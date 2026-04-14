@@ -37,7 +37,7 @@ export function AllLeaguesPage() {
           <button
             type="button"
             onClick={() => void dispatch(loadLeagues())}
-            className="rounded-lg border border-fume-200 px-3 py-1.5 text-sm font-medium dark:border-fume-700"
+            className="cursor-pointer rounded-lg border border-fume-200 px-3 py-1.5 text-sm font-medium dark:border-fume-700"
           >
             Retry
           </button>

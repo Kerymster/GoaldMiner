@@ -111,7 +111,7 @@ function TopBarActions({
       <button
         type="button"
         title="Notifications (mock)"
-        className="rounded-lg p-2 text-fume-500 transition-colors hover:bg-fume-200/80 hover:text-fume-800 dark:text-fume-400 dark:hover:bg-fume-800 dark:hover:text-fume-100"
+        className="cursor-pointer rounded-lg p-2 text-fume-500 transition-colors hover:bg-fume-200/80 hover:text-fume-800 dark:text-fume-400 dark:hover:bg-fume-800 dark:hover:text-fume-100"
       >
         <IconBell className="h-5 w-5" />
       </button>
@@ -122,7 +122,7 @@ function TopBarActions({
           onClick={() => setMenuOpen((o) => !o)}
           aria-expanded={menuOpen}
           aria-haspopup="menu"
-          className="flex items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2 transition-colors hover:bg-fume-200/80 dark:hover:bg-fume-800"
+          className="flex cursor-pointer items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2 transition-colors hover:bg-fume-200/80 dark:hover:bg-fume-800"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-600 text-xs font-bold text-fume-950 shadow-sm">
             GM
@@ -146,7 +146,7 @@ function TopBarActions({
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-fume-800"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-fume-800"
                 onClick={() => setMenuOpen(false)}
               >
                 Profile
@@ -154,7 +154,7 @@ function TopBarActions({
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-fume-800"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-fume-800"
                 onClick={() => setMenuOpen(false)}
               >
                 Settings
@@ -163,7 +163,7 @@ function TopBarActions({
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full px-4 py-2.5 text-left text-sm text-gold-800 hover:bg-gold-500/10 dark:text-gold-400 dark:hover:bg-gold-500/10"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-gold-800 hover:bg-gold-500/10 dark:text-gold-400 dark:hover:bg-gold-500/10"
                 onClick={() => setMenuOpen(false)}
               >
                 Log out
@@ -350,7 +350,7 @@ export function TopBar() {
                       onMouseEnter={() => setHighlight(i)}
                       onClick={() => goHit(h)}
                       className={[
-                        'flex w-full flex-col gap-0.5 px-4 py-2.5 text-left text-sm transition-colors',
+                        'flex w-full cursor-pointer flex-col gap-0.5 px-4 py-2.5 text-left text-sm transition-colors',
                         i === displayIndex
                           ? 'bg-gold-500/12 dark:bg-gold-500/15'
                           : 'hover:bg-fume-100 dark:hover:bg-fume-800/80',

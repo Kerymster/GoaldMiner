@@ -4,8 +4,8 @@ import { ComparePage } from './pages/compare/ComparePage'
 import { LeagueDetailPage } from './pages/leagues/LeagueDetailPage'
 import { AllLeaguesPage } from './pages/all-leagues/AllLeaguesPage'
 import { PlayerDetailPage } from './pages/players/PlayerDetailPage'
-import { PlayerListPage } from './pages/PlayerListPage'
-import { TeamDetailPage } from './pages/TeamDetailPage'
+import { AllPlayersPage } from './pages/players/AllPlayersPage'
+import { TeamDetailPage } from './pages/teams/TeamDetailPage'
 import { TeamsPage } from './pages/teams/TeamsPage'
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Navigate to="/players" replace />} />
-          <Route path="players" element={<PlayerListPage />} />
+          <Route path="players" element={<AllPlayersPage />} />
           <Route path="players/:id" element={<PlayerDetailPage />} />
           <Route path="leagues" element={<AllLeaguesPage />} />
           <Route path="leagues/:leagueId" element={<LeagueDetailPage />} />
