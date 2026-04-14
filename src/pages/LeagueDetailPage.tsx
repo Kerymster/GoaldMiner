@@ -1,98 +1,23 @@
-import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getLeagueById } from '../api/leagues'
-import { getTeams } from '../api/teams'
 import { Breadcrumbs } from '../components/Breadcrumbs'
 import { TeamLogo } from '../components/TeamLogo'
-import {
-  isApiErr,
-  type LeagueMeta,
-  type PaginatedTeamsResponse,
-  type TeamRow,
-} from '../types/api'
+import { useLeagueDetail } from '../hooks/useLeagueDetail'
 
 const listSurface =
   'divide-y divide-fume-200 rounded-xl border border-fume-200/90 bg-white shadow-sm shadow-fume-950/5 dark:divide-fume-800 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none'
 
-const PAGE_SIZE = 10
-
 export function LeagueDetailPage() {
   const { leagueId } = useParams<{ leagueId: string }>()
-  const [league, setLeague] = useState<LeagueMeta | null>(null)
-  const [teamsPage, setTeamsPage] = useState(1)
-  const [teamsRes, setTeamsRes] = useState<PaginatedTeamsResponse | null>(null)
-  const [leagueLoading, setLeagueLoading] = useState(true)
-  const [teamsLoading, setTeamsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!leagueId) {
-      setLeague(null)
-      setTeamsRes(null)
-      setTeamsPage(1)
-      setLeagueLoading(false)
-      return
-    }
-    let cancelled = false
-    ;(async () => {
-      setLeagueLoading(true)
-      setError(null)
-      try {
-        const L = await getLeagueById(leagueId)
-        if (!cancelled) {
-          setLeague(L)
-          setTeamsPage(1)
-        }
-      } catch (e) {
-        if (!cancelled) {
-          if (isApiErr(e) && e.status === 404) {
-            setLeague(null)
-            setError(null)
-          } else {
-            setError(isApiErr(e) ? e.message : 'Could not load league')
-            setLeague(null)
-          }
-          setTeamsRes(null)
-        }
-      } finally {
-        if (!cancelled) setLeagueLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [leagueId])
-
-  useEffect(() => {
-    if (!league) {
-      setTeamsRes(null)
-      return
-    }
-    let cancelled = false
-    ;(async () => {
-      setTeamsLoading(true)
-      setError(null)
-      try {
-        const res = await getTeams({
-          leagueId: league.leagueId,
-          page: teamsPage,
-          pageSize: PAGE_SIZE,
-          sort: 'name_asc',
-        })
-        if (!cancelled) setTeamsRes(res)
-      } catch (e) {
-        if (!cancelled) {
-          setTeamsRes(null)
-          setError(isApiErr(e) ? e.message : 'Could not load teams')
-        }
-      } finally {
-        if (!cancelled) setTeamsLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [league, teamsPage])
+  const {
+    league,
+    leagueLoading,
+    teamsRes,
+    teams,
+    teamsPage,
+    setTeamsPage,
+    teamsLoading,
+    error,
+  } = useLeagueDetail(leagueId)
 
   if (leagueLoading) {
     return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
@@ -125,8 +50,6 @@ export function LeagueDetailPage() {
       </div>
     )
   }
-
-  const teams: TeamRow[] = teamsRes?.items ?? []
 
   return (
     <div className="space-y-8">

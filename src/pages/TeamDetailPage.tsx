@@ -1,15 +1,7 @@
-import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getPlayers } from '../api/players'
-import { getTeamById } from '../api/teams'
 import { Breadcrumbs } from '../components/Breadcrumbs'
 import { TeamLogo } from '../components/TeamLogo'
-import {
-  isApiErr,
-  type PaginatedResponse,
-  type Player,
-  type TeamRow,
-} from '../types/api'
+import { useTeamDetail } from '../hooks/useTeamDetail'
 import { useAppSelector } from '../store/hooks'
 import { selectLeagueMetaById } from '../store/selectors/leaguesSelectors'
 
@@ -19,89 +11,20 @@ const cardSurface =
 const listSurface =
   'divide-y divide-fume-200 rounded-xl border border-fume-200/90 bg-white shadow-sm shadow-fume-950/5 dark:divide-fume-800 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none'
 
-const ROSTER_PAGE_SIZE = 10
-
 export function TeamDetailPage() {
   const { teamId } = useParams<{ teamId: string }>()
-  const [team, setTeam] = useState<TeamRow | null>(null)
-  const [rosterPage, setRosterPage] = useState(1)
-  const [rosterRes, setRosterRes] = useState<PaginatedResponse<Player> | null>(
-    null,
-  )
-  const [teamLoading, setTeamLoading] = useState(true)
-  const [rosterLoading, setRosterLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const {
+    team,
+    teamLoading,
+    rosterRes,
+    roster,
+    rosterPage,
+    setRosterPage,
+    rosterLoading,
+    error,
+  } = useTeamDetail(teamId)
 
   const leagueMeta = useAppSelector((s) => selectLeagueMetaById(s, team?.leagueId))
-
-  useEffect(() => {
-    if (!teamId) {
-      setTeam(null)
-      setRosterRes(null)
-      setRosterPage(1)
-      setTeamLoading(false)
-      return
-    }
-    let cancelled = false
-    ;(async () => {
-      setTeamLoading(true)
-      setError(null)
-      try {
-        const t = await getTeamById(teamId)
-        if (!cancelled) {
-          setTeam(t)
-          setRosterPage(1)
-        }
-      } catch (e) {
-        if (!cancelled) {
-          if (isApiErr(e) && e.status === 404) {
-            setTeam(null)
-            setError(null)
-          } else {
-            setError(isApiErr(e) ? e.message : 'Could not load team')
-            setTeam(null)
-          }
-          setRosterRes(null)
-        }
-      } finally {
-        if (!cancelled) setTeamLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [teamId])
-
-  useEffect(() => {
-    if (!team) {
-      setRosterRes(null)
-      return
-    }
-    let cancelled = false
-    ;(async () => {
-      setRosterLoading(true)
-      setError(null)
-      try {
-        const res = await getPlayers({
-          teamId: team.id,
-          page: rosterPage,
-          pageSize: ROSTER_PAGE_SIZE,
-          sort: 'name_asc',
-        })
-        if (!cancelled) setRosterRes(res)
-      } catch (e) {
-        if (!cancelled) {
-          setRosterRes(null)
-          setError(isApiErr(e) ? e.message : 'Could not load roster')
-        }
-      } finally {
-        if (!cancelled) setRosterLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [team, rosterPage])
 
   if (teamLoading) {
     return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
@@ -136,7 +59,6 @@ export function TeamDetailPage() {
   }
 
   const leagueName = leagueMeta?.name ?? team.leagueId
-  const roster = rosterRes?.items ?? []
 
   return (
     <div className="space-y-8">

@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getPlayerById } from '../api/players'
 import { Breadcrumbs } from '../components/Breadcrumbs'
-import { isApiErr, type Player } from '../types/api'
+import { usePlayerDetail } from '../hooks/usePlayerDetail'
 import { useAppSelector } from '../store/hooks'
 import { selectLeagueMetaById } from '../store/selectors/leaguesSelectors'
 
@@ -11,46 +9,11 @@ const cardSurface =
 
 export function PlayerDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const [player, setPlayer] = useState<Player | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { player, loading, error } = usePlayerDetail(id)
 
   const leagueMeta = useAppSelector((s) =>
     selectLeagueMetaById(s, player?.leagueId),
   )
-
-  useEffect(() => {
-    if (!id) {
-      setPlayer(null)
-      setLoading(false)
-      setError(null)
-      return
-    }
-    let cancelled = false
-    ;(async () => {
-      setLoading(true)
-      setError(null)
-      try {
-        const p = await getPlayerById(id)
-        if (!cancelled) setPlayer(p)
-      } catch (e) {
-        if (!cancelled) {
-          if (isApiErr(e) && e.status === 404) {
-            setPlayer(null)
-            setError(null)
-          } else {
-            setError(isApiErr(e) ? e.message : 'Could not load player')
-            setPlayer(null)
-          }
-        }
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [id])
 
   if (loading) {
     return <p className="text-fume-600 dark:text-fume-400">Loading…</p>

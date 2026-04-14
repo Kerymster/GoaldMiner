@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
-import { getPlayers } from '../api/players'
+import { useEffect, useMemo } from 'react'
 import { Breadcrumbs } from '../components/Breadcrumbs'
 import {
   setComparePlayerA,
   setComparePlayerB,
 } from '../features/compare/compareSlice'
-import { isApiErr, type Player } from '../types/api'
+import { useComparePlayersPool } from '../hooks/useComparePlayersPool'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
   selectComparePlayerAId,
@@ -23,30 +22,7 @@ export function ComparePage() {
   const aId = useAppSelector(selectComparePlayerAId)
   const bId = useAppSelector(selectComparePlayerBId)
 
-  const [pool, setPool] = useState<Player[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      setLoading(true)
-      setError(null)
-      try {
-        const r = await getPlayers({ page: 1, pageSize: 50, sort: 'name_asc' })
-        if (!cancelled) setPool(r.items)
-      } catch (e) {
-        if (!cancelled) {
-          setError(isApiErr(e) ? e.message : 'Could not load players')
-        }
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [])
+  const { pool, loading, error } = useComparePlayersPool()
 
   useEffect(() => {
     if (pool.length < 2 || loading) return

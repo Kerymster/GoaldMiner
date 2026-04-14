@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getPlayers } from '../api/players'
 import { Breadcrumbs } from '../components/Breadcrumbs'
-import { isApiErr, type PaginatedResponse, type Player, type PlayersSort } from '../types/api'
+import { usePlayersList } from '../hooks/usePlayersList'
+import type { PlayersSort } from '../types/api'
 import { useAppSelector } from '../store/hooks'
 import { selectLeaguesItems } from '../store/selectors/leaguesSelectors'
 
@@ -12,44 +11,20 @@ const listSurface =
 const inputClass =
   'rounded-lg border border-fume-200 bg-white px-3 py-2 text-sm text-fume-900 shadow-sm focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:border-fume-700 dark:bg-fume-900 dark:text-fume-100'
 
-const PAGE_SIZE = 20
-
 export function PlayerListPage() {
   const leagues = useAppSelector(selectLeaguesItems)
-  const [page, setPage] = useState(1)
-  const [leagueId, setLeagueId] = useState('')
-  const [sort, setSort] = useState<PlayersSort>('underratedScore_desc')
-  const [data, setData] = useState<PaginatedResponse<Player> | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      setLoading(true)
-      setError(null)
-      try {
-        const res = await getPlayers({
-          page,
-          pageSize: PAGE_SIZE,
-          leagueId: leagueId || undefined,
-          sort,
-        })
-        if (!cancelled) setData(res)
-      } catch (e) {
-        if (!cancelled) {
-          setError(isApiErr(e) ? e.message : 'Could not load players')
-        }
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [page, leagueId, sort])
-
-  const items = data?.items ?? []
+  const {
+    page,
+    setPage,
+    leagueId,
+    setLeagueId,
+    sort,
+    setSort,
+    data,
+    loading,
+    error,
+    items,
+  } = usePlayersList()
 
   return (
     <div className="space-y-6">

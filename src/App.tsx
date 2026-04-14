@@ -6,7 +6,7 @@ import { LeaguesPage } from './pages/LeaguesPage'
 import { PlayerDetailPage } from './pages/PlayerDetailPage'
 import { PlayerListPage } from './pages/PlayerListPage'
 import { TeamDetailPage } from './pages/TeamDetailPage'
-import { TeamsPage } from './pages/TeamsPage'
+import { TeamsPage } from './pages/teams/TeamsPage'
 
 export default function App() {
   return (
