@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { Breadcrumbs } from '../components/Breadcrumbs'
 import { setComparePlayerA, setComparePlayerB } from '../features/compare/compareSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
@@ -33,6 +34,7 @@ export function ComparePage() {
 
   return (
     <div className="space-y-6">
+      <Breadcrumbs items={[{ label: 'Compare' }]} />
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Compare</h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
