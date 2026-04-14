@@ -3,7 +3,12 @@ import { Link, useParams } from 'react-router-dom'
 import { getPlayers } from '../api/players'
 import { getTeamById } from '../api/teams'
 import { Breadcrumbs } from '../components/Breadcrumbs'
-import { isApiErr, type Player, type TeamRow } from '../types/api'
+import {
+  isApiErr,
+  type PaginatedResponse,
+  type Player,
+  type TeamRow,
+} from '../types/api'
 import { useAppSelector } from '../store/hooks'
 import { selectLeagueMetaById } from '../store/selectors/leaguesSelectors'
 
@@ -13,13 +18,17 @@ const cardSurface =
 const listSurface =
   'divide-y divide-fume-200 rounded-xl border border-fume-200/90 bg-white shadow-sm shadow-fume-950/5 dark:divide-fume-800 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none'
 
-const ROSTER_PAGE_SIZE = 50
+const ROSTER_PAGE_SIZE = 10
 
 export function TeamDetailPage() {
   const { teamId } = useParams<{ teamId: string }>()
   const [team, setTeam] = useState<TeamRow | null>(null)
-  const [roster, setRoster] = useState<Player[]>([])
-  const [loading, setLoading] = useState(true)
+  const [rosterPage, setRosterPage] = useState(1)
+  const [rosterRes, setRosterRes] = useState<PaginatedResponse<Player> | null>(
+    null,
+  )
+  const [teamLoading, setTeamLoading] = useState(true)
+  const [rosterLoading, setRosterLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const leagueMeta = useAppSelector((s) => selectLeagueMetaById(s, team?.leagueId))
@@ -27,39 +36,34 @@ export function TeamDetailPage() {
   useEffect(() => {
     if (!teamId) {
       setTeam(null)
-      setRoster([])
-      setLoading(false)
+      setRosterRes(null)
+      setRosterPage(1)
+      setTeamLoading(false)
       return
     }
     let cancelled = false
     ;(async () => {
-      setLoading(true)
+      setTeamLoading(true)
       setError(null)
       try {
         const t = await getTeamById(teamId)
-        if (cancelled) return
-        setTeam(t)
-        const playersRes = await getPlayers({
-          teamId: t.id,
-          page: 1,
-          pageSize: ROSTER_PAGE_SIZE,
-          sort: 'name_asc',
-        })
-        if (!cancelled) setRoster(playersRes.items)
+        if (!cancelled) {
+          setTeam(t)
+          setRosterPage(1)
+        }
       } catch (e) {
         if (!cancelled) {
           if (isApiErr(e) && e.status === 404) {
             setTeam(null)
-            setRoster([])
             setError(null)
           } else {
             setError(isApiErr(e) ? e.message : 'Could not load team')
             setTeam(null)
-            setRoster([])
           }
+          setRosterRes(null)
         }
       } finally {
-        if (!cancelled) setLoading(false)
+        if (!cancelled) setTeamLoading(false)
       }
     })()
     return () => {
@@ -67,11 +71,42 @@ export function TeamDetailPage() {
     }
   }, [teamId])
 
-  if (loading) {
+  useEffect(() => {
+    if (!team) {
+      setRosterRes(null)
+      return
+    }
+    let cancelled = false
+    ;(async () => {
+      setRosterLoading(true)
+      setError(null)
+      try {
+        const res = await getPlayers({
+          teamId: team.id,
+          page: rosterPage,
+          pageSize: ROSTER_PAGE_SIZE,
+          sort: 'name_asc',
+        })
+        if (!cancelled) setRosterRes(res)
+      } catch (e) {
+        if (!cancelled) {
+          setRosterRes(null)
+          setError(isApiErr(e) ? e.message : 'Could not load roster')
+        }
+      } finally {
+        if (!cancelled) setRosterLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [team, rosterPage])
+
+  if (teamLoading) {
     return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
   }
 
-  if (error) {
+  if (error && !team) {
     return (
       <div className="space-y-4">
         <p className="text-red-600 dark:text-red-400">{error}</p>
@@ -100,6 +135,7 @@ export function TeamDetailPage() {
   }
 
   const leagueName = leagueMeta?.name ?? team.leagueId
+  const roster = rosterRes?.items ?? []
 
   return (
     <div className="space-y-8">
@@ -127,13 +163,20 @@ export function TeamDetailPage() {
           </p>
         ) : null}
         <p className="mt-1 text-sm text-fume-600 dark:text-fume-400">
-          {roster.length} players (up to {ROSTER_PAGE_SIZE} loaded)
+          {rosterRes
+            ? `${rosterRes.total} players · showing page ${rosterRes.page} of ${rosterRes.totalPages}`
+            : rosterLoading
+              ? 'Loading roster…'
+              : null}
         </p>
       </div>
       <div>
         <h3 className="text-sm font-semibold text-fume-900 dark:text-fume-100">
           Roster
         </h3>
+        {error && team ? (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
+        ) : null}
         <ul className={`mt-3 ${listSurface}`}>
           {roster.map((player) => (
             <li key={player.id}>
@@ -159,10 +202,34 @@ export function TeamDetailPage() {
             </li>
           ))}
         </ul>
-        {roster.length === 0 ? (
+        {rosterRes && roster.length === 0 ? (
           <p className="mt-3 text-sm text-fume-500 dark:text-fume-400">
             No players returned for this team.
           </p>
+        ) : null}
+        {rosterRes && rosterRes.totalPages > 1 ? (
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+            <button
+              type="button"
+              disabled={rosterPage <= 1 || rosterLoading}
+              onClick={() => setRosterPage((p) => Math.max(1, p - 1))}
+              className="rounded-lg border border-fume-200 px-3 py-1.5 font-medium disabled:opacity-40 dark:border-fume-700"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              disabled={
+                rosterPage >= rosterRes.totalPages || rosterLoading
+              }
+              onClick={() =>
+                setRosterPage((p) => Math.min(rosterRes.totalPages, p + 1))
+              }
+              className="rounded-lg border border-fume-200 px-3 py-1.5 font-medium disabled:opacity-40 dark:border-fume-700"
+            >
+              Next
+            </button>
+          </div>
         ) : null}
       </div>
     </div>

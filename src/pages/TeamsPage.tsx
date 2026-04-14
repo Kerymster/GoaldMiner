@@ -16,7 +16,7 @@ const listSurface =
 const inputClass =
   'rounded-lg border border-fume-200 bg-white px-3 py-2 text-sm text-fume-900 shadow-sm focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:border-fume-700 dark:bg-fume-900 dark:text-fume-100'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 10
 
 export function TeamsPage() {
   const leagues = useAppSelector(selectLeaguesItems)

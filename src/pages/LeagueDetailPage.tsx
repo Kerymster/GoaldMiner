@@ -3,56 +3,58 @@ import { Link, useParams } from 'react-router-dom'
 import { getLeagueById } from '../api/leagues'
 import { getTeams } from '../api/teams'
 import { Breadcrumbs } from '../components/Breadcrumbs'
-import { isApiErr, type LeagueMeta, type TeamRow } from '../types/api'
+import {
+  isApiErr,
+  type LeagueMeta,
+  type PaginatedTeamsResponse,
+  type TeamRow,
+} from '../types/api'
 
 const listSurface =
   'divide-y divide-fume-200 rounded-xl border border-fume-200/90 bg-white shadow-sm shadow-fume-950/5 dark:divide-fume-800 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none'
 
-const PAGE_SIZE = 50
+const PAGE_SIZE = 10
 
 export function LeagueDetailPage() {
   const { leagueId } = useParams<{ leagueId: string }>()
   const [league, setLeague] = useState<LeagueMeta | null>(null)
-  const [teams, setTeams] = useState<TeamRow[]>([])
-  const [loading, setLoading] = useState(true)
+  const [teamsPage, setTeamsPage] = useState(1)
+  const [teamsRes, setTeamsRes] = useState<PaginatedTeamsResponse | null>(null)
+  const [leagueLoading, setLeagueLoading] = useState(true)
+  const [teamsLoading, setTeamsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!leagueId) {
       setLeague(null)
-      setTeams([])
-      setLoading(false)
+      setTeamsRes(null)
+      setTeamsPage(1)
+      setLeagueLoading(false)
       return
     }
     let cancelled = false
     ;(async () => {
-      setLoading(true)
+      setLeagueLoading(true)
       setError(null)
       try {
         const L = await getLeagueById(leagueId)
-        if (cancelled) return
-        setLeague(L)
-        const teamsRes = await getTeams({
-          leagueId: L.leagueId,
-          page: 1,
-          pageSize: PAGE_SIZE,
-          sort: 'name_asc',
-        })
-        if (!cancelled) setTeams(teamsRes.items)
+        if (!cancelled) {
+          setLeague(L)
+          setTeamsPage(1)
+        }
       } catch (e) {
         if (!cancelled) {
           if (isApiErr(e) && e.status === 404) {
             setLeague(null)
-            setTeams([])
             setError(null)
           } else {
             setError(isApiErr(e) ? e.message : 'Could not load league')
             setLeague(null)
-            setTeams([])
           }
+          setTeamsRes(null)
         }
       } finally {
-        if (!cancelled) setLoading(false)
+        if (!cancelled) setLeagueLoading(false)
       }
     })()
     return () => {
@@ -60,11 +62,42 @@ export function LeagueDetailPage() {
     }
   }, [leagueId])
 
-  if (loading) {
+  useEffect(() => {
+    if (!league) {
+      setTeamsRes(null)
+      return
+    }
+    let cancelled = false
+    ;(async () => {
+      setTeamsLoading(true)
+      setError(null)
+      try {
+        const res = await getTeams({
+          leagueId: league.leagueId,
+          page: teamsPage,
+          pageSize: PAGE_SIZE,
+          sort: 'name_asc',
+        })
+        if (!cancelled) setTeamsRes(res)
+      } catch (e) {
+        if (!cancelled) {
+          setTeamsRes(null)
+          setError(isApiErr(e) ? e.message : 'Could not load teams')
+        }
+      } finally {
+        if (!cancelled) setTeamsLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [league, teamsPage])
+
+  if (leagueLoading) {
     return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
   }
 
-  if (error) {
+  if (error && !league) {
     return (
       <div className="space-y-4">
         <p className="text-red-600 dark:text-red-400">{error}</p>
@@ -91,6 +124,8 @@ export function LeagueDetailPage() {
       </div>
     )
   }
+
+  const teams: TeamRow[] = teamsRes?.items ?? []
 
   return (
     <div className="space-y-8">
@@ -120,9 +155,21 @@ export function LeagueDetailPage() {
         <h3 className="text-sm font-semibold text-fume-900 dark:text-fume-100">
           Teams
         </h3>
-        <p className="mt-1 text-xs text-fume-500 dark:text-fume-400">
-          Showing up to {PAGE_SIZE} teams from the API.
-        </p>
+        {teamsLoading && !teamsRes ? (
+          <p className="mt-2 text-sm text-fume-500 dark:text-fume-400">
+            Loading teams…
+          </p>
+        ) : null}
+        {error && league ? (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
+        ) : null}
+        {!teamsLoading || teamsRes ? (
+          <p className="mt-1 text-xs text-fume-500 dark:text-fume-400">
+            {teamsRes
+              ? `Page ${teamsRes.page} of ${teamsRes.totalPages} (${teamsRes.total} teams)`
+              : null}
+          </p>
+        ) : null}
         <ul className={`mt-3 ${listSurface}`}>
           {teams.map((team) => (
             <li key={team.id}>
@@ -138,10 +185,34 @@ export function LeagueDetailPage() {
             </li>
           ))}
         </ul>
-        {teams.length === 0 ? (
+        {teamsRes && teams.length === 0 ? (
           <p className="mt-3 text-sm text-fume-500 dark:text-fume-400">
             No teams returned for this league.
           </p>
+        ) : null}
+        {teamsRes && teamsRes.totalPages > 1 ? (
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+            <button
+              type="button"
+              disabled={teamsPage <= 1 || teamsLoading}
+              onClick={() => setTeamsPage((p) => Math.max(1, p - 1))}
+              className="rounded-lg border border-fume-200 px-3 py-1.5 font-medium disabled:opacity-40 dark:border-fume-700"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              disabled={
+                teamsPage >= teamsRes.totalPages || teamsLoading
+              }
+              onClick={() =>
+                setTeamsPage((p) => Math.min(teamsRes.totalPages, p + 1))
+              }
+              className="rounded-lg border border-fume-200 px-3 py-1.5 font-medium disabled:opacity-40 dark:border-fume-700"
+            >
+              Next
+            </button>
+          </div>
         ) : null}
       </div>
     </div>
