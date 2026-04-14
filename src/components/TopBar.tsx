@@ -1,20 +1,14 @@
 import {
   useCallback,
-  useMemo,
+  useEffect,
   useRef,
   useState,
   type KeyboardEvent,
   type SVGProps,
 } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import {
-  countries,
-  leagues,
-  teams,
-} from '../data/catalog'
-import type { Player } from '../types/player'
-import { useAppSelector } from '../store/hooks'
-import { selectPlayersList } from '../store/selectors/playersSelectors'
+import { getPlayers } from '../api/players'
+import { isApiErr, type Player } from '../types/api'
 
 function titleFromPath(pathname: string): { title: string; subtitle?: string } {
   if (pathname === '/players' || pathname === '/') {
@@ -43,103 +37,64 @@ function titleFromPath(pathname: string): { title: string; subtitle?: string } {
 
 type SearchHit = {
   id: string
-  type: 'player' | 'team' | 'league' | 'country'
   title: string
   subtitle: string
   to: string
 }
 
-const TYPE_LABEL: Record<SearchHit['type'], string> = {
-  player: 'Player',
-  team: 'Team',
-  league: 'League',
-  country: 'Country',
-}
-
-function useSearchHits(query: string, players: Player[]) {
-  return useMemo(() => {
-    const n = query.trim().toLowerCase()
-    if (!n) return []
-
-    const hits: SearchHit[] = []
-
-    for (const p of players) {
-      const hay = `${p.name} ${p.team} ${p.position}`.toLowerCase()
-      if (hay.includes(n)) {
-        hits.push({
-          id: `p-${p.id}`,
-          type: 'player',
-          title: p.name,
-          subtitle: `${p.team} · ${p.position}`,
-          to: `/players/${p.id}`,
-        })
-      }
-    }
-
-    for (const t of teams) {
-      if (t.name.toLowerCase().includes(n)) {
-        hits.push({
-          id: `t-${t.id}`,
-          type: 'team',
-          title: t.name,
-          subtitle: 'Team',
-          to: `/teams/${t.id}`,
-        })
-      }
-    }
-
-    for (const l of leagues) {
-      const countryName =
-        countries.find((c) => c.id === l.countryId)?.name ?? ''
-      const hay = `${l.name} ${countryName}`.toLowerCase()
-      if (hay.includes(n)) {
-        hits.push({
-          id: `l-${l.id}`,
-          type: 'league',
-          title: l.name,
-          subtitle: countryName ? `${countryName} · Tier ${l.tier}` : `Tier ${l.tier}`,
-          to: `/leagues/${l.id}`,
-        })
-      }
-    }
-
-    for (const c of countries) {
-      const hay = `${c.name} ${c.code}`.toLowerCase()
-      if (hay.includes(n)) {
-        hits.push({
-          id: `c-${c.id}`,
-          type: 'country',
-          title: c.name,
-          subtitle: `${c.code} · filter leagues in sidebar`,
-          to: '/leagues',
-        })
-      }
-    }
-
-    return hits.slice(0, 12)
-  }, [query, players])
-}
-
 function IconSearch(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden {...props}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15z" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+      {...props}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15z"
+      />
     </svg>
   )
 }
 
 function IconBell(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden {...props}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+      {...props}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+      />
     </svg>
   )
 }
 
 function IconChevronDown(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden {...props}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+      {...props}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19 9l-7 7-7-7"
+      />
     </svg>
   )
 }
@@ -221,17 +176,63 @@ function TopBarActions({
   )
 }
 
+function playersToHits(players: Player[]): SearchHit[] {
+  return players.map((p) => ({
+    id: p.id,
+    title: p.name,
+    subtitle: `${p.team} · ${p.position}`,
+    to: `/players/${p.id}`,
+  }))
+}
+
 export function TopBar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
   const [highlight, setHighlight] = useState(0)
+  const [hits, setHits] = useState<SearchHit[]>([])
+  const [searchLoading, setSearchLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { title, subtitle } = titleFromPath(pathname)
-  const players = useAppSelector(selectPlayersList)
-  const hits = useSearchHits(query, players)
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setDebouncedQuery(query.trim()), 300)
+    return () => window.clearTimeout(t)
+  }, [query])
+
+  useEffect(() => {
+    if (!debouncedQuery) {
+      setHits([])
+      setSearchLoading(false)
+      return
+    }
+    let cancelled = false
+    ;(async () => {
+      setSearchLoading(true)
+      try {
+        const r = await getPlayers({
+          q: debouncedQuery,
+          page: 1,
+          pageSize: 12,
+          sort: 'name_asc',
+        })
+        if (!cancelled) setHits(playersToHits(r.items))
+      } catch (e) {
+        if (!cancelled) {
+          if (isApiErr(e)) setHits([])
+          else setHits([])
+        }
+      } finally {
+        if (!cancelled) setSearchLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [debouncedQuery])
 
   const displayIndex =
     hits.length === 0 ? 0 : Math.min(highlight, hits.length - 1)
@@ -240,6 +241,8 @@ export function TopBar() {
     (h: SearchHit) => {
       navigate(h.to)
       setQuery('')
+      setDebouncedQuery('')
+      setHits([])
       setSearchOpen(false)
     },
     [navigate],
@@ -292,7 +295,7 @@ export function TopBar() {
         <div className="flex w-full min-w-0 justify-center sm:flex-[1.65] sm:min-w-[12rem]">
           <div className="relative w-full max-w-xl">
             <label className="relative block">
-              <span className="sr-only">Search players, teams, and leagues</span>
+              <span className="sr-only">Search players</span>
               <IconSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-fume-400" />
               <input
                 ref={inputRef}
@@ -308,7 +311,7 @@ export function TopBar() {
                   window.setTimeout(() => setSearchOpen(false), 180)
                 }}
                 onKeyDown={onSearchKeyDown}
-                placeholder="Search players, teams, leagues…"
+                placeholder="Search players…"
                 autoComplete="off"
                 role="combobox"
                 aria-expanded={showPanel}
@@ -327,9 +330,13 @@ export function TopBar() {
                 role="listbox"
                 className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 max-h-80 overflow-auto rounded-xl border border-fume-200/90 bg-white py-1 shadow-lg shadow-fume-950/15 dark:border-fume-700 dark:bg-fume-900"
               >
-                {hits.length === 0 ? (
+                {searchLoading ? (
                   <p className="px-4 py-3 text-sm text-fume-500 dark:text-fume-400">
-                    No matches. Try another name or league.
+                    Searching…
+                  </p>
+                ) : hits.length === 0 ? (
+                  <p className="px-4 py-3 text-sm text-fume-500 dark:text-fume-400">
+                    No players match. Try another name.
                   </p>
                 ) : (
                   hits.map((h, i) => (
@@ -351,7 +358,7 @@ export function TopBar() {
                     >
                       <span className="flex items-center gap-2">
                         <span className="rounded bg-fume-200/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-fume-600 dark:bg-fume-800 dark:text-fume-400">
-                          {TYPE_LABEL[h.type]}
+                          Player
                         </span>
                         <span className="font-medium text-fume-900 dark:text-fume-100">
                           {h.title}

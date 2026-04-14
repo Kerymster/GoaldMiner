@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { players as seedPlayers } from '../../data/players'
 
 export type CompareState = {
   playerAId: string
@@ -7,8 +6,8 @@ export type CompareState = {
 }
 
 const initialState: CompareState = {
-  playerAId: seedPlayers[0]?.id ?? '',
-  playerBId: seedPlayers[1]?.id ?? '',
+  playerAId: '',
+  playerBId: '',
 }
 
 export const compareSlice = createSlice({

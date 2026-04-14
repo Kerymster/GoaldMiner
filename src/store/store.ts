@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { compareReducer } from '../features/compare/compareSlice'
-import { playersReducer } from '../features/players/playersSlice'
+import { leaguesReducer } from '../features/leagues/leaguesSlice'
 
 const rootReducer = combineReducers({
-  players: playersReducer,
+  leagues: leaguesReducer,
   compare: compareReducer,
 })
 

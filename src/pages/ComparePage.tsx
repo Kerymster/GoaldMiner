@@ -1,12 +1,16 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { getPlayers } from '../api/players'
 import { Breadcrumbs } from '../components/Breadcrumbs'
-import { setComparePlayerA, setComparePlayerB } from '../features/compare/compareSlice'
+import {
+  setComparePlayerA,
+  setComparePlayerB,
+} from '../features/compare/compareSlice'
+import { isApiErr, type Player } from '../types/api'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
   selectComparePlayerAId,
   selectComparePlayerBId,
 } from '../store/selectors/compareSelectors'
-import { selectPlayersList } from '../store/selectors/playersSelectors'
 
 const selectClass =
   'w-full rounded-lg border border-fume-200 bg-white px-3 py-2.5 text-sm text-fume-900 shadow-sm transition-colors focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:border-fume-700 dark:bg-fume-900 dark:text-fume-100'
@@ -16,25 +20,87 @@ const tableWrap =
 
 export function ComparePage() {
   const dispatch = useAppDispatch()
-  const players = useAppSelector(selectPlayersList)
   const aId = useAppSelector(selectComparePlayerAId)
   const bId = useAppSelector(selectComparePlayerBId)
 
-  const a = useMemo(() => players.find((p) => p.id === aId), [players, aId])
-  const b = useMemo(() => players.find((p) => p.id === bId), [players, bId])
+  const [pool, setPool] = useState<Player[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const r = await getPlayers({ page: 1, pageSize: 50, sort: 'name_asc' })
+        if (!cancelled) setPool(r.items)
+      } catch (e) {
+        if (!cancelled) {
+          setError(isApiErr(e) ? e.message : 'Could not load players')
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (pool.length < 2 || loading) return
+    if (!aId) dispatch(setComparePlayerA(pool[0].id))
+  }, [pool, loading, aId, dispatch])
+
+  useEffect(() => {
+    if (pool.length < 2 || loading) return
+    const curA = aId || pool[0].id
+    if (!bId || bId === curA) {
+      const alt = pool.find((p) => p.id !== curA)
+      if (alt) dispatch(setComparePlayerB(alt.id))
+    }
+  }, [pool, loading, aId, bId, dispatch])
+
+  const a = useMemo(() => pool.find((p) => p.id === aId), [pool, aId])
+  const b = useMemo(() => pool.find((p) => p.id === bId), [pool, bId])
+
+  if (loading) {
+    return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <Breadcrumbs items={[{ label: 'Compare' }]} />
+        <p className="text-red-600 dark:text-red-400">{error}</p>
+      </div>
+    )
+  }
+
+  if (pool.length < 2) {
+    return (
+      <div className="space-y-4">
+        <Breadcrumbs items={[{ label: 'Compare' }]} />
+        <p className="text-fume-600 dark:text-fume-400">
+          Need at least two players in the API to compare.
+        </p>
+      </div>
+    )
+  }
 
   if (!a || !b) {
-    return <p className="text-fume-600 dark:text-fume-400">Not enough data.</p>
+    return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
   }
 
   const rows: { label: string; a: string; b: string }[] = [
     { label: 'Team', a: a.team, b: b.team },
     { label: 'Position', a: a.position, b: b.position },
-    { label: 'Rating', a: String(a.rating), b: String(b.rating) },
+    { label: 'Rating', a: String(a.rating ?? '—'), b: String(b.rating ?? '—') },
     {
       label: 'Underrated',
-      a: String(a.underratedScore),
-      b: String(b.underratedScore),
+      a: String(a.underratedScore ?? '—'),
+      b: String(b.underratedScore ?? '—'),
     },
   ]
 
@@ -46,7 +112,7 @@ export function ComparePage() {
           Compare
         </h2>
         <p className="mt-1 text-sm text-fume-600 dark:text-fume-400">
-          Pick two players to contrast side by side.
+          Pick two players from the first page of results (up to 50).
         </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
@@ -59,7 +125,7 @@ export function ComparePage() {
             onChange={(e) => dispatch(setComparePlayerA(e.target.value))}
             className={selectClass}
           >
-            {players.map((p) => (
+            {pool.map((p) => (
               <option key={p.id} value={p.id} disabled={p.id === bId}>
                 {p.name}
               </option>
@@ -75,7 +141,7 @@ export function ComparePage() {
             onChange={(e) => dispatch(setComparePlayerB(e.target.value))}
             className={selectClass}
           >
-            {players.map((p) => (
+            {pool.map((p) => (
               <option key={p.id} value={p.id} disabled={p.id === aId}>
                 {p.name}
               </option>

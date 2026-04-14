@@ -1,16 +1,74 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { getPlayerById } from '../api/players'
 import { Breadcrumbs } from '../components/Breadcrumbs'
-import { getTeamWithLeague } from '../data/catalog'
+import { isApiErr, type Player } from '../types/api'
 import { useAppSelector } from '../store/hooks'
-import { selectPlayerById } from '../store/selectors/playersSelectors'
+import { selectLeagueMetaById } from '../store/selectors/leaguesSelectors'
 
 const cardSurface =
   'rounded-2xl border border-fume-200/90 bg-white p-6 shadow-sm shadow-fume-950/5 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none'
 
 export function PlayerDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const player = useAppSelector((state) => selectPlayerById(state, id))
-  const ctx = player ? getTeamWithLeague(player.teamId) : undefined
+  const [player, setPlayer] = useState<Player | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const leagueMeta = useAppSelector((s) =>
+    selectLeagueMetaById(s, player?.leagueId),
+  )
+
+  useEffect(() => {
+    if (!id) {
+      setPlayer(null)
+      setLoading(false)
+      setError(null)
+      return
+    }
+    let cancelled = false
+    ;(async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const p = await getPlayerById(id)
+        if (!cancelled) setPlayer(p)
+      } catch (e) {
+        if (!cancelled) {
+          if (isApiErr(e) && e.status === 404) {
+            setPlayer(null)
+            setError(null)
+          } else {
+            setError(isApiErr(e) ? e.message : 'Could not load player')
+            setPlayer(null)
+          }
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [id])
+
+  if (loading) {
+    return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <p className="text-red-600 dark:text-red-400">{error}</p>
+        <Link
+          to="/players"
+          className="text-sm font-medium text-gold-700 underline-offset-4 hover:text-gold-600 hover:underline dark:text-gold-400 dark:hover:text-gold-300"
+        >
+          Back to players
+        </Link>
+      </div>
+    )
+  }
 
   if (!player) {
     return (
@@ -26,17 +84,22 @@ export function PlayerDetailPage() {
     )
   }
 
-  const breadcrumbItems = ctx
-    ? [
-        { label: 'Leagues', to: '/leagues' },
-        { label: ctx.league.name, to: `/leagues/${ctx.league.id}` },
-        { label: ctx.team.name, to: `/teams/${ctx.team.id}` },
-        { label: player.name },
-      ]
-    : [
-        { label: 'Players', to: '/players' },
-        { label: player.name },
-      ]
+  const leagueName = leagueMeta?.name ?? player.leagueId
+  const breadcrumbItems =
+    player.leagueId && leagueName
+      ? [
+          { label: 'Leagues', to: '/leagues' },
+          {
+            label: leagueName,
+            to: `/leagues/${player.leagueId}`,
+          },
+          { label: player.team, to: `/teams/${player.teamId}` },
+          { label: player.name },
+        ]
+      : [
+          { label: 'Players', to: '/players' },
+          { label: player.name },
+        ]
 
   return (
     <div className="space-y-8">
@@ -48,27 +111,34 @@ export function PlayerDetailPage() {
               {player.name}
             </h2>
             <p className="mt-1 text-fume-600 dark:text-fume-400">
-              {ctx ? (
+              <Link
+                to={`/teams/${player.teamId}`}
+                className="font-medium text-gold-700 underline-offset-4 hover:text-gold-600 hover:underline dark:text-gold-400 dark:hover:text-gold-300"
+              >
+                {player.team}
+              </Link>
+              {leagueName ? (
                 <>
-                  <Link
-                    to={`/teams/${ctx.team.id}`}
-                    className="font-medium text-gold-700 underline-offset-4 hover:text-gold-600 hover:underline dark:text-gold-400 dark:hover:text-gold-300"
-                  >
-                    {ctx.team.name}
-                  </Link>
                   {' · '}
-                  {ctx.league.name} · {player.position}
+                  {player.leagueId ? (
+                    <Link
+                      to={`/leagues/${player.leagueId}`}
+                      className="text-gold-700 underline-offset-4 hover:text-gold-600 hover:underline dark:text-gold-400 dark:hover:text-gold-300"
+                    >
+                      {leagueName}
+                    </Link>
+                  ) : (
+                    leagueName
+                  )}
                 </>
-              ) : (
-                <>
-                  {player.team} · {player.position}
-                </>
-              )}
+              ) : null}
+              {' · '}
+              {player.position}
             </p>
           </div>
           <div className="rounded-xl border border-gold-500/30 bg-gold-500/10 px-4 py-3 text-center dark:bg-gold-400/10">
             <p className="text-2xl font-semibold tabular-nums text-gold-800 dark:text-gold-300">
-              {player.underratedScore}
+              {player.underratedScore ?? '—'}
             </p>
             <p className="text-xs font-medium uppercase tracking-wide text-gold-700/90 dark:text-gold-400/90">
               score
@@ -80,20 +150,24 @@ export function PlayerDetailPage() {
             <dt className="text-xs font-medium uppercase tracking-wide text-fume-500">
               Rating
             </dt>
-            <dd className="mt-1 text-lg tabular-nums">{player.rating}</dd>
+            <dd className="mt-1 text-lg tabular-nums">
+              {player.rating ?? '—'}
+            </dd>
           </div>
           <div className="sm:text-right">
             <dt className="text-xs font-medium uppercase tracking-wide text-fume-500">
               Underrated score
             </dt>
             <dd className="mt-1 text-lg tabular-nums text-gold-700 dark:text-gold-400">
-              {player.underratedScore}
+              {player.underratedScore ?? '—'}
             </dd>
           </div>
         </dl>
-        <p className="mt-8 border-t border-fume-100 pt-6 text-sm leading-relaxed text-fume-600 dark:border-fume-800 dark:text-fume-400">
-          {player.note}
-        </p>
+        {player.note ? (
+          <p className="mt-8 border-t border-fume-100 pt-6 text-sm leading-relaxed text-fume-600 dark:border-fume-800 dark:text-fume-400">
+            {player.note}
+          </p>
+        ) : null}
       </div>
       <Link
         to="/players"
