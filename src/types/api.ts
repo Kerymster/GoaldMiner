@@ -31,6 +31,7 @@ export type TeamRow = {
   countryId: string
   leagueId: string
   note?: string
+  logoUrl?: string
 }
 
 export type TeamsFileMeta = {

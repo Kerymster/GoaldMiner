@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getLeagueById } from '../api/leagues'
 import { getTeams } from '../api/teams'
 import { Breadcrumbs } from '../components/Breadcrumbs'
+import { TeamLogo } from '../components/TeamLogo'
 import {
   isApiErr,
   type LeagueMeta,
@@ -177,7 +178,15 @@ export function LeagueDetailPage() {
                 to={`/teams/${team.id}`}
                 className="flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-gold-500/[0.07] dark:hover:bg-fume-800/55"
               >
-                <span className="font-medium">{team.name}</span>
+                <span className="flex min-w-0 flex-1 items-center gap-3">
+                  <TeamLogo
+                    key={`${team.id}-${team.logoUrl ?? ''}`}
+                    name={team.name}
+                    logoUrl={team.logoUrl}
+                    size="sm"
+                  />
+                  <span className="truncate font-medium">{team.name}</span>
+                </span>
                 <span className="text-sm text-gold-700 dark:text-gold-500">
                   View roster →
                 </span>

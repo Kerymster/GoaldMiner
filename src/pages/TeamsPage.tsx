@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getTeams } from '../api/teams'
 import { Breadcrumbs } from '../components/Breadcrumbs'
+import { TeamLogo } from '../components/TeamLogo'
 import {
   isApiErr,
   type PaginatedTeamsResponse,
@@ -147,7 +148,13 @@ export function TeamsPage() {
                   to={`/teams/${team.id}`}
                   className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-gold-500/[0.07] dark:hover:bg-fume-800/55"
                 >
-                  <div className="min-w-0">
+                  <TeamLogo
+                    key={`${team.id}-${team.logoUrl ?? ''}`}
+                    name={team.name}
+                    logoUrl={team.logoUrl}
+                    size="sm"
+                  />
+                  <div className="min-w-0 flex-1">
                     <p className="font-medium">{team.name}</p>
                     <p className="text-sm text-fume-500 dark:text-fume-400">
                       {team.shortName ? `${team.shortName} · ` : null}
