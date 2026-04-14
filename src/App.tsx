@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
-import { ComparePage } from './pages/ComparePage'
+import { ComparePage } from './pages/compare/ComparePage'
 import { LeagueDetailPage } from './pages/LeagueDetailPage'
 import { LeaguesPage } from './pages/LeaguesPage'
 import { PlayerDetailPage } from './pages/PlayerDetailPage'

@@ -1,7 +1,4 @@
-import {
-  Breadcrumbs,
-  type BreadcrumbItem,
-} from '../../components/Breadcrumbs'
+import { Breadcrumbs, type BreadcrumbItem } from './Breadcrumbs'
 
 type PageHeaderProps = {
   breadcrumbItems: BreadcrumbItem[]

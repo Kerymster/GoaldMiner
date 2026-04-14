@@ -1,7 +1,7 @@
 import { useTeamsList } from '../../hooks/useTeamsList'
 import { useAppSelector } from '../../store/hooks'
 import { selectLeaguesItems } from '../../store/selectors/leaguesSelectors'
-import { PageHeader } from './PageHeader'
+import { PageHeader } from '../../components/PageHeader'
 import { TeamListRow } from './TeamListRow'
 import { TeamsFilters } from './TeamsFilters'
 import { TeamsPagination } from './TeamsPagination'

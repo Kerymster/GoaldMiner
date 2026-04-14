@@ -1,0 +1,73 @@
+import { useMemo } from 'react'
+import type { Player } from '../../types/api'
+import { compareTableWrap } from './comparePageStyles'
+
+type CompareStatsTableProps = {
+  playerA: Player
+  playerB: Player
+}
+
+type StatRow = { label: string; a: string; b: string }
+
+export function CompareStatsTable({ playerA, playerB }: CompareStatsTableProps) {
+  const rows: StatRow[] = useMemo(
+    () => [
+      { label: 'Team', a: playerA.team, b: playerB.team },
+      { label: 'Position', a: playerA.position, b: playerB.position },
+      {
+        label: 'Rating',
+        a: String(playerA.rating ?? '—'),
+        b: String(playerB.rating ?? '—'),
+      },
+      {
+        label: 'Underrated',
+        a: String(playerA.underratedScore ?? '—'),
+        b: String(playerB.underratedScore ?? '—'),
+      },
+    ],
+    [playerA, playerB],
+  )
+
+  return (
+    <div className={compareTableWrap}>
+      <table className="w-full text-left text-sm">
+        <thead>
+          <tr className="border-b border-fume-200 bg-fume-50/80 dark:border-fume-800 dark:bg-fume-900">
+            <th className="px-4 py-3 font-medium text-fume-500"></th>
+            <th className="px-4 py-3 font-medium text-fume-900 dark:text-fume-100">
+              {playerA.name}
+            </th>
+            <th className="px-4 py-3 font-medium text-fume-900 dark:text-fume-100">
+              {playerB.name}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-fume-100 dark:divide-fume-800">
+          {rows.map((row) => (
+            <tr key={row.label}>
+              <td className="px-4 py-3 text-fume-500">{row.label}</td>
+              <td className="px-4 py-3 tabular-nums text-fume-800 dark:text-fume-200">
+                {row.label === 'Underrated' ? (
+                  <span className="font-semibold text-gold-700 dark:text-gold-400">
+                    {row.a}
+                  </span>
+                ) : (
+                  row.a
+                )}
+              </td>
+              <td className="px-4 py-3 tabular-nums text-fume-800 dark:text-fume-200">
+                {row.label === 'Underrated' ? (
+                  <span className="font-semibold text-gold-700 dark:text-gold-400">
+                    {row.b}
+                  </span>
+                ) : (
+                  row.b
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
