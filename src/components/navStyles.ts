@@ -1,15 +1,16 @@
+/** Sidebar nav — dark füme rail */
 export const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   [
-    'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+    'rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200',
     isActive
-      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900'
-      : 'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800',
+      ? 'bg-gold-500/18 text-gold-200 shadow-[inset_0_0_0_1px_rgba(212,168,74,0.25)]'
+      : 'text-fume-300 hover:bg-fume-800/90 hover:text-fume-50',
   ].join(' ')
 
 export const navSublinkClass = ({ isActive }: { isActive: boolean }) =>
   [
-    'block rounded-md px-2 py-1.5 text-sm transition-colors',
+    'block rounded-md px-2 py-1.5 text-sm transition-colors duration-200',
     isActive
-      ? 'bg-zinc-200/90 font-medium text-zinc-900 dark:bg-zinc-800 dark:text-white'
-      : 'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800/80',
+      ? 'bg-fume-800 font-medium text-gold-300'
+      : 'text-fume-400 hover:bg-fume-800/70 hover:text-fume-200',
   ].join(' ')

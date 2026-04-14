@@ -6,6 +6,9 @@ import {
   getTeamsByLeagueId,
 } from '../data/catalog'
 
+const listSurface =
+  'divide-y divide-fume-200 rounded-xl border border-fume-200/90 bg-white shadow-sm shadow-fume-950/5 dark:divide-fume-800 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none'
+
 export function LeagueDetailPage() {
   const { leagueId } = useParams<{ leagueId: string }>()
   const league = leagueId ? getLeagueById(leagueId) : undefined
@@ -13,10 +16,10 @@ export function LeagueDetailPage() {
   if (!league) {
     return (
       <div className="space-y-4">
-        <p className="text-zinc-600 dark:text-zinc-400">League not found.</p>
+        <p className="text-fume-600 dark:text-fume-400">League not found.</p>
         <Link
           to="/leagues"
-          className="text-sm font-medium text-emerald-600 underline-offset-4 hover:underline dark:text-emerald-400"
+          className="text-sm font-medium text-gold-700 underline-offset-4 hover:text-gold-600 hover:underline dark:text-gold-400 dark:hover:text-gold-300"
         >
           All leagues
         </Link>
@@ -36,29 +39,31 @@ export function LeagueDetailPage() {
         ]}
       />
       <div>
-        <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+        <p className="text-xs font-medium uppercase tracking-wide text-fume-500">
           {country?.name} · Tier {league.tier}
         </p>
-        <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-fume-950 dark:text-fume-50">
           {league.name}
         </h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-fume-600 dark:text-fume-400">
           Open a team to see its roster and jump to player profiles.
         </p>
       </div>
       <div>
-        <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+        <h3 className="text-sm font-semibold text-fume-900 dark:text-fume-100">
           Teams
         </h3>
-        <ul className="mt-3 divide-y divide-zinc-200 rounded-xl border border-zinc-200 bg-white dark:divide-zinc-800 dark:border-zinc-800 dark:bg-zinc-900/40">
+        <ul className={`mt-3 ${listSurface}`}>
           {teams.map((team) => (
             <li key={team.id}>
               <Link
                 to={`/teams/${team.id}`}
-                className="flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
+                className="flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-gold-500/[0.07] dark:hover:bg-fume-800/55"
               >
                 <span className="font-medium">{team.name}</span>
-                <span className="text-sm text-zinc-500">View roster →</span>
+                <span className="text-sm text-gold-700 dark:text-gold-500">
+                  View roster →
+                </span>
               </Link>
             </li>
           ))}
