@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { ComparePage } from './pages/compare/ComparePage'
-import { LeagueDetailPage } from './pages/LeagueDetailPage'
-import { LeaguesPage } from './pages/LeaguesPage'
+import { LeagueDetailPage } from './pages/leagues/LeagueDetailPage'
+import { AllLeaguesPage } from './pages/all-leagues/AllLeaguesPage'
 import { PlayerDetailPage } from './pages/PlayerDetailPage'
 import { PlayerListPage } from './pages/PlayerListPage'
 import { TeamDetailPage } from './pages/TeamDetailPage'
@@ -16,7 +16,7 @@ export default function App() {
           <Route index element={<Navigate to="/players" replace />} />
           <Route path="players" element={<PlayerListPage />} />
           <Route path="players/:id" element={<PlayerDetailPage />} />
-          <Route path="leagues" element={<LeaguesPage />} />
+          <Route path="leagues" element={<AllLeaguesPage />} />
           <Route path="leagues/:leagueId" element={<LeagueDetailPage />} />
           <Route path="teams" element={<TeamsPage />} />
           <Route path="teams/:teamId" element={<TeamDetailPage />} />
