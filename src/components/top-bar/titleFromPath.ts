@@ -1,0 +1,27 @@
+export function titleFromPath(pathname: string): {
+  title: string
+  subtitle?: string
+} {
+  if (pathname === '/players' || pathname === '/') {
+    return { title: 'Players', subtitle: 'Browse underrated picks' }
+  }
+  if (pathname.startsWith('/players/')) {
+    return { title: 'Player profile', subtitle: 'Stats and notes' }
+  }
+  if (pathname === '/compare') {
+    return { title: 'Compare', subtitle: 'Side-by-side view' }
+  }
+  if (pathname === '/leagues') {
+    return { title: 'Leagues', subtitle: 'Second-tier focus' }
+  }
+  if (pathname.startsWith('/leagues/')) {
+    return { title: 'League', subtitle: 'Teams and context' }
+  }
+  if (pathname === '/teams') {
+    return { title: 'Teams', subtitle: 'By country and league' }
+  }
+  if (pathname.startsWith('/teams/')) {
+    return { title: 'Team', subtitle: 'Roster' }
+  }
+  return { title: 'Overview' }
+}
