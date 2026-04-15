@@ -12,3 +12,11 @@ export const reportSectionTitleClass =
 
 export const reportSubLabelClass =
   'text-[11px] font-medium normal-case tracking-normal text-fume-500 dark:text-fume-500'
+
+/** Append to inputs/textareas when the field failed validation. */
+export const reportFieldErrorClass =
+  'border-red-500 focus:border-red-500 focus:ring-red-500/30 dark:border-red-500 dark:focus:border-red-500'
+
+/** Inline validation + step-level warnings — compact, muted red. */
+export const reportValidationMessageClass =
+  'text-[11px] font-normal leading-snug text-red-500/75 dark:text-red-400/65'

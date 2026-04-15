@@ -2,7 +2,7 @@ import { reportSectionTitleClass } from '../reportFormStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
-export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
+export function StepTechnical({ form, setForm, errors }: ScoutReportStepProps) {
   return (
     <div className="space-y-8">
       <div className="space-y-3">
@@ -10,6 +10,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="First touch"
           value={form.technical.ballControl.firstTouch}
+          error={errors.firstTouch}
           onChange={(firstTouch) =>
             setForm((f) => ({
               ...f,
@@ -24,6 +25,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Quality in tight spaces"
           value={form.technical.ballControl.tightSpaceQuality}
+          error={errors.tightSpaceQuality}
           onChange={(tightSpaceQuality) =>
             setForm((f) => ({
               ...f,
@@ -44,6 +46,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Short / long passing"
           value={form.technical.passing.shortAndLong}
+          error={errors.shortAndLong}
           onChange={(shortAndLong) =>
             setForm((f) => ({
               ...f,
@@ -58,6 +61,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Creativity"
           value={form.technical.passing.creativity}
+          error={errors.creativity}
           onChange={(creativity) =>
             setForm((f) => ({
               ...f,
@@ -75,6 +79,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="1v1 success"
           value={form.technical.dribbling.oneVsOne}
+          error={errors.oneVsOne}
           onChange={(oneVsOne) =>
             setForm((f) => ({
               ...f,
@@ -89,6 +94,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Change of direction with the ball"
           value={form.technical.dribbling.changeOfDirection}
+          error={errors.changeOfDirection}
           onChange={(changeOfDirection) =>
             setForm((f) => ({
               ...f,
@@ -109,6 +115,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Shot quality"
           value={form.technical.finishing.shotQuality}
+          error={errors.shotQuality}
           onChange={(shotQuality) =>
             setForm((f) => ({
               ...f,
@@ -123,6 +130,7 @@ export function StepTechnical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Penalty-area effectiveness"
           value={form.technical.finishing.penaltyAreaEffectiveness}
+          error={errors.penaltyAreaEffectiveness}
           onChange={(penaltyAreaEffectiveness) =>
             setForm((f) => ({
               ...f,

@@ -1,0 +1,124 @@
+import type { ScoutReportForm } from '../../../types/scoutReportForm'
+
+/** Field keys are unique within a single step (used for `errors[key]` under inputs). */
+export type ScoutReportStepErrors = Partial<Record<string, string>>
+
+const REQUIRED = 'required'
+
+function need(errors: ScoutReportStepErrors, key: string, value: string) {
+  if (!value.trim()) errors[key] = REQUIRED
+}
+
+/**
+ * Validates every field shown on the given wizard step. Empty strings fail.
+ * Rating on step 10 must be 1–5 (not “Not set”).
+ */
+export function validateScoutReportStep(
+  step: number,
+  form: ScoutReportForm,
+): ScoutReportStepErrors {
+  const e: ScoutReportStepErrors = {}
+  const p = form.playerInformation
+
+  switch (step) {
+    case 0:
+      need(e, 'reportDate', form.reportDate)
+      need(e, 'name', p.name)
+      need(e, 'ageOrDob', p.ageOrDob)
+      need(e, 'nationality', p.nationality)
+      need(e, 'heightWeight', p.heightWeight)
+      need(e, 'preferredFoot', p.preferredFoot)
+      need(e, 'position', p.position)
+      need(e, 'club', p.club)
+      need(e, 'contractIfKnown', p.contractIfKnown)
+      break
+    case 1:
+      need(e, 'role', form.playingStyle.role)
+      need(e, 'systemFit', form.playingStyle.systemFit)
+      need(e, 'tacticalIntelligence', form.playingStyle.tacticalIntelligence)
+      need(e, 'roleOnPitch', form.playingStyle.roleOnPitch)
+      need(e, 'systemVsIndividual', form.playingStyle.systemVsIndividual)
+      need(e, 'bestFormations', form.playingStyle.bestFormations)
+      break
+    case 2: {
+      const t = form.technical
+      need(e, 'firstTouch', t.ballControl.firstTouch)
+      need(e, 'tightSpaceQuality', t.ballControl.tightSpaceQuality)
+      need(e, 'shortAndLong', t.passing.shortAndLong)
+      need(e, 'creativity', t.passing.creativity)
+      need(e, 'oneVsOne', t.dribbling.oneVsOne)
+      need(e, 'changeOfDirection', t.dribbling.changeOfDirection)
+      need(e, 'shotQuality', t.finishing.shotQuality)
+      need(e, 'penaltyAreaEffectiveness', t.finishing.penaltyAreaEffectiveness)
+      break
+    }
+    case 3: {
+      const t = form.tactical
+      need(e, 'rightPlace', t.positioning.rightPlace)
+      need(e, 'findingSpace', t.positioning.findingSpace)
+      need(e, 'runsWithoutBall', t.offBallMovement.runsWithoutBall)
+      need(e, 'creatingSpace', t.offBallMovement.creatingSpace)
+      need(e, 'pressing', t.defensiveContribution.pressing)
+      need(e, 'trackingBack', t.defensiveContribution.trackingBack)
+      need(e, 'tackleTiming', t.defensiveContribution.tackleTiming)
+      break
+    }
+    case 4:
+      need(e, 'paceAccelerationSprint', form.physical.paceAccelerationSprint)
+      need(e, 'stamina', form.physical.stamina)
+      need(e, 'strength', form.physical.strength)
+      need(e, 'balance', form.physical.balance)
+      break
+    case 5:
+      need(e, 'decisionMaking', form.mental.decisionMaking)
+      need(e, 'gameIntelligence', form.mental.gameIntelligence)
+      need(e, 'discipline', form.mental.discipline)
+      need(e, 'confidence', form.mental.confidence)
+      need(e, 'performanceUnderPressure', form.mental.performanceUnderPressure)
+      break
+    case 6: {
+      const s = form.statisticalSnapshot
+      need(e, 'dataSource', s.dataSource)
+      need(e, 'passPercent', s.perMatch.passPercent)
+      need(e, 'shots', s.perMatch.shots)
+      need(e, 'keyPasses', s.perMatch.keyPasses)
+      need(e, 'ballLosses', s.perMatch.ballLosses)
+      need(e, 'defensiveActions', s.perMatch.defensiveActions)
+      need(e, 'interpretation', s.interpretation)
+      break
+    }
+    case 7:
+      need(e, 'strengths', form.strengthsWeaknesses.strengths)
+      need(e, 'weaknesses', form.strengthsWeaknesses.weaknesses)
+      break
+    case 8:
+      need(e, 'ceiling', form.potential.ceiling)
+      need(e, 'developmentAreas', form.potential.developmentAreas)
+      need(e, 'riskFactors', form.potential.riskFactors)
+      break
+    case 9:
+      need(e, 'playingStyleComparison', form.comparison.playingStyleComparison)
+      need(e, 'levelComparison', form.comparison.levelComparison)
+      break
+    case 10: {
+      const tf = form.teamFit
+      need(e, 'whichTeams', tf.whichTeams)
+      need(e, 'whichSystems', tf.whichSystems)
+      need(e, 'transferRecommendation', tf.transferRecommendation)
+      need(e, 'finalVerdict', tf.finalVerdict)
+      if (tf.ratingOutOfFive == null) e.ratingOutOfFive = REQUIRED
+      break
+    }
+    case 11:
+      need(e, 'executiveNarrative', form.executiveSummary.narrative)
+      break
+    default:
+      break
+  }
+
+  return e
+}
+
+export function hasStepErrors(errors: ScoutReportStepErrors): boolean {
+  return Object.keys(errors).length > 0
+}

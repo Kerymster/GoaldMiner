@@ -1,13 +1,14 @@
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
-export function StepStrengthsWeaknesses({ form, setForm }: ScoutReportStepProps) {
+export function StepStrengthsWeaknesses({ form, setForm, errors }: ScoutReportStepProps) {
   return (
     <div className="space-y-4">
       <ScoutReportField
         label="Strengths"
         hint="Concrete, observable strengths"
         value={form.strengthsWeaknesses.strengths}
+        error={errors.strengths}
         onChange={(strengths) =>
           setForm((f) => ({
             ...f,
@@ -19,6 +20,7 @@ export function StepStrengthsWeaknesses({ form, setForm }: ScoutReportStepProps)
       <ScoutReportField
         label="Weaknesses"
         value={form.strengthsWeaknesses.weaknesses}
+        error={errors.weaknesses}
         onChange={(weaknesses) =>
           setForm((f) => ({
             ...f,

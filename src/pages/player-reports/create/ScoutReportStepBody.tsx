@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { ScoutReportForm } from '../../../types/scoutReportForm'
+import type { ScoutReportStepErrors } from './scoutReportStepValidation'
 import { StepComparison } from './steps/StepComparison'
 import { StepExecutiveSummary } from './steps/StepExecutiveSummary'
 import { StepMental } from './steps/StepMental'
@@ -17,6 +18,7 @@ type ScoutReportStepBodyProps = {
   step: number
   form: ScoutReportForm
   setForm: Dispatch<SetStateAction<ScoutReportForm>>
+  errors: ScoutReportStepErrors
 }
 
 /** `step` indices map 1:1 to `SCOUT_REPORT_STEPS` in `scoutReportForm.ts`. */
@@ -24,8 +26,9 @@ export function ScoutReportStepBody({
   step,
   form,
   setForm,
+  errors,
 }: ScoutReportStepBodyProps) {
-  const p = { form, setForm }
+  const p = { form, setForm, errors }
 
   switch (step) {
     case 0:

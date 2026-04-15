@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, type SetStateAction } from 'react'
 import { createScoutReport } from '../../../api/scoutReports'
 import {
   SCOUT_REPORT_STEPS,
@@ -6,10 +6,17 @@ import {
   type ScoutReportForm,
 } from '../../../types/scoutReportForm'
 import { ProTipsPanel } from './ProTipsPanel'
+import { reportValidationMessageClass } from './reportFormStyles'
 import { ScoutReportStepBody } from './ScoutReportStepBody'
+import {
+  hasStepErrors,
+  validateScoutReportStep,
+  type ScoutReportStepErrors,
+} from './scoutReportStepValidation'
 
 export function CreateReportForm() {
   const [form, setForm] = useState<ScoutReportForm>(createEmptyScoutReportForm)
+  const [stepErrors, setStepErrors] = useState<ScoutReportStepErrors>({})
   const [step, setStep] = useState(0)
   const [saveStatus, setSaveStatus] = useState<
     'idle' | 'saving' | 'success' | 'error'
@@ -19,19 +26,40 @@ export function CreateReportForm() {
   const last = step === SCOUT_REPORT_STEPS.length - 1
   const meta = SCOUT_REPORT_STEPS[step]
 
+  const setFormAndClearStepErrors = useCallback(
+    (u: SetStateAction<ScoutReportForm>) => {
+      setStepErrors({})
+      setForm(u)
+    },
+    [],
+  )
+
   const goBack = useCallback(() => {
+    setStepErrors({})
     setStep((s) => Math.max(0, s - 1))
     setSaveStatus('idle')
     setSaveMessage(null)
   }, [])
 
   const goNext = useCallback(() => {
+    const errs = validateScoutReportStep(step, form)
+    if (hasStepErrors(errs)) {
+      setStepErrors(errs)
+      return
+    }
+    setStepErrors({})
     setStep((s) => Math.min(SCOUT_REPORT_STEPS.length - 1, s + 1))
     setSaveStatus('idle')
     setSaveMessage(null)
-  }, [])
+  }, [step, form])
 
   const handleSave = useCallback(async () => {
+    const errs = validateScoutReportStep(step, form)
+    if (hasStepErrors(errs)) {
+      setStepErrors(errs)
+      return
+    }
+    setStepErrors({})
     setSaveStatus('saving')
     setSaveMessage(null)
     try {
@@ -44,7 +72,7 @@ export function CreateReportForm() {
         e instanceof Error ? e.message : 'Save failed. Check the API and try again.',
       )
     }
-  }, [form])
+  }, [form, step])
 
   const progress = ((step + 1) / SCOUT_REPORT_STEPS.length) * 100
 
@@ -83,9 +111,19 @@ export function CreateReportForm() {
             <p className="mt-1 text-sm text-fume-600 dark:text-fume-400">
               {meta.description}
             </p>
+            {Object.keys(stepErrors).length > 0 ? (
+              <p className={`mt-3 ${reportValidationMessageClass}`} role="alert">
+                Fill every field on this step before continuing.
+              </p>
+            ) : null}
           </div>
 
-          <ScoutReportStepBody step={step} form={form} setForm={setForm} />
+          <ScoutReportStepBody
+            step={step}
+            form={form}
+            setForm={setFormAndClearStepErrors}
+            errors={stepErrors}
+          />
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-fume-100 pt-6 dark:border-fume-800">
             <button
@@ -123,7 +161,7 @@ export function CreateReportForm() {
               className={
                 saveStatus === 'success'
                   ? 'mt-4 text-sm text-emerald-700 dark:text-emerald-400'
-                  : 'mt-4 text-sm text-red-600 dark:text-red-400'
+                  : `mt-4 ${reportValidationMessageClass}`
               }
               role="status"
             >

@@ -2,13 +2,14 @@ import { reportSectionTitleClass } from '../reportFormStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
-export function StepStatistical({ form, setForm }: ScoutReportStepProps) {
+export function StepStatistical({ form, setForm, errors }: ScoutReportStepProps) {
   return (
     <div className="space-y-6">
       <ScoutReportField
         label="Data source"
         hint="e.g. SofaScore, Wyscout, league site"
         value={form.statisticalSnapshot.dataSource}
+        error={errors.dataSource}
         onChange={(dataSource) =>
           setForm((f) => ({
             ...f,
@@ -21,6 +22,7 @@ export function StepStatistical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Pass %"
           value={form.statisticalSnapshot.perMatch.passPercent}
+          error={errors.passPercent}
           onChange={(passPercent) =>
             setForm((f) => ({
               ...f,
@@ -37,6 +39,7 @@ export function StepStatistical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Shots"
           value={form.statisticalSnapshot.perMatch.shots}
+          error={errors.shots}
           onChange={(shots) =>
             setForm((f) => ({
               ...f,
@@ -50,6 +53,7 @@ export function StepStatistical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Key passes"
           value={form.statisticalSnapshot.perMatch.keyPasses}
+          error={errors.keyPasses}
           onChange={(keyPasses) =>
             setForm((f) => ({
               ...f,
@@ -63,6 +67,7 @@ export function StepStatistical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Ball losses"
           value={form.statisticalSnapshot.perMatch.ballLosses}
+          error={errors.ballLosses}
           onChange={(ballLosses) =>
             setForm((f) => ({
               ...f,
@@ -76,6 +81,7 @@ export function StepStatistical({ form, setForm }: ScoutReportStepProps) {
         <ScoutReportField
           label="Defensive actions"
           value={form.statisticalSnapshot.perMatch.defensiveActions}
+          error={errors.defensiveActions}
           onChange={(defensiveActions) =>
             setForm((f) => ({
               ...f,
@@ -94,6 +100,7 @@ export function StepStatistical({ form, setForm }: ScoutReportStepProps) {
         label="Interpretation"
         hint="Explain what the numbers mean in context — not a naked stat dump."
         value={form.statisticalSnapshot.interpretation}
+        error={errors.interpretation}
         onChange={(interpretation) =>
           setForm((f) => ({
             ...f,

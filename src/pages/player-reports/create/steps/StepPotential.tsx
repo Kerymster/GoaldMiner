@@ -1,12 +1,13 @@
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
-export function StepPotential({ form, setForm }: ScoutReportStepProps) {
+export function StepPotential({ form, setForm, errors }: ScoutReportStepProps) {
   return (
     <div className="space-y-4">
       <ScoutReportField
         label="Ceiling"
         value={form.potential.ceiling}
+        error={errors.ceiling}
         onChange={(ceiling) =>
           setForm((f) => ({
             ...f,
@@ -18,6 +19,7 @@ export function StepPotential({ form, setForm }: ScoutReportStepProps) {
       <ScoutReportField
         label="Development areas"
         value={form.potential.developmentAreas}
+        error={errors.developmentAreas}
         onChange={(developmentAreas) =>
           setForm((f) => ({
             ...f,
@@ -29,6 +31,7 @@ export function StepPotential({ form, setForm }: ScoutReportStepProps) {
       <ScoutReportField
         label="Risk factors"
         value={form.potential.riskFactors}
+        error={errors.riskFactors}
         onChange={(riskFactors) =>
           setForm((f) => ({
             ...f,

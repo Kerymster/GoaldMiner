@@ -1,12 +1,13 @@
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
-export function StepPhysical({ form, setForm }: ScoutReportStepProps) {
+export function StepPhysical({ form, setForm, errors }: ScoutReportStepProps) {
   return (
     <div className="space-y-4">
       <ScoutReportField
         label="Pace (acceleration / sprint)"
         value={form.physical.paceAccelerationSprint}
+        error={errors.paceAccelerationSprint}
         onChange={(paceAccelerationSprint) =>
           setForm((f) => ({
             ...f,
@@ -18,6 +19,7 @@ export function StepPhysical({ form, setForm }: ScoutReportStepProps) {
       <ScoutReportField
         label="Stamina"
         value={form.physical.stamina}
+        error={errors.stamina}
         onChange={(stamina) =>
           setForm((f) => ({
             ...f,
@@ -29,6 +31,7 @@ export function StepPhysical({ form, setForm }: ScoutReportStepProps) {
       <ScoutReportField
         label="Strength"
         value={form.physical.strength}
+        error={errors.strength}
         onChange={(strength) =>
           setForm((f) => ({
             ...f,
@@ -40,6 +43,7 @@ export function StepPhysical({ form, setForm }: ScoutReportStepProps) {
       <ScoutReportField
         label="Balance"
         value={form.physical.balance}
+        error={errors.balance}
         onChange={(balance) =>
           setForm((f) => ({
             ...f,

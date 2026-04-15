@@ -1,7 +1,7 @@
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
-export function StepComparison({ form, setForm }: ScoutReportStepProps) {
+export function StepComparison({ form, setForm, errors }: ScoutReportStepProps) {
   return (
     <div className="space-y-4">
       <p className="text-sm text-fume-600 dark:text-fume-400">
@@ -10,6 +10,7 @@ export function StepComparison({ form, setForm }: ScoutReportStepProps) {
       <ScoutReportField
         label="Playing-style comparison"
         value={form.comparison.playingStyleComparison}
+        error={errors.playingStyleComparison}
         onChange={(playingStyleComparison) =>
           setForm((f) => ({
             ...f,
@@ -21,6 +22,7 @@ export function StepComparison({ form, setForm }: ScoutReportStepProps) {
       <ScoutReportField
         label="Level comparison"
         value={form.comparison.levelComparison}
+        error={errors.levelComparison}
         onChange={(levelComparison) =>
           setForm((f) => ({
             ...f,

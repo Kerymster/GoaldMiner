@@ -134,6 +134,8 @@ export type ScoutReportTeamFit = {
 }
 
 export type ScoutReportForm = {
+  /** YYYY-MM-DD — when this report was written. */
+  reportDate: string
   playerInformation: ScoutReportPlayerInformation
   executiveSummary: ScoutReportExecutiveSummary
   playingStyle: ScoutReportPlayingStyle
@@ -158,7 +160,7 @@ export const SCOUT_REPORT_STEPS: readonly ScoutReportStepMeta[] = [
   {
     id: 'player-information',
     title: 'Player information',
-    description: 'Identity, physique, club context.',
+    description: 'Report date, identity, physique, club context.',
   },
   {
     id: 'playing-style',
@@ -218,7 +220,9 @@ export const SCOUT_REPORT_STEPS: readonly ScoutReportStepMeta[] = [
 ] as const
 
 export function createEmptyScoutReportForm(): ScoutReportForm {
+  const today = new Date().toISOString().slice(0, 10)
   return {
+    reportDate: today,
     playerInformation: {
       name: '',
       ageOrDob: '',

@@ -1,7 +1,7 @@
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
-export function StepExecutiveSummary({ form, setForm }: ScoutReportStepProps) {
+export function StepExecutiveSummary({ form, setForm, errors }: ScoutReportStepProps) {
   return (
     <div className="space-y-3">
       <p className="text-sm text-fume-600 dark:text-fume-400">
@@ -14,6 +14,7 @@ export function StepExecutiveSummary({ form, setForm }: ScoutReportStepProps) {
         label="Executive summary"
         hint="Example tone: modern full-back with strong offensive contribution; defensive positioning inconsistent; fits possession sides."
         value={form.executiveSummary.narrative}
+        error={errors.executiveNarrative}
         onChange={(narrative) =>
           setForm((f) => ({
             ...f,
