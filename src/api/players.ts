@@ -1,4 +1,5 @@
 import { fetchJson } from './client'
+import { endpoints } from './endpoints'
 import type {
   PaginatedResponse,
   Player,
@@ -48,10 +49,12 @@ export async function getPlayers(
   query: PlayersQuery,
 ): Promise<PaginatedResponse<Player>> {
   return fetchJson<PaginatedResponse<Player>>(
-    `/api/players${toSearchParams(query)}`,
+    `${endpoints.players}${toSearchParams(query)}`,
   )
 }
 
 export async function getPlayerById(id: string): Promise<Player> {
-  return fetchJson<Player>(`/api/players/${encodeURIComponent(id)}`)
+  return fetchJson<Player>(
+    `${endpoints.players}/${encodeURIComponent(id)}`,
+  )
 }

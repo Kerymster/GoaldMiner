@@ -1,4 +1,5 @@
 import { fetchJson } from './client'
+import { endpoints } from './endpoints'
 import type {
   PaginatedTeamsResponse,
   TeamRow,
@@ -30,10 +31,10 @@ export async function getTeams(
   query: TeamsQuery,
 ): Promise<PaginatedTeamsResponse> {
   return fetchJson<PaginatedTeamsResponse>(
-    `/api/teams${toSearchParams(query)}`,
+    `${endpoints.teams}${toSearchParams(query)}`,
   )
 }
 
 export async function getTeamById(id: string): Promise<TeamRow> {
-  return fetchJson<TeamRow>(`/api/teams/${encodeURIComponent(id)}`)
+  return fetchJson<TeamRow>(`${endpoints.teams}/${encodeURIComponent(id)}`)
 }

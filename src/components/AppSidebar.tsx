@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
+import { IconChevronDown } from './icons'
 import { navLinkClass, navSublinkClass } from './navStyles'
 import { useAppSelector } from '../store/hooks'
 import {
@@ -69,20 +70,7 @@ export function AppSidebar() {
                   <summary className="cursor-pointer list-none rounded-md px-2 py-1.5 text-xs font-semibold text-fume-400 transition-colors marker:hidden hover:bg-fume-800/50 hover:text-fume-200 [&::-webkit-details-marker]:hidden">
                     <span className="flex items-center justify-between gap-2">
                       {countryLabel}
-                      <svg
-                        className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        aria-hidden
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
+                      <IconChevronDown className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180" />
                     </span>
                   </summary>
                   <ul className="mt-1 space-y-0.5 border-l border-gold-600/25 pl-2.5">

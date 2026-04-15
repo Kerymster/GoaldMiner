@@ -1,4 +1,4 @@
-import { IconBell, IconChevronDown } from './TopBarIcons'
+import { IconBell, IconChevronDown } from '../icons'
 
 export type TopBarActionsProps = {
   menuOpen: boolean

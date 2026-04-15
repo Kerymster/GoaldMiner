@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local-only dev notes (see DEVELOPMENT.md)
+DEVELOPMENT.local.md

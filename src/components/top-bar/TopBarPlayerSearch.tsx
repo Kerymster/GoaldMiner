@@ -8,7 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { getPlayers } from '../../api/players'
 import { isApiErr, type Player } from '../../types/api'
-import { IconSearch } from './TopBarIcons'
+import { IconSearch } from '../icons'
 
 type SearchHit = {
   id: string
