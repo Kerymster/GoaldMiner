@@ -53,6 +53,29 @@ export function AppSidebar() {
           All leagues
         </NavLink>
 
+        <div className="mt-1">
+          <details className="group rounded-lg" open>
+            <summary className="cursor-pointer list-none rounded-md px-2 py-1.5 text-xs font-semibold text-fume-400 transition-colors marker:hidden hover:bg-fume-800/50 hover:text-fume-200 [&::-webkit-details-marker]:hidden">
+              <span className="flex items-center justify-between gap-2">
+                Player Reports
+                <IconChevronDown className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180" />
+              </span>
+            </summary>
+            <ul className="mt-1 space-y-0.5 border-l border-gold-600/25 pl-2.5">
+              <li>
+                <NavLink to="/player-reports/create" className={navSublinkClass}>
+                  Create report
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/player-reports" className={navSublinkClass} end>
+                  View reports
+                </NavLink>
+              </li>
+            </ul>
+          </details>
+        </div>
+
         <div className="mt-3 border-t border-fume-800/80 pt-3">
           <p className="px-2 pb-2 text-[10px] font-semibold uppercase tracking-wider text-fume-500">
             By country

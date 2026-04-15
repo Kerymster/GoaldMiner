@@ -23,5 +23,11 @@ export function titleFromPath(pathname: string): {
   if (pathname.startsWith('/teams/')) {
     return { title: 'Team', subtitle: 'Roster' }
   }
+  if (pathname === '/player-reports') {
+    return { title: 'Player Reports', subtitle: 'View saved reports' }
+  }
+  if (pathname === '/player-reports/create') {
+    return { title: 'Create report', subtitle: 'New player report' }
+  }
   return { title: 'Overview' }
 }

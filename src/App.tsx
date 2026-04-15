@@ -7,6 +7,8 @@ import { PlayerDetailPage } from './pages/players/PlayerDetailPage'
 import { AllPlayersPage } from './pages/players/AllPlayersPage'
 import { TeamDetailPage } from './pages/teams/TeamDetailPage'
 import { TeamsPage } from './pages/teams/TeamsPage'
+import { CreateReportPage } from './pages/player-reports/CreateReportPage'
+import { ViewReportsPage } from './pages/player-reports/ViewReportsPage'
 
 export default function App() {
   return (
@@ -21,6 +23,8 @@ export default function App() {
           <Route path="teams" element={<TeamsPage />} />
           <Route path="teams/:teamId" element={<TeamDetailPage />} />
           <Route path="compare" element={<ComparePage />} />
+          <Route path="player-reports" element={<ViewReportsPage />} />
+          <Route path="player-reports/create" element={<CreateReportPage />} />
           <Route path="*" element={<Navigate to="/players" replace />} />
         </Route>
       </Routes>
