@@ -5,6 +5,7 @@ import {
   detailTabButton,
   detailTabButtonActive,
   detailTabButtonIdle,
+  detailTabHint,
   detailTabList,
 } from './detailStyles'
 import { DetailComparisonSection } from './sections/DetailComparisonSection'
@@ -52,7 +53,7 @@ export function ScoutReportDetailBody({ form }: { form: ScoutReportForm }) {
             Full analysis
           </button>
         </div>
-        <p className="mt-2 max-w-2xl text-xs text-fume-500 dark:text-fume-500">
+        <p className={detailTabHint}>
           {tab === 'overview'
             ? 'Identity, narrative, style, pros/cons, and recommendation — the usual one-page read for staff.'
             : 'Technical, tactical, physical, mental, data, potential, and comparisons — for deeper review.'}

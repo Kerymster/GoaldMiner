@@ -2,7 +2,10 @@ import type { ReactNode } from 'react'
 import {
   detailSectionCard,
   detailSectionTitle,
+  detailSectionTitleAccent,
+  detailSectionTitleLabel,
   detailSubTitle,
+  detailSubTitleMark,
   detailRowLabel,
   detailRowValue,
 } from './detailStyles'
@@ -18,14 +21,22 @@ export function DetailSection({
 }) {
   return (
     <section id={id} className={detailSectionCard}>
-      <h2 className={detailSectionTitle}>{title}</h2>
-      <div className="pt-4">{children}</div>
+      <h2 className={detailSectionTitle}>
+        <span className={detailSectionTitleAccent} aria-hidden />
+        <span className={detailSectionTitleLabel}>{title}</span>
+      </h2>
+      <div className="pt-5">{children}</div>
     </section>
   )
 }
 
 export function DetailSubheading({ children }: { children: ReactNode }) {
-  return <h3 className={detailSubTitle}>{children}</h3>
+  return (
+    <h3 className={detailSubTitle}>
+      <span className={detailSubTitleMark} aria-hidden />
+      {children}
+    </h3>
+  )
 }
 
 export function DetailRow({ label, value }: { label: string; value: string }) {

@@ -3,16 +3,29 @@ export const detailPageStack = 'space-y-5 lg:space-y-6'
 export const detailSectionCard =
   'rounded-2xl border border-fume-200/90 bg-white/90 p-5 shadow-sm shadow-fume-950/10 dark:border-fume-800 dark:bg-fume-900/50 dark:shadow-none sm:p-6'
 
+/** Section card main title (h2) — row with gold accent */
 export const detailSectionTitle =
-  'border-b border-fume-100 pb-3 text-xs font-semibold uppercase tracking-[0.12em] text-fume-500 dark:border-fume-800 dark:text-fume-400'
+  'flex items-center gap-3 border-b border-fume-200/80 pb-4 dark:border-fume-800/80'
 
+/** Cap-height bar, centered with the title line (avoid stretching past text) */
+export const detailSectionTitleAccent =
+  'h-6 w-1 shrink-0 rounded-full bg-gradient-to-b from-gold-400 via-gold-500 to-gold-700/55'
+
+/** Distinct from body values: deep gold-brown in light; gold tint in dark without glow */
+export const detailSectionTitleLabel =
+  'min-w-0 flex-1 text-base font-bold leading-snug tracking-tight text-gold-950 dark:text-gold-200'
+
+/** In-card subsection (h3), e.g. “Ball control” */
 export const detailSubTitle =
-  'mt-5 text-[11px] font-semibold uppercase tracking-wider text-fume-400 first:mt-0 dark:text-fume-500'
+  'mt-6 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-700 first:mt-0 dark:text-gold-400'
+
+export const detailSubTitleMark =
+  'h-1 w-6 shrink-0 rounded-full bg-gradient-to-r from-gold-500/80 to-gold-600/25'
 
 export const detailGrid = 'mt-4 grid gap-4 sm:grid-cols-2'
 
 export const detailRowLabel =
-  'text-[11px] font-medium uppercase tracking-wide text-fume-500 dark:text-fume-500'
+  'text-[11px] font-semibold uppercase tracking-[0.06em] text-fume-500 dark:text-fume-400'
 
 export const detailRowValue =
   'mt-1 text-sm leading-relaxed text-fume-900 dark:text-fume-100'
@@ -29,3 +42,7 @@ export const detailTabButtonActive =
 
 export const detailTabButtonIdle =
   'text-fume-600 hover:bg-white/70 dark:text-fume-400 dark:hover:bg-fume-800/70'
+
+/** Helper line under tabs (overview / full analysis) */
+export const detailTabHint =
+  'mt-2 max-w-2xl text-xs leading-relaxed text-fume-600 dark:text-fume-400'
