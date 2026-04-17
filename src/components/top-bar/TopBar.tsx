@@ -10,7 +10,7 @@ export function TopBar() {
   const { title, subtitle } = titleFromPath(pathname)
 
   return (
-    <header className="sticky top-0 z-30 border-b border-fume-200/90 bg-fume-100/85 backdrop-blur-md dark:border-fume-800 dark:bg-fume-950/85">
+    <header className="sticky top-0 z-30 border-b border-fume-200/80 bg-shell/80 backdrop-blur-xl backdrop-saturate-150 dark:border-fume-800 dark:bg-fume-950/88">
       <div className="flex w-full flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:gap-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center justify-between gap-3 sm:flex-1 sm:basis-0 sm:justify-start">
           <div className="min-w-0">

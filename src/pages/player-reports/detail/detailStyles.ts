@@ -1,7 +1,7 @@
 export const detailPageStack = 'space-y-5 lg:space-y-6'
 
 export const detailSectionCard =
-  'rounded-2xl border border-fume-200/90 bg-white/90 p-5 shadow-sm shadow-fume-950/5 dark:border-fume-800 dark:bg-fume-900/50 dark:shadow-none sm:p-6'
+  'rounded-2xl border border-fume-200/90 bg-white/90 p-5 shadow-sm shadow-fume-950/10 dark:border-fume-800 dark:bg-fume-900/50 dark:shadow-none sm:p-6'
 
 export const detailSectionTitle =
   'border-b border-fume-100 pb-3 text-xs font-semibold uppercase tracking-[0.12em] text-fume-500 dark:border-fume-800 dark:text-fume-400'

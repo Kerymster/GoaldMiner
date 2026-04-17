@@ -6,16 +6,16 @@ export function Layout() {
   const { pathname } = useLocation()
 
   return (
-    <div className="min-h-dvh bg-fume-100 font-sans text-fume-900 dark:bg-fume-950 dark:text-fume-100">
+    <div className="min-h-dvh bg-shell font-sans text-fume-900 dark:bg-fume-950 dark:text-fume-100">
       <div className="flex min-h-dvh flex-col md:flex-row">
         <AppSidebar />
         <div className="relative flex min-w-0 flex-1 flex-col">
           <div
-            className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-25"
+            className="pointer-events-none absolute inset-0 opacity-[0.26] dark:opacity-25"
             aria-hidden
             style={{
               background:
-                'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(196, 147, 46, 0.12), transparent 55%)',
+                'radial-gradient(ellipse 85% 55% at 50% -18%, rgba(245, 158, 11, 0.06), transparent 52%), radial-gradient(ellipse 70% 45% at 80% 0%, rgba(20, 184, 166, 0.045), transparent 50%)',
             }}
           />
           <TopBar key={pathname} />

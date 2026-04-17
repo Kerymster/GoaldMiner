@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useMemo, type ReactNode } from 'react'
+import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
 import { IconChevronDown } from './icons'
 import { navLinkClass, navSublinkClass } from './navStyles'
 import { useAppSelector } from '../store/hooks'
@@ -7,6 +7,30 @@ import {
   selectLeaguesItems,
   selectLeaguesStatus,
 } from '../store/selectors/leaguesSelectors'
+
+function SidebarRouteSublink({
+  to,
+  end,
+  children,
+}: {
+  to: string
+  end?: boolean
+  children: ReactNode
+}) {
+  const { pathname } = useLocation()
+  const isActive =
+    matchPath({ path: to, end: end ?? false, caseSensitive: false }, pathname) != null
+
+  return (
+    <Link
+      to={to}
+      className={navSublinkClass({ isActive })}
+      aria-current={isActive ? 'page' : undefined}
+    >
+      {children}
+    </Link>
+  )
+}
 
 export function AppSidebar() {
   const items = useAppSelector(selectLeaguesItems)
@@ -61,16 +85,16 @@ export function AppSidebar() {
                 <IconChevronDown className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180" />
               </span>
             </summary>
-            <ul className="mt-1 space-y-0.5 border-l border-gold-600/25 pl-2.5">
+            <ul className="mt-1 space-y-0.5 border-l border-sea-500/22 pl-2.5">
               <li>
-                <NavLink to="/player-reports/create" className={navSublinkClass}>
+                <SidebarRouteSublink to="/player-reports/create" end>
                   Create report
-                </NavLink>
+                </SidebarRouteSublink>
               </li>
               <li>
-                <NavLink to="/player-reports" className={navSublinkClass} end>
+                <SidebarRouteSublink to="/player-reports" end>
                   View reports
-                </NavLink>
+                </SidebarRouteSublink>
               </li>
             </ul>
           </details>
@@ -96,15 +120,12 @@ export function AppSidebar() {
                       <IconChevronDown className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180" />
                     </span>
                   </summary>
-                  <ul className="mt-1 space-y-0.5 border-l border-gold-600/25 pl-2.5">
+                  <ul className="mt-1 space-y-0.5 border-l border-sea-500/22 pl-2.5">
                     {leagues.map((league) => (
                       <li key={league.leagueId}>
-                        <NavLink
-                          to={`/leagues/${league.leagueId}`}
-                          className={navSublinkClass}
-                        >
+                        <SidebarRouteSublink to={`/leagues/${league.leagueId}`} end>
                           {league.name}
-                        </NavLink>
+                        </SidebarRouteSublink>
                       </li>
                     ))}
                   </ul>

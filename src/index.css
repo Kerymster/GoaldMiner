@@ -3,31 +3,47 @@
 @theme {
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 
-  /* Warm smoke / charcoal (füme) */
-  --color-fume-50: #faf9f7;
-  --color-fume-100: #f0eeeb;
-  --color-fume-200: #ddd9d3;
-  --color-fume-300: #c4beb4;
-  --color-fume-400: #a39a8e;
-  --color-fume-500: #887d72;
-  --color-fume-600: #6e655d;
-  --color-fume-700: #5a534c;
-  --color-fume-800: #4c4640;
-  --color-fume-900: #3f3a36;
-  --color-fume-950: #1f1d1b;
+  /* Slate-style neutrals (mapped as `fume-*` in components) */
+  --color-fume-50: #f8fafc;
+  --color-fume-100: #f1f5f9;
+  --color-fume-200: #e2e8f0;
+  --color-fume-300: #cbd5e1;
+  --color-fume-400: #94a3b8;
+  --color-fume-500: #64748b;
+  --color-fume-600: #475569;
+  --color-fume-700: #334155;
+  --color-fume-800: #1e293b;
+  --color-fume-900: #0f172a;
+  --color-fume-950: #020617;
 
-  /* Antique gold accent */
-  --color-gold-50: #fbf8ef;
-  --color-gold-100: #f5edd4;
-  --color-gold-200: #ead9ac;
-  --color-gold-300: #ddc178;
-  --color-gold-400: #d1a84a;
-  --color-gold-500: #c4932e;
-  --color-gold-600: #a77724;
-  --color-gold-700: #865d1f;
-  --color-gold-800: #6e4b20;
-  --color-gold-900: #5a3f1e;
-  --color-gold-950: #33210d;
+  /* Light-mode page canvas — lifted, cool white (panels stay pure white) */
+  --color-shell: #f6f8fc;
+
+  /* Amber accent (mapped as `gold-*`) */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+  --color-gold-950: #451a03;
+
+  /* Teal secondary accent — wayfinding, success, cool contrast to amber */
+  --color-sea-50: #f0fdfa;
+  --color-sea-100: #ccfbf1;
+  --color-sea-200: #99f6e4;
+  --color-sea-300: #5eead4;
+  --color-sea-400: #2dd4bf;
+  --color-sea-500: #14b8a6;
+  --color-sea-600: #0d9488;
+  --color-sea-700: #0f766e;
+  --color-sea-800: #115e59;
+  --color-sea-900: #134e4a;
+  --color-sea-950: #042f2e;
 }
 
 body {
@@ -37,11 +53,11 @@ body {
 }
 
 ::selection {
-  background-color: color-mix(in oklab, var(--color-gold-400) 35%, transparent);
+  background-color: color-mix(in oklab, var(--color-sea-400) 28%, transparent);
   color: var(--color-fume-950);
 }
 
 .dark ::selection {
-  background-color: color-mix(in oklab, var(--color-gold-500) 40%, transparent);
+  background-color: color-mix(in oklab, var(--color-sea-500) 32%, transparent);
   color: var(--color-fume-50);
 }

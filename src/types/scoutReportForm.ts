@@ -134,7 +134,6 @@ export type ScoutReportTeamFit = {
 }
 
 export type ScoutReportForm = {
-  /** YYYY-MM-DD — when this report was written. */
   reportDate: string
   playerInformation: ScoutReportPlayerInformation
   executiveSummary: ScoutReportExecutiveSummary

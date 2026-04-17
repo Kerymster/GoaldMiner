@@ -13,7 +13,7 @@ export function DetailReportHero({
   const rating = form.teamFit.ratingOutOfFive
 
   return (
-    <div className="rounded-2xl border border-fume-200/90 bg-gradient-to-br from-white to-fume-50/80 p-5 shadow-sm dark:border-fume-800 dark:from-fume-900/80 dark:to-fume-950/50 sm:p-6">
+    <div className="rounded-2xl border border-fume-200/90 bg-gradient-to-br from-white via-white to-shell/40 p-5 shadow-sm shadow-fume-950/10 dark:border-fume-800 dark:from-fume-900/80 dark:to-fume-950/50 dark:shadow-none sm:p-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-600 dark:text-gold-400">

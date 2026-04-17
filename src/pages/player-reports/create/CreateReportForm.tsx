@@ -103,7 +103,7 @@ export function CreateReportForm() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-fume-200/90 bg-white p-5 shadow-sm shadow-fume-950/5 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none sm:p-6">
+        <div className="rounded-xl border border-fume-200/90 bg-white p-5 shadow-sm shadow-fume-950/10 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none sm:p-6">
           <div className="mb-6 border-b border-fume-100 pb-4 dark:border-fume-800">
             <h3 className="text-lg font-semibold tracking-tight text-fume-950 dark:text-fume-50">
               {meta.title}
@@ -160,7 +160,7 @@ export function CreateReportForm() {
             <p
               className={
                 saveStatus === 'success'
-                  ? 'mt-4 text-sm text-emerald-700 dark:text-emerald-400'
+                  ? 'mt-4 text-sm text-sea-700 dark:text-sea-400'
                   : `mt-4 ${reportValidationMessageClass}`
               }
               role="status"
