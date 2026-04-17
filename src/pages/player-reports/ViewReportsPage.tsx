@@ -1,8 +1,10 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { loadScoutReportsForPlayer } from '../../features/scoutReports/scoutReportsSlice'
+import { selectScoutReportsForPlayer } from '../../features/scoutReports/scoutReportsSelectors'
 import { PageHeader } from '../../components/PageHeader'
-import { reportsForPlayerName } from '../../mocks/scoutReportsMock'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { playerListSurface } from '../players/playerListStyles'
+import { ViewReportsListRow } from './ViewReportsListRow'
 import {
   ViewReportsPlayerSearch,
   type ViewReportsSelectedPlayer,
@@ -11,32 +13,23 @@ import {
 const BREADCRUMB = [{ label: 'Player Reports' as const }]
 const TITLE = 'View reports'
 const DESCRIPTION =
-  'Search like the top bar, then pick a player. Demo: two mock reports for Marco Ruiz — use “Demo reports on file” if the roster returns no match. Open a row for the full report.'
-
-function formatListDate(iso: string) {
-  if (!iso) return '—'
-  const d = new Date(`${iso}T12:00:00`)
-  if (Number.isNaN(d.getTime())) return iso
-  return d.toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
-}
-
-function excerpt(text: string, max = 140) {
-  const t = text.trim()
-  if (!t) return '—'
-  return t.length <= max ? t : `${t.slice(0, max)}…`
-}
+  'Search the roster, pick a player, then open a report. Lists are loaded from the API and cached in the app store; each report link includes the player id.'
 
 export function ViewReportsPage() {
+  const dispatch = useAppDispatch()
   const [selectedPlayer, setSelectedPlayer] = useState<ViewReportsSelectedPlayer | null>(null)
 
-  const reports = useMemo(
-    () => (selectedPlayer ? reportsForPlayerName(selectedPlayer.name) : []),
-    [selectedPlayer],
+  const { status, error, items: reports } = useAppSelector((s) =>
+    selectScoutReportsForPlayer(s, selectedPlayer?.id),
   )
+
+  useEffect(() => {
+    if (!selectedPlayer) return
+    void dispatch(loadScoutReportsForPlayer(selectedPlayer.id))
+  }, [dispatch, selectedPlayer])
+
+  const reportsLoading = Boolean(selectedPlayer) && status === 'loading'
+  const reportsError = status === 'failed' ? error : null
 
   return (
     <div className="space-y-6">
@@ -57,52 +50,25 @@ export function ViewReportsPage() {
           <h2 className="text-sm font-semibold text-fume-900 dark:text-fume-100">
             Reports for {selectedPlayer.name}
           </h2>
-          {reports.length === 0 ? (
+          {reportsLoading ? (
+            <p className="text-sm text-fume-600 dark:text-fume-400">Loading reports…</p>
+          ) : reportsError ? (
+            <p className="text-sm text-red-600 dark:text-red-400">{reportsError}</p>
+          ) : reports.length === 0 ? (
             <p className="text-sm text-fume-600 dark:text-fume-400">
-              No mock reports are stored under this exact player name. Try a demo name from the
-              search list (e.g. Marco Ruiz) or pick a player whose name matches your saved mock
-              data.
+              No scout reports were returned for this player.
             </p>
           ) : (
             <ul className={`${playerListSurface} overflow-hidden`}>
-              {reports.map(({ id, form }) => (
-                <li key={id}>
-                  <Link
-                    to={`/player-reports/report/${id}`}
-                    className="flex flex-col gap-2 px-4 py-4 transition-colors hover:bg-fume-50/90 dark:hover:bg-fume-800/50 sm:flex-row sm:items-start sm:justify-between sm:px-5"
-                  >
-                    <div className="min-w-0 space-y-1">
-                      <p className="text-sm font-semibold text-fume-900 dark:text-fume-50">
-                        {formatListDate(form.reportDate)}
-                        <span className="font-normal text-fume-500 dark:text-fume-400">
-                          {' '}
-                          · {form.playerInformation.club || 'Club —'}
-                          {form.teamFit.ratingOutOfFive != null
-                            ? ` · ${form.teamFit.ratingOutOfFive}/5`
-                            : ''}
-                        </span>
-                      </p>
-                      <p className="text-xs text-fume-600 dark:text-fume-300">
-                        {excerpt(form.executiveSummary.narrative)}
-                      </p>
-                    </div>
-                    <span className="flex shrink-0 flex-col items-end gap-1 sm:items-end">
-                      <span className="text-[10px] font-medium uppercase tracking-wide text-fume-400 dark:text-fume-500">
-                        {id}
-                      </span>
-                      <span className="text-xs font-semibold text-gold-700 dark:text-gold-400">
-                        Open →
-                      </span>
-                    </span>
-                  </Link>
-                </li>
+              {reports.map((row) => (
+                <ViewReportsListRow key={row.id} playerId={selectedPlayer.id} row={row} />
               ))}
             </ul>
           )}
         </div>
       ) : (
         <p className="max-w-xl text-sm text-fume-600 dark:text-fume-400">
-          Choose a player from search to see their mock report list here.
+          Choose a player from search to see their report list here.
         </p>
       )}
     </div>

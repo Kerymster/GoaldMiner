@@ -1,10 +1,16 @@
 import { fetchJson } from './client'
 import { endpoints } from './endpoints'
+import type { ScoutReportForm } from '../types/scoutReportForm'
 import type {
   PaginatedResponse,
   Player,
   PlayersSort,
 } from '../types/api'
+
+export type PlayerScoutReportRow = {
+  id: string
+  form: ScoutReportForm
+}
 
 export type PlayersQuery = {
   q?: string
@@ -57,4 +63,23 @@ export async function getPlayerById(id: string): Promise<Player> {
   return fetchJson<Player>(
     `${endpoints.players}/${encodeURIComponent(id)}`,
   )
+}
+
+/** Response from `GET /api/players/:id/scout-reports` — each row exposes the form as `report`. */
+type ApiPlayerScoutReportsResponse = {
+  playerId?: string
+  total?: number
+  items?: Array<{
+    id: string
+    report: ScoutReportForm
+  }>
+}
+
+/** List scout reports for a roster player (`GET /api/players/:id/scout-reports`). */
+export async function getPlayerScoutReports(
+  playerId: string,
+): Promise<PlayerScoutReportRow[]> {
+  const path = `${endpoints.players}/${encodeURIComponent(playerId)}/scout-reports`
+  const body = await fetchJson<ApiPlayerScoutReportsResponse>(path)
+  return (body.items ?? []).map((row) => ({ id: row.id, form: row.report }))
 }

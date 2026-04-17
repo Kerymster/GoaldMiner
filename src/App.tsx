@@ -26,7 +26,11 @@ export default function App() {
           <Route path="compare" element={<ComparePage />} />
           <Route path="player-reports" element={<ViewReportsPage />} />
           <Route path="player-reports/create" element={<CreateReportPage />} />
-          <Route path="player-reports/report/:reportId" element={<ScoutReportDetailPage />} />
+          <Route
+            path="player-reports/players/:playerId/reports/:reportId"
+            element={<ScoutReportDetailPage />}
+          />
+          <Route path="player-reports/report/:reportId" element={<Navigate to="/player-reports" replace />} />
           <Route path="*" element={<Navigate to="/players" replace />} />
         </Route>
       </Routes>

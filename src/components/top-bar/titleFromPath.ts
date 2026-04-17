@@ -29,7 +29,7 @@ export function titleFromPath(pathname: string): {
   if (pathname === '/player-reports/create') {
     return { title: 'Create report', subtitle: 'New player report' }
   }
-  if (pathname.startsWith('/player-reports/report/')) {
+  if (pathname.includes('/player-reports/players/') && pathname.includes('/reports/')) {
     return { title: 'Scout report', subtitle: 'Read-only detail' }
   }
   return { title: 'Overview' }

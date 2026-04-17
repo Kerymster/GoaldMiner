@@ -6,17 +6,14 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { getPlayers } from '../../api/players'
-import { isApiErr, type Player } from '../../types/api'
+import type { Player } from '../../types/api'
 import { IconSearch } from '../../components/icons'
-import { mockReportPlayerNameSuggestions } from '../../mocks/scoutReportsMock'
 
 export type ViewReportsSelectedPlayer = {
   id: string
   name: string
   team: string
   position: string
-  /** Selected from demo name list (no API row). */
-  fromMockName?: boolean
 }
 
 const searchInputClass =
@@ -49,14 +46,6 @@ export function ViewReportsPlayerSearch({
     return () => window.clearTimeout(t)
   }, [query])
 
-  const excludeNames = new Set(apiHits.map((p) => p.name.trim().toLowerCase()))
-  const mockNameHits = mockReportPlayerNameSuggestions(debouncedQuery, excludeNames)
-
-  const rows: ({ kind: 'api'; player: Player } | { kind: 'mock'; name: string })[] = [
-    ...apiHits.map((player) => ({ kind: 'api' as const, player })),
-    ...mockNameHits.map((name) => ({ kind: 'mock' as const, name })),
-  ]
-
   useEffect(() => {
     if (!debouncedQuery) {
       setApiHits([])
@@ -75,11 +64,8 @@ export function ViewReportsPlayerSearch({
           sort: 'name_asc',
         })
         if (!cancelled) setApiHits(r.items)
-      } catch (e) {
-        if (!cancelled) {
-          if (isApiErr(e)) setApiHits([])
-          else setApiHits([])
-        }
+      } catch {
+        if (!cancelled) setApiHits([])
       } finally {
         if (!cancelled) setSearchLoading(false)
       }
@@ -91,35 +77,18 @@ export function ViewReportsPlayerSearch({
 
   useEffect(() => {
     setHighlight(0)
-  }, [debouncedQuery, apiHits.length, mockNameHits.length])
+  }, [debouncedQuery, apiHits.length])
 
-  const displayIndex =
-    rows.length === 0 ? 0 : Math.min(highlight, rows.length - 1)
+  const rows = apiHits
+  const displayIndex = rows.length === 0 ? 0 : Math.min(highlight, rows.length - 1)
 
-  const pickApi = useCallback(
+  const pickPlayer = useCallback(
     (p: Player) => {
       onSelectPlayer({
         id: p.id,
         name: p.name,
         team: p.team,
         position: p.position,
-      })
-      setQuery('')
-      setDebouncedQuery('')
-      setApiHits([])
-      setSearchOpen(false)
-    },
-    [onSelectPlayer],
-  )
-
-  const pickMockName = useCallback(
-    (name: string) => {
-      onSelectPlayer({
-        id: `mock:${name}`,
-        name,
-        team: '',
-        position: '',
-        fromMockName: true,
       })
       setQuery('')
       setDebouncedQuery('')
@@ -142,9 +111,8 @@ export function ViewReportsPlayerSearch({
       setHighlight((i) => (i - 1 + rows.length) % rows.length)
     } else if (e.key === 'Enter') {
       e.preventDefault()
-      const row = rows[displayIndex]
-      if (row?.kind === 'api') pickApi(row.player)
-      else if (row?.kind === 'mock') pickMockName(row.name)
+      const p = rows[displayIndex]
+      if (p) pickPlayer(p)
     } else if (e.key === 'Escape') {
       setSearchOpen(false)
       inputRef.current?.blur()
@@ -153,11 +121,7 @@ export function ViewReportsPlayerSearch({
 
   const showPanel = searchOpen && query.trim().length > 0
   const showEmptyPanel =
-    showPanel &&
-    !searchLoading &&
-    apiHits.length === 0 &&
-    mockNameHits.length === 0 &&
-    debouncedQuery.length > 0
+    showPanel && !searchLoading && apiHits.length === 0 && debouncedQuery.length > 0
 
   return (
     <div className="space-y-3">
@@ -196,16 +160,14 @@ export function ViewReportsPlayerSearch({
             ) : null}
             {showEmptyPanel ? (
               <p className="px-4 py-3 text-sm text-fume-500 dark:text-fume-400">
-                No roster players match. Use demo names below if available.
+                No players match your search.
               </p>
             ) : null}
-            {apiHits.length > 0 || mockNameHits.length > 0 ? (
+            {apiHits.length > 0 ? (
               <>
-                {apiHits.length > 0 ? (
-                  <p className="px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-fume-400">
-                    From roster
-                  </p>
-                ) : null}
+                <p className="px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-fume-400">
+                  From roster
+                </p>
                 {apiHits.map((p, i) => {
                   const idx = i
                   return (
@@ -216,7 +178,7 @@ export function ViewReportsPlayerSearch({
                       aria-selected={idx === displayIndex}
                       onMouseDown={(e) => e.preventDefault()}
                       onMouseEnter={() => setHighlight(idx)}
-                      onClick={() => pickApi(p)}
+                      onClick={() => pickPlayer(p)}
                       className={[
                         'flex w-full cursor-pointer flex-col gap-0.5 px-4 py-2.5 text-left text-sm transition-colors',
                         idx === displayIndex
@@ -238,45 +200,6 @@ export function ViewReportsPlayerSearch({
                     </button>
                   )
                 })}
-                {mockNameHits.length > 0 ? (
-                  <>
-                    <p className="mt-1 border-t border-fume-100 px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-fume-400 dark:border-fume-800">
-                      Demo reports on file
-                    </p>
-                    {mockNameHits.map((name, j) => {
-                      const idx = apiHits.length + j
-                      return (
-                        <button
-                          key={name}
-                          type="button"
-                          role="option"
-                          aria-selected={idx === displayIndex}
-                          onMouseDown={(e) => e.preventDefault()}
-                          onMouseEnter={() => setHighlight(idx)}
-                          onClick={() => pickMockName(name)}
-                          className={[
-                            'flex w-full cursor-pointer flex-col gap-0.5 px-4 py-2.5 text-left text-sm transition-colors',
-                            idx === displayIndex
-                              ? 'bg-gold-500/12 dark:bg-gold-500/15'
-                              : 'hover:bg-fume-100 dark:hover:bg-fume-800/80',
-                          ].join(' ')}
-                        >
-                          <span className="flex items-center gap-2">
-                            <span className="rounded bg-gold-500/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-fume-800 dark:text-gold-200">
-                              Reports
-                            </span>
-                            <span className="font-medium text-fume-900 dark:text-fume-100">
-                              {name}
-                            </span>
-                          </span>
-                          <span className="pl-0.5 text-xs text-fume-500 dark:text-fume-400">
-                            Mock scout data — select to list reports
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </>
-                ) : null}
               </>
             ) : null}
           </div>
@@ -288,15 +211,9 @@ export function ViewReportsPlayerSearch({
           <span className="text-xs text-fume-500 dark:text-fume-400">Selected:</span>
           <span className="inline-flex items-center gap-2 rounded-lg border border-fume-200 bg-fume-50 px-3 py-1.5 text-sm font-medium text-fume-900 dark:border-fume-700 dark:bg-fume-800/60 dark:text-fume-100">
             {selectedPlayer.name}
-            {selectedPlayer.team ? (
-              <span className="font-normal text-fume-500 dark:text-fume-400">
-                · {selectedPlayer.team} · {selectedPlayer.position}
-              </span>
-            ) : selectedPlayer.fromMockName ? (
-              <span className="font-normal text-fume-500 dark:text-fume-400">
-                · demo roster
-              </span>
-            ) : null}
+            <span className="font-normal text-fume-500 dark:text-fume-400">
+              · {selectedPlayer.team} · {selectedPlayer.position}
+            </span>
           </span>
           <button
             type="button"
