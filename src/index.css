@@ -105,3 +105,44 @@ body {
   background-color: color-mix(in oklab, var(--color-sea-500) 32%, transparent);
   color: var(--color-fume-50);
 }
+
+@layer base {
+  /*
+   * Clickable native controls — pointer by default; disabled → not-allowed.
+   * Overrides / exceptions: use Tailwind utilities (e.g. cursor-default on a backdrop).
+   * See DEVELOPMENT.md → Etkileşim ve UX (imleç).
+   */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  input[type='button']:not(:disabled),
+  input[type='submit']:not(:disabled),
+  input[type='reset']:not(:disabled),
+  select:not(:disabled),
+  input[type='date']:not(:disabled),
+  input[type='datetime-local']:not(:disabled),
+  input[type='month']:not(:disabled),
+  input[type='week']:not(:disabled),
+  input[type='time']:not(:disabled),
+  input[type='checkbox']:not(:disabled),
+  input[type='radio']:not(:disabled),
+  input[type='file']:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  input[type='button']:disabled,
+  input[type='submit']:disabled,
+  input[type='reset']:disabled,
+  input[type='date']:disabled,
+  input[type='datetime-local']:disabled,
+  input[type='month']:disabled,
+  input[type='week']:disabled,
+  input[type='time']:disabled,
+  input[type='checkbox']:disabled,
+  input[type='radio']:disabled,
+  input[type='file']:disabled {
+    cursor: not-allowed;
+  }
+}

@@ -7,7 +7,7 @@ import {
   type PlayersSort,
 } from '../types/api'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 10
 
 export function usePlayersList() {
   const [page, setPage] = useState(1)

@@ -53,7 +53,7 @@ Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonl
 
 ### Etkileşim (UI ile ilgili)
 
-- Aşağıdaki **Etkileşim ve UX** bölümündeki imleç ve form kuralları geçerlidir.
+- Aşağıdaki **Etkileşim ve UX (imleç)** bölümündeki kurallar geçerlidir.
 
 ## API katmanı
 
@@ -71,11 +71,14 @@ Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonl
 - **Küçük ve odaklı bileşenler:** Mümkün olduğunca tek sorumluluk; dosya uzadıkça veya okunurluk düştükçe mantıklı sınırlarla alt bileşenlere / alt klasörlere ayrılır (ör. `src/components/top-bar/`). Aşırı parçalamadan kaçının: birlikte anlam taşıyan UI bir arada kalsın.
 - Liste satırları ve kartlar mümkünse `Link` ile yönlendirme kullanır; gereksiz `div` + `onClick` kaçınılır.
 
-## Etkileşim ve UX
+## Etkileşim ve UX (imleç)
 
-- Gerçek `<button>` öğelerinde imleç: `cursor-pointer`; `disabled` durumunda `disabled:cursor-not-allowed` tercih edilir.
-- Tam ekran overlay / arka plan tıklaması gibi “görünmez” kontrollerde `cursor-default` bilinçli kullanılabilir.
-- Form kontrolleri (`select`, vb.) için proje genelinde aynı imleç tutarlılığı isteniyorsa ortak input sınıflarına `cursor-pointer` eklenebilir.
+- **Tıklanabilir kontroller:** Aşağıdaki native öğelerde imleç **`pointer`** olmalı; **`disabled`** iken **`not-allowed`** (istisna: yükleme vb. için bileşende `disabled:cursor-wait` gibi utility ile override).
+  - `button`, `input[type="button" | "submit" | "reset"]`, `select`, tarih/saat seçiciler (`date`, `datetime-local`, `month`, `week`, `time`), `checkbox`, `radio`, `file`, `details` / `summary`.
+  - İleride `role="button"` ile özel widget’lar eklenirse aynı mantık geçerli; mümkünse gerçek `<button>` tercih edilir.
+- **Uygulama kaynağı:** Bu davranış `src/index.css` içindeki **`@layer base`** kurallarıyla merkezi verilir; her bileşende tekrar `cursor-pointer` yazmak gerekmez. Aksini isteyen yerlerde Tailwind utility ile override edilir.
+- **Metin alanları:** `text`, `email`, `number`, `search`, `url`, `textarea` vb. için imleç metin girişine uygun kalmalıdır; bu tiplere `cursor-pointer` eklenmez.
+- **Örtü / backdrop:** Tam ekran overlay veya “görünmez” tıklama alanında bilinçli olarak `cursor-default` kullanılabilir (utility, base kuralından sonra gelir ve baskın gelir).
 
 ## Redux
 
