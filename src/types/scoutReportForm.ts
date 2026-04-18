@@ -3,12 +3,23 @@
  * Serialize with JSON; map field names to backend when the save endpoint exists.
  */
 
+/** Canonical values for `playerInformation.preferredFoot` (POST / UI). */
+export const SCOUT_PREFERRED_FOOT_OPTIONS = [
+  'Left Only',
+  'Left',
+  'Right Only',
+  'Right',
+  'Both',
+] as const
+
 export type ScoutReportPlayerInformation = {
   name: string
   /** Backend field name; UI uses ISO `YYYY-MM-DD` via `<input type="date" />`. */
   ageOrDob: string
   nationality: string
-  heightWeight: string
+  heightCm: number | null
+  weightKg: number | null
+  /** One of `SCOUT_PREFERRED_FOOT_OPTIONS` when set from the create form. */
   preferredFoot: string
   position: string
   club: string
@@ -227,7 +238,8 @@ export function createEmptyScoutReportForm(): ScoutReportForm {
       name: '',
       ageOrDob: '',
       nationality: '',
-      heightWeight: '',
+      heightCm: null,
+      weightKg: null,
       preferredFoot: '',
       position: '',
       club: '',

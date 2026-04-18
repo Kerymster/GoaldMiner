@@ -5,8 +5,37 @@ export type ScoutReportStepErrors = Partial<Record<string, string>>
 
 const REQUIRED = 'required'
 
+export const HEIGHT_CM_MIN = 120
+export const HEIGHT_CM_MAX = 230
+export const WEIGHT_KG_MIN = 35
+export const WEIGHT_KG_MAX = 130
+
+function heightRangeMessage() {
+  return `Use ${HEIGHT_CM_MIN}–${HEIGHT_CM_MAX} cm`
+}
+
+function weightRangeMessage() {
+  return `Use ${WEIGHT_KG_MIN}–${WEIGHT_KG_MAX} kg`
+}
+
 function need(errors: ScoutReportStepErrors, key: string, value: string) {
   if (!value.trim()) errors[key] = REQUIRED
+}
+
+function needHeightCm(errors: ScoutReportStepErrors, n: number | null) {
+  if (n == null || !Number.isFinite(n) || !Number.isInteger(n)) {
+    errors.heightCm = REQUIRED
+    return
+  }
+  if (n < HEIGHT_CM_MIN || n > HEIGHT_CM_MAX) errors.heightCm = heightRangeMessage()
+}
+
+function needWeightKg(errors: ScoutReportStepErrors, n: number | null) {
+  if (n == null || !Number.isFinite(n) || !Number.isInteger(n)) {
+    errors.weightKg = REQUIRED
+    return
+  }
+  if (n < WEIGHT_KG_MIN || n > WEIGHT_KG_MAX) errors.weightKg = weightRangeMessage()
 }
 
 /**
@@ -26,7 +55,8 @@ export function validateScoutReportStep(
       need(e, 'name', p.name)
       need(e, 'ageOrDob', p.ageOrDob)
       need(e, 'nationality', p.nationality)
-      need(e, 'heightWeight', p.heightWeight)
+      needHeightCm(e, p.heightCm)
+      needWeightKg(e, p.weightKg)
       need(e, 'preferredFoot', p.preferredFoot)
       need(e, 'position', p.position)
       need(e, 'club', p.club)

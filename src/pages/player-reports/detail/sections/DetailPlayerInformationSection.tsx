@@ -15,8 +15,15 @@ export function DetailPlayerInformationSection({ form }: { form: ScoutReportForm
           value={formatReportDisplayDate(p.ageOrDob)}
         />
         <DetailRow label="Nationality" value={p.nationality} />
-        <DetailRow label="Height / weight" value={p.heightWeight} />
         <DetailRow label="Preferred foot" value={p.preferredFoot} />
+        <DetailRow
+          label="Height"
+          value={p.heightCm != null ? `${p.heightCm} cm` : '—'}
+        />
+        <DetailRow
+          label="Weight"
+          value={p.weightKg != null ? `${p.weightKg} kg` : '—'}
+        />
         <DetailRow label="Position" value={p.position} />
         <DetailRow label="Club" value={p.club} />
         <DetailRow label="Contract" value={p.contractIfKnown} />

@@ -64,6 +64,11 @@ export function OverlaySelect({
     return o?.label ?? placeholder
   }, [options, value, placeholder])
 
+  const hasSelection = useMemo(
+    () => options.some((o) => o.value === value && !o.disabled),
+    [options, value],
+  )
+
   useEffect(() => {
     if (!open) return
     const onDoc = (e: MouseEvent) => {
@@ -151,7 +156,16 @@ export function OverlaySelect({
         onKeyDown={onTriggerKeyDown}
         className={triggerClass}
       >
-        <span className="min-w-0 truncate">{selectedLabel}</span>
+        <span
+          className={[
+            'min-w-0 truncate',
+            hasSelection
+              ? 'text-fume-900 dark:text-fume-100'
+              : 'text-fume-500 dark:text-fume-400',
+          ].join(' ')}
+        >
+          {selectedLabel}
+        </span>
         <span className="shrink-0 text-fume-400 transition-transform dark:text-fume-500" aria-hidden>
           {open ? '▴' : '▾'}
         </span>
