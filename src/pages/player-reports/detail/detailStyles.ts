@@ -43,4 +43,4 @@ export const detailTabButtonIdle =
 
 /** Helper line under tabs (overview / full analysis) */
 export const detailTabHint =
-  'mt-2 max-w-2xl text-xs leading-relaxed text-fume-600 dark:text-fume-400'
+  'mt-2 max-w-2xl pl-2 text-xs leading-relaxed text-fume-600 sm:pl-3 dark:text-fume-400'

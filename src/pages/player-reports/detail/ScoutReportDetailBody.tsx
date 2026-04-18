@@ -65,7 +65,7 @@ export function ScoutReportDetailBody({ form }: { form: ScoutReportForm }) {
           id="panel-overview"
           role="tabpanel"
           aria-labelledby="tab-overview"
-          className={`${detailPageStack} mx-auto max-w-4xl`}
+          className={detailPageStack}
         >
           <DetailPlayerInformationSection form={form} />
           <DetailExecutiveSection form={form} />
