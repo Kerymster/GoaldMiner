@@ -7,7 +7,6 @@ export function DetailPlayingStyleSection({ form }: { form: ScoutReportForm }) {
   return (
     <DetailSection title="Playing style & role" id="playing-style">
       <div className={detailGrid}>
-        <DetailRow label="Role" value={s.role} />
         <DetailRow label="System fit" value={s.systemFit} />
         <DetailRow label="Tactical intelligence" value={s.tacticalIntelligence} />
         <DetailRow label="Role on the pitch" value={s.roleOnPitch} />

@@ -39,8 +39,6 @@ export type ScoutReportExecutiveSummary = {
 }
 
 export type ScoutReportPlayingStyle = {
-  /** Inverted winger, box-to-box, ball-playing CB, etc. */
-  role: string
   systemFit: string
   tacticalIntelligence: string
   roleOnPitch: string
@@ -183,7 +181,7 @@ export const SCOUT_REPORT_STEPS: readonly ScoutReportStepMeta[] = [
   {
     id: 'playing-style',
     title: 'Playing style & role',
-    description: 'Role, system fit, tactical intelligence.',
+    description: 'System fit, tactical intelligence — position & role from step 1 shown here.',
   },
   {
     id: 'technical',
@@ -257,7 +255,6 @@ export function createEmptyScoutReportForm(): ScoutReportForm {
     },
     executiveSummary: { narrative: '' },
     playingStyle: {
-      role: '',
       systemFit: '',
       tacticalIntelligence: '',
       roleOnPitch: '',

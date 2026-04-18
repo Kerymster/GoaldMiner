@@ -90,7 +90,6 @@ export function validateScoutReportStep(
       need(e, 'club', p.club)
       break
     case 1:
-      need(e, 'role', form.playingStyle.role)
       need(e, 'systemFit', form.playingStyle.systemFit)
       need(e, 'tacticalIntelligence', form.playingStyle.tacticalIntelligence)
       need(e, 'roleOnPitch', form.playingStyle.roleOnPitch)
