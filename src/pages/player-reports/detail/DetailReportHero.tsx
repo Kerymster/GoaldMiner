@@ -41,10 +41,14 @@ export function DetailReportHero({
   const rating = form.teamFit.ratingOutOfFive
   const [copied, setCopied] = useState(false)
 
+  const positionLine = [p.position?.trim(), (p.mostlyUsedRole ?? '').trim()]
+    .filter(Boolean)
+    .join(' · ')
+
   const metaItems = [
     formatReportDisplayDate(form.reportDate),
     club || null,
-    p.position?.trim() || null,
+    positionLine || null,
     p.nationality?.trim() || null,
   ].filter(Boolean) as string[]
 

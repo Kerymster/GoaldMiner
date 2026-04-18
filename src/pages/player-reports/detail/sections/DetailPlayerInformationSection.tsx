@@ -25,6 +25,12 @@ export function DetailPlayerInformationSection({ form }: { form: ScoutReportForm
           value={p.weightKg != null ? `${p.weightKg} kg` : '—'}
         />
         <DetailRow label="Position" value={p.position} />
+        <DetailRow
+          label="Secondary position"
+          value={(p.secondaryPosition ?? '').trim() || '—'}
+        />
+        <DetailRow label="Mostly used role" value={(p.mostlyUsedRole ?? '').trim() || '—'} />
+        <DetailRow label="Other roles" value={(p.otherRoles ?? '').trim() || '—'} />
         <DetailRow label="Club" value={p.club} />
         <DetailRow label="Contract" value={p.contractIfKnown} />
       </div>

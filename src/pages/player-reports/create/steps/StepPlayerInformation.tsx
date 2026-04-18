@@ -1,4 +1,10 @@
+import { useMemo } from 'react'
 import { OverlaySelect } from '../../../../components/OverlaySelect'
+import {
+  POSITION_CODES,
+  getRolesForPosition,
+  resolveMostlyUsedRoleForPosition,
+} from '../../../../data/positionRoles'
 import { SCOUT_PREFERRED_FOOT_OPTIONS } from '../../../../types/scoutReportForm'
 import { FieldError, ScoutReportField } from '../ScoutReportField'
 import { ScoutReportNationalityField } from '../ScoutReportNationalityField'
@@ -20,7 +26,23 @@ const PREFERRED_FOOT_SELECT_OPTIONS = SCOUT_PREFERRED_FOOT_OPTIONS.map((v) => ({
   label: v,
 }))
 
+const POSITION_SELECT_OPTIONS = POSITION_CODES.map((c) => ({
+  value: c,
+  label: c,
+}))
+
+const SECONDARY_POSITION_SELECT_OPTIONS = [
+  { value: '', label: 'None' },
+  ...POSITION_CODES.map((c) => ({ value: c, label: c })),
+]
+
 export function StepPlayerInformation({ form, setForm, errors }: ScoutReportStepProps) {
+  const roleSelectOptions = useMemo(() => {
+    const code = form.playerInformation.position
+    if (!code) return []
+    return getRolesForPosition(code).map((r) => ({ value: r, label: r }))
+  }, [form.playerInformation.position])
+
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <label className={`${reportLabelClass} sm:col-span-2`}>
@@ -167,14 +189,76 @@ export function StepPlayerInformation({ form, setForm, errors }: ScoutReportStep
         />
         <FieldError message={errors.weightKg} />
       </label>
+      <div className="flex flex-col gap-1">
+        <span className={reportLabelClass}>Position</span>
+        <OverlaySelect
+          value={form.playerInformation.position}
+          onChange={(position) =>
+            setForm((f) => {
+              const pi = f.playerInformation
+              return {
+                ...f,
+                playerInformation: {
+                  ...pi,
+                  position,
+                  mostlyUsedRole: resolveMostlyUsedRoleForPosition(position, pi.mostlyUsedRole),
+                },
+              }
+            })
+          }
+          options={POSITION_SELECT_OPTIONS}
+          placeholder="Select position…"
+          aria-invalid={Boolean(errors.position)}
+          triggerClassName={errors.position ? reportFieldErrorClass : ''}
+        />
+        <FieldError message={errors.position} />
+      </div>
+      <label className={reportLabelClass}>
+        Secondary position
+        <OverlaySelect
+          value={form.playerInformation.secondaryPosition ?? ''}
+          onChange={(secondaryPosition) =>
+            setForm((f) => ({
+              ...f,
+              playerInformation: { ...f.playerInformation, secondaryPosition },
+            }))
+          }
+          options={SECONDARY_POSITION_SELECT_OPTIONS}
+          placeholder="None"
+          aria-invalid={Boolean(errors.secondaryPosition)}
+          triggerClassName={errors.secondaryPosition ? reportFieldErrorClass : ''}
+        />
+        <FieldError message={errors.secondaryPosition} />
+      </label>
+      <div className="flex flex-col gap-1">
+        <span className={reportLabelClass}>Mostly used role</span>
+        <OverlaySelect
+          value={form.playerInformation.mostlyUsedRole}
+          onChange={(mostlyUsedRole) =>
+            setForm((f) => ({
+              ...f,
+              playerInformation: { ...f.playerInformation, mostlyUsedRole },
+            }))
+          }
+          options={roleSelectOptions}
+          placeholder={
+            form.playerInformation.position
+              ? 'Select role…'
+              : 'Select position first…'
+          }
+          disabled={!form.playerInformation.position}
+          aria-invalid={Boolean(errors.mostlyUsedRole)}
+          triggerClassName={errors.mostlyUsedRole ? reportFieldErrorClass : ''}
+        />
+        <FieldError message={errors.mostlyUsedRole} />
+      </div>
       <ScoutReportField
-        label="Position"
-        value={form.playerInformation.position}
-        error={errors.position}
-        onChange={(position) =>
+        label="Other roles"
+        value={form.playerInformation.otherRoles ?? ''}
+        onChange={(otherRoles) =>
           setForm((f) => ({
             ...f,
-            playerInformation: { ...f.playerInformation, position },
+            playerInformation: { ...f.playerInformation, otherRoles },
           }))
         }
       />
@@ -192,7 +276,6 @@ export function StepPlayerInformation({ form, setForm, errors }: ScoutReportStep
       <ScoutReportField
         label="Contract (if known)"
         value={form.playerInformation.contractIfKnown}
-        error={errors.contractIfKnown}
         onChange={(contractIfKnown) =>
           setForm((f) => ({
             ...f,

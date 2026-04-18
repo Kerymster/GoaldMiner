@@ -21,7 +21,14 @@ export type ScoutReportPlayerInformation = {
   weightKg: number | null
   /** One of `SCOUT_PREFERRED_FOOT_OPTIONS` when set from the create form. */
   preferredFoot: string
+  /** FM-style code (e.g. GK, ST) — see `FM_POSITION_CODES` in `src/data/fmPositionRoles.ts`. */
   position: string
+  /** Optional second position code; empty string = not set. */
+  secondaryPosition: string
+  /** Role name from `FM_POSITION_ROLES[position]`; required when `position` is set. */
+  mostlyUsedRole: string
+  /** Free-text other roles (not validated against FM lists). */
+  otherRoles: string
   club: string
   contractIfKnown: string
 }
@@ -242,6 +249,9 @@ export function createEmptyScoutReportForm(): ScoutReportForm {
       weightKg: null,
       preferredFoot: '',
       position: '',
+      secondaryPosition: '',
+      mostlyUsedRole: '',
+      otherRoles: '',
       club: '',
       contractIfKnown: '',
     },

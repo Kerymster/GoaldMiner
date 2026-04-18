@@ -4,9 +4,7 @@ type PageHeaderProps = {
   breadcrumbItems: BreadcrumbItem[]
   title: string
   description: string
-  /** Small label above title (e.g. country · tier) */
   eyebrow?: string
-  /** Optional line between title and description (e.g. local name) */
   metaLine?: string
 }
 

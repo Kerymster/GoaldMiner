@@ -1,3 +1,7 @@
+import {
+  getRolesForPosition,
+  isPositionCode,
+} from '../../../data/positionRoles'
 import type { ScoutReportForm } from '../../../types/scoutReportForm'
 
 /** Field keys are unique within a single step (used for `errors[key]` under inputs). */
@@ -30,8 +34,10 @@ function needHeightCm(errors: ScoutReportStepErrors, n: number | null) {
   if (n < HEIGHT_CM_MIN || n > HEIGHT_CM_MAX) errors.heightCm = heightRangeMessage()
 }
 
-function needWeightKg(errors: ScoutReportStepErrors, n: number | null) {
-  if (n == null || !Number.isFinite(n) || !Number.isInteger(n)) {
+/** Optional: empty is OK; when set, must be an integer in range. */
+function validateWeightKgOptional(errors: ScoutReportStepErrors, n: number | null) {
+  if (n == null) return
+  if (!Number.isFinite(n) || !Number.isInteger(n)) {
     errors.weightKg = REQUIRED
     return
   }
@@ -56,11 +62,32 @@ export function validateScoutReportStep(
       need(e, 'ageOrDob', p.ageOrDob)
       need(e, 'nationality', p.nationality)
       needHeightCm(e, p.heightCm)
-      needWeightKg(e, p.weightKg)
+      validateWeightKgOptional(e, p.weightKg)
       need(e, 'preferredFoot', p.preferredFoot)
       need(e, 'position', p.position)
+      {
+        const pos = p.position.trim()
+        if (pos) {
+          if (!isPositionCode(pos)) {
+            e.position = 'Select a valid position'
+          } else {
+            need(e, 'mostlyUsedRole', p.mostlyUsedRole)
+            const allowed = getRolesForPosition(pos)
+            if (
+              p.mostlyUsedRole.trim() &&
+              allowed.length > 0 &&
+              !allowed.includes(p.mostlyUsedRole.trim())
+            ) {
+              e.mostlyUsedRole = 'Pick a role for this position'
+            }
+          }
+        }
+      }
+      {
+        const sec = p.secondaryPosition.trim()
+        if (sec && !isPositionCode(sec)) e.secondaryPosition = 'Select a valid position or None'
+      }
       need(e, 'club', p.club)
-      need(e, 'contractIfKnown', p.contractIfKnown)
       break
     case 1:
       need(e, 'role', form.playingStyle.role)
