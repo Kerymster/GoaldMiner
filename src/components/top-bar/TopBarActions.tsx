@@ -1,3 +1,4 @@
+import { overlayMenuPanelClass } from '../overlayDropdownStyles'
 import { IconBell, IconChevronDown } from '../icons'
 
 export type TopBarActionsProps = {
@@ -39,10 +40,7 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
               className="fixed inset-0 z-40 cursor-default bg-transparent"
               onClick={() => setMenuOpen(false)}
             />
-            <div
-              role="menu"
-              className="absolute right-0 z-50 mt-2 w-52 rounded-xl border border-surface-inset-border bg-surface-inset py-1 shadow-lg shadow-fume-950/10"
-            >
+            <div role="menu" className={overlayMenuPanelClass}>
               <button
                 type="button"
                 role="menuitem"

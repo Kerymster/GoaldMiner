@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { getPlayers } from '../../api/players'
 import type { Player } from '../../types/api'
+import { overlayAutocompletePanelClass } from '../../components/overlayDropdownStyles'
 import { IconSearch } from '../../components/icons'
 import { useDebouncedSearchQuery } from '../../hooks/useDebouncedSearchQuery'
 import { playerMatchesNameOrTeam } from '../../utils/playerNameTeamSearch'
@@ -21,8 +22,7 @@ export type ViewReportsSelectedPlayer = {
 const searchInputClass =
   'w-full rounded-lg border border-surface-field-border bg-surface-field py-2 pl-9 pr-3 text-sm text-fume-900 shadow-sm placeholder:text-fume-400 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:text-fume-100 dark:placeholder:text-fume-500'
 
-const panelClass =
-  'absolute left-0 right-0 top-[calc(100%+6px)] z-40 max-h-80 overflow-auto rounded-xl border border-surface-panel-border bg-surface-panel py-1 shadow-lg shadow-fume-950/15'
+const panelClass = `${overlayAutocompletePanelClass} py-1`
 
 type ViewReportsPlayerSearchProps = {
   selectedPlayer: ViewReportsSelectedPlayer | null

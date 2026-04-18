@@ -7,4 +7,5 @@ export const endpoints = {
   leagues: '/api/leagues',
   /** POST body: `ScoutReportForm` JSON — wire when backend exists */
   scoutReports: '/api/scout-reports',
+  nationalities: '/api/nationalities',
 } as const

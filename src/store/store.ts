@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { compareReducer } from '../features/compare/compareSlice'
 import { leaguesReducer } from '../features/leagues/leaguesSlice'
+import { nationalitiesReducer } from '../features/nationalities/nationalitiesSlice'
 import { scoutReportsReducer } from '../features/scoutReports/scoutReportsSlice'
 
 const rootReducer = combineReducers({
   leagues: leaguesReducer,
   compare: compareReducer,
   scoutReports: scoutReportsReducer,
+  nationalities: nationalitiesReducer,
 })
 
 export const store = configureStore({

@@ -1,9 +1,6 @@
+import { OverlaySelect } from '../../../../components/OverlaySelect'
 import { FieldError, ScoutReportField } from '../ScoutReportField'
-import {
-  reportFieldClass,
-  reportFieldErrorClass,
-  reportLabelClass,
-} from '../reportFormStyles'
+import { reportFieldErrorClass, reportLabelClass } from '../reportFormStyles'
 import type { ScoutReportStepProps } from './stepProps'
 
 export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
@@ -59,10 +56,11 @@ export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
       />
       <label className={reportLabelClass}>
         Overall rating (1–5)
-        <select
-          value={form.teamFit.ratingOutOfFive ?? ''}
-          onChange={(e) => {
-            const v = e.target.value
+        <OverlaySelect
+          value={
+            form.teamFit.ratingOutOfFive == null ? '' : String(form.teamFit.ratingOutOfFive)
+          }
+          onChange={(v) =>
             setForm((f) => ({
               ...f,
               teamFit: {
@@ -70,17 +68,19 @@ export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
                 ratingOutOfFive: v === '' ? null : Number(v),
               },
             }))
-          }}
+          }
+          options={[
+            { value: '', label: 'Not set' },
+            { value: '1', label: '1' },
+            { value: '2', label: '2' },
+            { value: '3', label: '3' },
+            { value: '4', label: '4' },
+            { value: '5', label: '5' },
+          ]}
+          placeholder="Not set"
           aria-invalid={Boolean(errors.ratingOutOfFive)}
-          className={`${reportFieldClass} ${errors.ratingOutOfFive ? reportFieldErrorClass : ''}`}
-        >
-          <option value="">Not set</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
+          triggerClassName={errors.ratingOutOfFive ? reportFieldErrorClass : ''}
+        />
         <FieldError message={errors.ratingOutOfFive} />
       </label>
     </div>

@@ -1,5 +1,6 @@
+import { useMemo } from 'react'
+import { OverlaySelect } from '../../components/OverlaySelect'
 import type { Player } from '../../types/api'
-import { compareSelectClass } from './comparePageStyles'
 
 type ComparePlayerSelectorsProps = {
   pool: Player[]
@@ -16,40 +17,50 @@ export function ComparePlayerSelectors({
   onPlayerAChange,
   onPlayerBChange,
 }: ComparePlayerSelectorsProps) {
+  const optionsA = useMemo(
+    () =>
+      pool.map((p) => ({
+        value: p.id,
+        label: p.name,
+        disabled: p.id === playerBId,
+      })),
+    [pool, playerBId],
+  )
+
+  const optionsB = useMemo(
+    () =>
+      pool.map((p) => ({
+        value: p.id,
+        label: p.name,
+        disabled: p.id === playerAId,
+      })),
+    [pool, playerAId],
+  )
+
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <label className="block space-y-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-fume-500">
+      <div className="block space-y-2">
+        <span className="text-xs font-medium uppercase tracking-wide text-fume-500 dark:text-fume-400">
           Player A
         </span>
-        <select
+        <OverlaySelect
           value={playerAId}
-          onChange={(e) => onPlayerAChange(e.target.value)}
-          className={compareSelectClass}
-        >
-          {pool.map((p) => (
-            <option key={p.id} value={p.id} disabled={p.id === playerBId}>
-              {p.name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label className="block space-y-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-fume-500">
+          onChange={onPlayerAChange}
+          options={optionsA}
+          placeholder="Select player"
+        />
+      </div>
+      <div className="block space-y-2">
+        <span className="text-xs font-medium uppercase tracking-wide text-fume-500 dark:text-fume-400">
           Player B
         </span>
-        <select
+        <OverlaySelect
           value={playerBId}
-          onChange={(e) => onPlayerBChange(e.target.value)}
-          className={compareSelectClass}
-        >
-          {pool.map((p) => (
-            <option key={p.id} value={p.id} disabled={p.id === playerAId}>
-              {p.name}
-            </option>
-          ))}
-        </select>
-      </label>
+          onChange={onPlayerBChange}
+          options={optionsB}
+          placeholder="Select player"
+        />
+      </div>
     </div>
   )
 }

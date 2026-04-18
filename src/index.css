@@ -186,3 +186,19 @@ body {
     cursor: not-allowed;
   }
 }
+
+@layer utilities {
+  /*
+   * Hide the OS scrollbar on scrollable overlays; wheel / trackpad / touch still scroll.
+   * Pair with overflow-auto or overflow-y-auto.
+   */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}

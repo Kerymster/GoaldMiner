@@ -1,6 +1,8 @@
 import { useMemo } from 'react'
 import type { Player } from '../../types/api'
-import { compareTableWrap } from './comparePageStyles'
+
+const compareTableWrap =
+  'overflow-hidden rounded-xl border border-surface-panel-border bg-surface-panel shadow-sm shadow-fume-950/10 dark:shadow-none'
 
 type CompareStatsTableProps = {
   playerA: Player

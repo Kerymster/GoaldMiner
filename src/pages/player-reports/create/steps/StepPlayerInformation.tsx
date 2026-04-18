@@ -1,4 +1,5 @@
 import { FieldError, ScoutReportField } from '../ScoutReportField'
+import { ScoutReportNationalityField } from '../ScoutReportNationalityField'
 import {
   reportFieldClass,
   reportFieldErrorClass,
@@ -58,8 +59,7 @@ export function StepPlayerInformation({ form, setForm, errors }: ScoutReportStep
         />
         <FieldError message={errors.ageOrDob} />
       </label>
-      <ScoutReportField
-        label="Nationality"
+      <ScoutReportNationalityField
         value={form.playerInformation.nationality}
         error={errors.nationality}
         onChange={(nationality) =>
