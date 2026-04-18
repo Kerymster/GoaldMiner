@@ -44,6 +44,49 @@
   --color-sea-800: #115e59;
   --color-sea-900: #134e4a;
   --color-sea-950: #042f2e;
+
+  /*
+   * Semantic surfaces (light + dark values on :root / .dark).
+   * Use bg-surface-panel, border-surface-panel-border, etc. for content cards & lists.
+   */
+  --color-surface-panel: var(--surface-panel);
+  --color-surface-panel-border: var(--surface-panel-border);
+  --color-surface-panel-hover: var(--surface-panel-hover);
+  --color-surface-inset: var(--surface-inset);
+  --color-surface-inset-border: var(--surface-inset-border);
+  --color-surface-field: var(--surface-field);
+  --color-surface-field-border: var(--surface-field-border);
+  --color-surface-divider: var(--surface-divider);
+  --color-surface-list-divider: var(--surface-list-divider);
+}
+
+:root {
+  --surface-panel: #ffffff;
+  --surface-panel-border: rgb(226 232 240 / 0.9);
+  --surface-panel-hover: rgb(248 250 252);
+  --surface-inset: rgb(241 245 249 / 0.65);
+  --surface-inset-border: rgb(226 232 240 / 0.9);
+  --surface-field: #ffffff;
+  --surface-field-border: rgb(226 232 240);
+  --surface-divider: rgb(241 245 249);
+  --surface-list-divider: rgb(241 245 249);
+}
+
+/* Matches Tailwind default dark mode (prefers-color-scheme). If you switch to class-based dark on <html>, mirror these vars under a `.dark` rule. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Lifted panels vs page (fume-950) — tweak these to retune all content surfaces */
+    --surface-panel: rgb(30 41 59);
+    --surface-panel-border: rgb(71 85 105 / 0.55);
+    --surface-panel-hover: rgb(15 23 42);
+    /* Recessed chrome (tabs, popovers) — one step darker than panel */
+    --surface-inset: rgb(15 23 42);
+    --surface-inset-border: rgb(51 65 85 / 0.55);
+    --surface-field: rgb(15 23 42);
+    --surface-field-border: rgb(51 65 85);
+    --surface-divider: rgb(51 65 85 / 0.6);
+    --surface-list-divider: rgb(51 65 85);
+  }
 }
 
 body {

@@ -5,7 +5,6 @@ import {
   detailSectionTitleAccent,
   detailSectionTitleLabel,
   detailSubTitle,
-  detailSubTitleMark,
   detailRowLabel,
   detailRowValue,
 } from './detailStyles'
@@ -31,12 +30,7 @@ export function DetailSection({
 }
 
 export function DetailSubheading({ children }: { children: ReactNode }) {
-  return (
-    <h3 className={detailSubTitle}>
-      <span className={detailSubTitleMark} aria-hidden />
-      {children}
-    </h3>
-  )
+  return <h3 className={detailSubTitle}>{children}</h3>
 }
 
 export function DetailRow({ label, value }: { label: string; value: string }) {

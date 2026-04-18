@@ -1,11 +1,12 @@
 export const detailPageStack = 'space-y-5 lg:space-y-6'
 
+/** Uses theme surface tokens — see index.css (--surface-panel) */
 export const detailSectionCard =
-  'rounded-2xl border border-fume-200/90 bg-white/90 p-5 shadow-sm shadow-fume-950/10 dark:border-fume-800 dark:bg-fume-900/50 dark:shadow-none sm:p-6'
+  'rounded-2xl border border-surface-panel-border bg-surface-panel p-5 shadow-sm shadow-fume-950/10 dark:shadow-none sm:p-6'
 
 /** Section card main title (h2) — row with gold accent */
 export const detailSectionTitle =
-  'flex items-center gap-3 border-b border-fume-200/80 pb-4 dark:border-fume-800/80'
+  'flex items-center gap-3 border-b border-surface-divider pb-4'
 
 /** Cap-height bar, centered with the title line (avoid stretching past text) */
 export const detailSectionTitleAccent =
@@ -17,10 +18,7 @@ export const detailSectionTitleLabel =
 
 /** In-card subsection (h3), e.g. “Ball control” */
 export const detailSubTitle =
-  'mt-6 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-700 first:mt-0 dark:text-gold-400'
-
-export const detailSubTitleMark =
-  'h-1 w-6 shrink-0 rounded-full bg-gradient-to-r from-gold-500/80 to-gold-600/25'
+  'mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-gold-700 first:mt-0 dark:text-gold-400'
 
 export const detailGrid = 'mt-4 grid gap-4 sm:grid-cols-2'
 
@@ -32,16 +30,16 @@ export const detailRowValue =
 
 /** Segmented control — two “pages” without leaving the route */
 export const detailTabList =
-  'flex flex-wrap gap-1 rounded-xl border border-fume-200/90 bg-fume-100/60 p-1 dark:border-fume-800 dark:bg-fume-950/60'
+  'flex flex-wrap gap-1 rounded-xl border border-surface-inset-border bg-surface-inset p-1'
 
 export const detailTabButton =
   'cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/40'
 
 export const detailTabButtonActive =
-  'bg-white text-fume-950 shadow-sm dark:bg-fume-800 dark:text-fume-50'
+  'bg-white text-fume-950 shadow-sm dark:bg-surface-panel dark:text-fume-50'
 
 export const detailTabButtonIdle =
-  'text-fume-600 hover:bg-white/70 dark:text-fume-400 dark:hover:bg-fume-800/70'
+  'text-fume-600 hover:bg-white/70 dark:text-fume-400 dark:hover:bg-surface-panel/70'
 
 /** Helper line under tabs (overview / full analysis) */
 export const detailTabHint =

@@ -39,7 +39,7 @@ export function TeamLogo({
     <img
       src={logoUrl}
       alt=""
-      className={`shrink-0 rounded-xl border border-fume-200/90 bg-white object-contain p-1 dark:border-fume-700 dark:bg-fume-900 ${dim} ${className}`}
+      className={`shrink-0 rounded-xl border border-surface-field-border bg-white object-contain p-1 dark:bg-surface-field ${dim} ${className}`}
       loading="lazy"
       decoding="async"
       onError={() => setImgFailed(true)}

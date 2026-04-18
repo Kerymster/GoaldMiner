@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import type { PlayerScoutReportRow } from '../../api/players'
 
 const linkClass =
-  'flex flex-col gap-2 px-4 py-4 transition-colors hover:bg-fume-50/90 dark:hover:bg-fume-800/50 sm:flex-row sm:items-start sm:justify-between sm:px-5'
+  'flex flex-col gap-2 px-4 py-4 transition-colors hover:bg-fume-50/90 dark:hover:bg-surface-panel-hover/45 sm:flex-row sm:items-start sm:justify-between sm:px-5'
 
 function formatListDate(iso: string) {
   if (!iso) return '—'

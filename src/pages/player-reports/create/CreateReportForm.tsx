@@ -103,8 +103,8 @@ export function CreateReportForm() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-fume-200/90 bg-white p-5 shadow-sm shadow-fume-950/10 dark:border-fume-800 dark:bg-fume-900/45 dark:shadow-none sm:p-6">
-          <div className="mb-6 border-b border-fume-100 pb-4 dark:border-fume-800">
+        <div className="rounded-xl border border-surface-panel-border bg-surface-panel p-5 shadow-sm shadow-fume-950/10 dark:shadow-none sm:p-6">
+          <div className="mb-6 border-b border-surface-divider pb-4">
             <h3 className="text-lg font-semibold tracking-tight text-fume-950 dark:text-fume-50">
               {meta.title}
             </h3>
@@ -125,12 +125,12 @@ export function CreateReportForm() {
             errors={stepErrors}
           />
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-fume-100 pt-6 dark:border-fume-800">
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-surface-divider pt-6">
             <button
               type="button"
               onClick={goBack}
               disabled={step === 0}
-              className="cursor-pointer rounded-lg border border-fume-200 px-4 py-2 text-sm font-medium text-fume-800 transition-colors hover:bg-fume-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-fume-600 dark:text-fume-200 dark:hover:bg-fume-800/50"
+              className="cursor-pointer rounded-lg border border-fume-200 px-4 py-2 text-sm font-medium text-fume-800 transition-colors hover:bg-fume-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-fume-600 dark:text-fume-200 dark:hover:bg-surface-panel-hover/50"
             >
               Back
             </button>

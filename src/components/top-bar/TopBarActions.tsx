@@ -41,12 +41,12 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
             />
             <div
               role="menu"
-              className="absolute right-0 z-50 mt-2 w-52 rounded-xl border border-fume-200/90 bg-white py-1 shadow-lg shadow-fume-950/10 dark:border-fume-700 dark:bg-fume-900"
+              className="absolute right-0 z-50 mt-2 w-52 rounded-xl border border-surface-inset-border bg-surface-inset py-1 shadow-lg shadow-fume-950/10"
             >
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-fume-800"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-surface-panel"
                 onClick={() => setMenuOpen(false)}
               >
                 Profile
@@ -54,12 +54,12 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-fume-800"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-surface-panel"
                 onClick={() => setMenuOpen(false)}
               >
                 Settings
               </button>
-              <div className="my-1 h-px bg-fume-200 dark:bg-fume-700" />
+              <div className="my-1 h-px bg-surface-divider" />
               <button
                 type="button"
                 role="menuitem"

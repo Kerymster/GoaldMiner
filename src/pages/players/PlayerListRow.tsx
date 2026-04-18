@@ -11,7 +11,7 @@ export function PlayerListRow({ player, leagueLabel }: PlayerListRowProps) {
     <li>
       <Link
         to={`/players/${player.id}`}
-        className="flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-gold-500/[0.07] dark:hover:bg-fume-800/55"
+        className="flex items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-gold-500/[0.07] dark:hover:bg-surface-panel-hover/55"
       >
         <div className="min-w-0">
           <p className="truncate font-medium">{player.name}</p>

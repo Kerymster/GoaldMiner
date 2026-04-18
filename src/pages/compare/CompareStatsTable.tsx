@@ -32,7 +32,7 @@ export function CompareStatsTable({ playerA, playerB }: CompareStatsTableProps) 
     <div className={compareTableWrap}>
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="border-b border-fume-200 bg-fume-50/80 dark:border-fume-800 dark:bg-fume-900">
+          <tr className="border-b border-surface-list-divider bg-fume-50/80 dark:bg-surface-panel-hover">
             <th className="px-4 py-3 font-medium text-fume-500"></th>
             <th className="px-4 py-3 font-medium text-fume-900 dark:text-fume-100">
               {playerA.name}
@@ -42,7 +42,7 @@ export function CompareStatsTable({ playerA, playerB }: CompareStatsTableProps) 
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-fume-100 dark:divide-fume-800">
+        <tbody className="divide-y divide-surface-list-divider">
           {rows.map((row) => (
             <tr key={row.label}>
               <td className="px-4 py-3 text-fume-500">{row.label}</td>

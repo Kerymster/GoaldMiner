@@ -11,7 +11,7 @@ export function TeamListRow({ team }: TeamListRowProps) {
     <li>
       <Link
         to={`/teams/${team.id}`}
-        className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-gold-500/[0.07] dark:hover:bg-fume-800/55"
+        className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 transition-colors hover:bg-gold-500/[0.07] dark:hover:bg-surface-panel-hover/55"
       >
         <TeamLogo
           key={`${team.id}-${team.logoUrl ?? ''}`}

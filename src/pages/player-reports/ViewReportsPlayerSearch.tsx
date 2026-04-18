@@ -19,10 +19,10 @@ export type ViewReportsSelectedPlayer = {
 }
 
 const searchInputClass =
-  'w-full rounded-lg border border-fume-200/90 bg-white/90 py-2 pl-9 pr-3 text-sm text-fume-900 shadow-sm placeholder:text-fume-400 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:border-fume-700 dark:bg-fume-900/70 dark:text-fume-100 dark:placeholder:text-fume-500'
+  'w-full rounded-lg border border-surface-field-border bg-surface-field py-2 pl-9 pr-3 text-sm text-fume-900 shadow-sm placeholder:text-fume-400 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:text-fume-100 dark:placeholder:text-fume-500'
 
 const panelClass =
-  'absolute left-0 right-0 top-[calc(100%+6px)] z-40 max-h-80 overflow-auto rounded-xl border border-fume-200/90 bg-white py-1 shadow-lg shadow-fume-950/15 dark:border-fume-700 dark:bg-fume-900'
+  'absolute left-0 right-0 top-[calc(100%+6px)] z-40 max-h-80 overflow-auto rounded-xl border border-surface-panel-border bg-surface-panel py-1 shadow-lg shadow-fume-950/15'
 
 type ViewReportsPlayerSearchProps = {
   selectedPlayer: ViewReportsSelectedPlayer | null
@@ -152,7 +152,7 @@ export function ViewReportsPlayerSearch({
         {showPanel ? (
           <div id="view-reports-search-results" role="listbox" className={panelClass}>
             {searchLoading ? (
-              <p className="border-b border-fume-100 px-4 py-2 text-sm text-fume-500 dark:border-fume-800 dark:text-fume-400">
+              <p className="border-b border-surface-divider px-4 py-2 text-sm text-fume-500 dark:text-fume-400">
                 Searching roster…
               </p>
             ) : null}
@@ -181,7 +181,7 @@ export function ViewReportsPlayerSearch({
                         'flex w-full cursor-pointer flex-col gap-0.5 px-4 py-2.5 text-left text-sm transition-colors',
                         idx === displayIndex
                           ? 'bg-gold-500/12 dark:bg-gold-500/15'
-                          : 'hover:bg-fume-100 dark:hover:bg-fume-800/80',
+                          : 'hover:bg-fume-100 dark:hover:bg-surface-panel/85',
                       ].join(' ')}
                     >
                       <span className="flex items-center gap-2">
@@ -207,7 +207,7 @@ export function ViewReportsPlayerSearch({
       {selectedPlayer ? (
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs text-fume-500 dark:text-fume-400">Selected:</span>
-          <span className="inline-flex items-center gap-2 rounded-lg border border-fume-200 bg-fume-50 px-3 py-1.5 text-sm font-medium text-fume-900 dark:border-fume-700 dark:bg-fume-800/60 dark:text-fume-100">
+          <span className="inline-flex items-center gap-2 rounded-lg border border-surface-field-border bg-fume-50 px-3 py-1.5 text-sm font-medium text-fume-900 dark:bg-surface-panel/55 dark:text-fume-100">
             {selectedPlayer.name}
             <span className="font-normal text-fume-500 dark:text-fume-400">
               · {selectedPlayer.team} · {selectedPlayer.position}
