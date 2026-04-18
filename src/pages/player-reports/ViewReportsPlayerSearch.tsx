@@ -8,6 +8,8 @@ import {
 import { getPlayers } from '../../api/players'
 import type { Player } from '../../types/api'
 import { IconSearch } from '../../components/icons'
+import { useDebouncedSearchQuery } from '../../hooks/useDebouncedSearchQuery'
+import { playerMatchesNameOrTeam } from '../../utils/playerNameTeamSearch'
 
 export type ViewReportsSelectedPlayer = {
   id: string
@@ -34,17 +36,12 @@ export function ViewReportsPlayerSearch({
   onClearSelection,
 }: ViewReportsPlayerSearchProps) {
   const [query, setQuery] = useState('')
-  const [debouncedQuery, setDebouncedQuery] = useState('')
+  const debouncedQuery = useDebouncedSearchQuery(query)
   const [searchOpen, setSearchOpen] = useState(false)
   const [highlight, setHighlight] = useState(0)
   const [apiHits, setApiHits] = useState<Player[]>([])
   const [searchLoading, setSearchLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    const t = window.setTimeout(() => setDebouncedQuery(query.trim()), 300)
-    return () => window.clearTimeout(t)
-  }, [query])
 
   useEffect(() => {
     if (!debouncedQuery) {
@@ -60,10 +57,12 @@ export function ViewReportsPlayerSearch({
         const r = await getPlayers({
           q: debouncedQuery,
           page: 1,
-          pageSize: 12,
+          pageSize: 48,
           sort: 'name_asc',
         })
-        if (!cancelled) setApiHits(r.items)
+        if (!cancelled) {
+          setApiHits(r.items.filter((p) => playerMatchesNameOrTeam(p, debouncedQuery)))
+        }
       } catch {
         if (!cancelled) setApiHits([])
       } finally {
@@ -91,7 +90,6 @@ export function ViewReportsPlayerSearch({
         position: p.position,
       })
       setQuery('')
-      setDebouncedQuery('')
       setApiHits([])
       setSearchOpen(false)
     },
@@ -143,7 +141,7 @@ export function ViewReportsPlayerSearch({
               window.setTimeout(() => setSearchOpen(false), 180)
             }}
             onKeyDown={onSearchKeyDown}
-            placeholder="Search players…"
+            placeholder="Search by player or team…"
             autoComplete="off"
             role="combobox"
             aria-expanded={showPanel}
@@ -195,7 +193,7 @@ export function ViewReportsPlayerSearch({
                         </span>
                       </span>
                       <span className="pl-0.5 text-xs text-fume-500 dark:text-fume-400">
-                        {p.team} · {p.position}
+                        {p.team}
                       </span>
                     </button>
                   )

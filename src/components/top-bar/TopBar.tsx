@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { TopBarActions } from './TopBarActions'
-import { TopBarPlayerSearch } from './TopBarPlayerSearch'
 import { titleFromPath } from './titleFromPath'
 
 export function TopBar() {
@@ -11,8 +10,8 @@ export function TopBar() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-fume-200/80 bg-shell/80 backdrop-blur-xl backdrop-saturate-150 dark:border-fume-800 dark:bg-fume-950/88">
-      <div className="flex w-full flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:gap-4 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center justify-between gap-3 sm:flex-1 sm:basis-0 sm:justify-start">
+      <div className="flex w-full flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center justify-between gap-3 sm:justify-start">
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-fume-900 dark:text-fume-100">
               {title}
@@ -30,11 +29,7 @@ export function TopBar() {
           </div>
         </div>
 
-        <div className="flex w-full min-w-0 justify-center sm:flex-[1.65] sm:min-w-[12rem]">
-          <TopBarPlayerSearch />
-        </div>
-
-        <div className="hidden shrink-0 sm:flex sm:flex-1 sm:basis-0 sm:justify-end">
+        <div className="hidden shrink-0 sm:flex sm:justify-end">
           <TopBarActions menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         </div>
       </div>
