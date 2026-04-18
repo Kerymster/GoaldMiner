@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
-import { Breadcrumbs } from '../../components/Breadcrumbs'
+import { PageHeader } from '../../components/PageHeader'
 import { useLeagueDetail } from '../../hooks/useLeagueDetail'
-import { LeagueDetailHero } from './LeagueDetailHero'
 import { LeagueTeamsSection } from './LeagueTeamsSection'
 
 export function LeagueDetailPage() {
@@ -49,15 +48,21 @@ export function LeagueDetailPage() {
     )
   }
 
+  const metaLine =
+    league.nameLocal !== league.name ? league.nameLocal : undefined
+
   return (
     <div className="space-y-8">
-      <Breadcrumbs
-        items={[
+      <PageHeader
+        breadcrumbItems={[
           { label: 'Leagues', to: '/leagues' },
           { label: league.name },
         ]}
+        eyebrow={`${league.countryName} · Tier ${league.tier}`}
+        title={league.name}
+        metaLine={metaLine}
+        description="Open a team to see its roster and jump to player profiles."
       />
-      <LeagueDetailHero league={league} />
       <LeagueTeamsSection
         teams={teams}
         teamsRes={teamsRes}

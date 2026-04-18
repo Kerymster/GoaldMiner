@@ -14,6 +14,47 @@ Bu dosya projede tutarlılık için referans niteliğindedir. Yeni kurallar veya
 - **Durum:** Redux Toolkit (`src/store/`, `src/features/`).
 - **Veri:** API çağrıları `src/api/` altında; sayfalar ve hook’lar bu fonksiyonları kullanır.
 
+## UI ve tema
+
+### Marka ve varlıklar
+
+- Ürün adı **ScoutLedger**; sekme başlığı `index.html`, paket adı `scout-ledger`.
+- **Favicon:** `public/favicon.svg` — sidebar üstündeki marka alanında da aynı dosya (`/favicon.svg`) kullanılır.
+- API alan adları değişmeden kalabilir (ör. `underratedScore`); kullanıcıya dönük metinlerde metrik için **Ledger** / **Ledger score** diline uyulur.
+
+### Renk ve Tailwind
+
+- Palet `src/index.css` içindeki `@theme` ile tanımlı: nötrler `fume-*`, birincil vurgu `gold-*`, ikincil vurgu `sea-*`, açık mod sayfa zemini `shell`.
+- **Karanlık mod:** Yüzey değişkenleri `@media (prefers-color-scheme: dark)` altında güncellenir (Tailwind varsayılanı ile uyumlu). İleride `<html class="dark">` kullanılırsa aynı `--surface-*` atamaları `.dark` kuralına da yansıtılmalıdır.
+
+### Semantik yüzeyler (`surface-*`)
+
+Tek kaynak: `src/index.css` içindeki `--surface-*` değişkenleri; bileşenlerde mümkün olduğunca **`bg-surface-*` / `border-surface-*` / `divide-surface-*`** yardımcı sınıfları kullanılır. Sayfa zemini (`fume-950` / `shell`) ile içerik blokları arasındaki kontrast buradan yönetilir.
+
+| Yardımcı sınıf (ör.) | Amaç |
+|----------------------|------|
+| `surface-panel` / `surface-panel-border` | Kartlar, listeler, tablo sarmalayıcıları, sayfa üstü filtre alanlarındaki kontroller (select/input) |
+| `surface-panel-hover` | Liste satırı hover vb. bir ton içeri |
+| `surface-inset` / `surface-inset-border` | Sekme şeridi, açılır menü gövdesi gibi çukur krom |
+| `surface-field` / `surface-field-border` | Form alanı; koyu modda panel ile aynı yükselti (tek tip kontrast) |
+| `surface-divider` / `surface-list-divider` | İç ayırıcılar, `divide-y` |
+
+Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonlar yerine bu token’lara bağlanın.
+
+### Sayfa başlığı ve rotalar
+
+- Rota sayfalarında mümkünse **`PageHeader`** (`src/components/PageHeader.tsx`) kullanılır: breadcrumb, başlık, açıklama, isteğe bağlı `eyebrow` ve `metaLine` (ör. lig detayında ülke · tier ve yerel lig adı).
+- Lig detayı gibi özel başlık için ayrı “hero” bileşeni yazmak yerine `PageHeader` genişletilir; böylece kart stili ve tipografi tek yerde kalır.
+
+### Rapor detayı
+
+- Üst bant: **`DetailReportHero`** (`src/pages/player-reports/detail/`).
+- Rapor gövdesi bölümleri: **`DetailSection` / `DetailSubheading`** ve `detailStyles.ts` — ana başlıkta dikey altın çubuk; alt başlıklarda yatay çizgi kullanılmaz.
+
+### Etkileşim (UI ile ilgili)
+
+- Aşağıdaki **Etkileşim ve UX** bölümündeki imleç ve form kuralları geçerlidir.
+
 ## API katmanı
 
 - HTTP istekleri `fetchJson` üzerinden (`src/api/client.ts`); taban URL `VITE_API_URL` / `src/api/config.ts`.

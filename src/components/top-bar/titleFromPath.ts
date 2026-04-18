@@ -3,7 +3,7 @@ export function titleFromPath(pathname: string): {
   subtitle?: string
 } {
   if (pathname === '/players' || pathname === '/') {
-    return { title: 'Players', subtitle: 'Browse underrated picks' }
+    return { title: 'Players', subtitle: 'Roster and ledger scores' }
   }
   if (pathname.startsWith('/players/')) {
     return { title: 'Player profile', subtitle: 'Stats and notes' }

@@ -24,7 +24,7 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
           aria-haspopup="menu"
           className="flex cursor-pointer items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2 transition-colors hover:bg-fume-200/80 dark:hover:bg-fume-800"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-sea-700 text-xs font-bold text-white shadow-sm shadow-fume-950/15">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-600 text-xs font-bold text-white shadow-sm dark:bg-gold-500">
             GM
           </span>
           <IconChevronDown

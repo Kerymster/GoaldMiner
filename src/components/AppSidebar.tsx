@@ -52,15 +52,29 @@ export function AppSidebar() {
   return (
     <aside className="flex w-full shrink-0 flex-col border-b border-fume-800/80 bg-fume-900 md:w-60 md:border-r md:border-b-0 md:min-h-dvh md:shadow-[4px_0_24px_-4px_rgba(0,0,0,0.35)]">
       <div className="flex flex-col gap-1 p-3 md:sticky md:top-0 md:max-h-dvh md:overflow-y-auto">
-        <div className="mb-3 border-b border-fume-800/80 px-2 pb-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-400">
-            Underrated
-          </p>
-          <p className="mt-1 text-sm font-semibold tracking-tight text-fume-100">
-            Player finder
-          </p>
-          <p className="mt-2 h-px w-8 bg-gradient-to-r from-gold-500 to-transparent" />
-        </div>
+        <Link
+          to="/players"
+          className="mb-3 block rounded-lg px-2 pb-3 outline-none ring-offset-2 ring-offset-fume-900 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-gold-500/45"
+        >
+          <div className="flex items-start gap-2.5 border-b border-fume-800/80 pb-3">
+            <img
+              src="/favicon.svg"
+              alt=""
+              width={36}
+              height={36}
+              decoding="async"
+              className="h-9 w-9 shrink-0 rounded-lg shadow-sm ring-1 ring-fume-800/90"
+              aria-hidden
+            />
+            <div className="min-w-0 flex-1 pt-0.5">
+              <p className="text-base font-bold tracking-tight text-fume-50">ScoutLedger</p>
+              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-400">
+                Scout reports · roster
+              </p>
+              <p className="mt-2 h-px w-8 bg-gradient-to-r from-gold-500 to-transparent" />
+            </div>
+          </div>
+        </Link>
 
         <NavLink to="/players" className={navLinkClass}>
           Players

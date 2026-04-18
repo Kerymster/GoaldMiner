@@ -82,8 +82,9 @@
     /* Recessed chrome (tabs, popovers) — one step darker than panel */
     --surface-inset: rgb(15 23 42);
     --surface-inset-border: rgb(51 65 85 / 0.55);
-    --surface-field: rgb(15 23 42);
-    --surface-field-border: rgb(51 65 85);
+    /* Controls on page canvas — match elevated panels (selects, text inputs) */
+    --surface-field: rgb(30 41 59);
+    --surface-field-border: rgb(71 85 105 / 0.55);
     --surface-divider: rgb(51 65 85 / 0.6);
     --surface-list-divider: rgb(51 65 85);
   }

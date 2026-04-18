@@ -1,6 +1,6 @@
-# Underrated Player Finder
+# ScoutLedger
 
-React + TypeScript + Vite. Tailwind CSS, React Router, Redux Toolkit.
+Scout reports and roster intelligence — React + TypeScript + Vite, Tailwind CSS, React Router, Redux Toolkit.
 
 ## Geliştirme
 

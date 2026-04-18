@@ -17,7 +17,7 @@ export function PlayerStatsGrid({
       </div>
       <div className="sm:text-right">
         <dt className="text-xs font-medium uppercase tracking-wide text-fume-500">
-          Underrated score
+          Ledger score
         </dt>
         <dd className="mt-1 text-lg tabular-nums text-gold-700 dark:text-gold-400">
           {underratedScore ?? '—'}

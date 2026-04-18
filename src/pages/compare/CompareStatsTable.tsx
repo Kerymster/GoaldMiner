@@ -20,7 +20,7 @@ export function CompareStatsTable({ playerA, playerB }: CompareStatsTableProps) 
         b: String(playerB.rating ?? '—'),
       },
       {
-        label: 'Underrated',
+        label: 'Ledger',
         a: String(playerA.underratedScore ?? '—'),
         b: String(playerB.underratedScore ?? '—'),
       },
@@ -47,7 +47,7 @@ export function CompareStatsTable({ playerA, playerB }: CompareStatsTableProps) 
             <tr key={row.label}>
               <td className="px-4 py-3 text-fume-500">{row.label}</td>
               <td className="px-4 py-3 tabular-nums text-fume-800 dark:text-fume-200">
-                {row.label === 'Underrated' ? (
+                {row.label === 'Ledger' ? (
                   <span className="font-semibold text-gold-700 dark:text-gold-400">
                     {row.a}
                   </span>
@@ -56,7 +56,7 @@ export function CompareStatsTable({ playerA, playerB }: CompareStatsTableProps) 
                 )}
               </td>
               <td className="px-4 py-3 tabular-nums text-fume-800 dark:text-fume-200">
-                {row.label === 'Underrated' ? (
+                {row.label === 'Ledger' ? (
                   <span className="font-semibold text-gold-700 dark:text-gold-400">
                     {row.b}
                   </span>

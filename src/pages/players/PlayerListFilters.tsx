@@ -40,8 +40,8 @@ export function PlayerListFilters({
           onChange={(e) => onSortChange(e.target.value as PlayersSort)}
           className={`${playerListInputClass} min-w-[12rem]`}
         >
-          <option value="underratedScore_desc">Underrated (high → low)</option>
-          <option value="underratedScore_asc">Underrated (low → high)</option>
+          <option value="underratedScore_desc">Ledger score (high → low)</option>
+          <option value="underratedScore_asc">Ledger score (low → high)</option>
           <option value="rating_desc">Rating (high → low)</option>
           <option value="rating_asc">Rating (low → high)</option>
           <option value="name_asc">Name (A–Z)</option>

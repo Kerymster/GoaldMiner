@@ -20,7 +20,7 @@ export function TopBar() {
               {subtitle ? `${subtitle} · ` : null}
               <span className="text-fume-600 dark:text-fume-400">Signed in as </span>
               <span className="font-medium text-fume-800 dark:text-fume-200">
-                demo@goaldminer.app
+                demo@scoutledger.app
               </span>
             </p>
           </div>

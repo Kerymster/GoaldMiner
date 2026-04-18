@@ -25,7 +25,7 @@ export function PlayerListRow({ player, leagueLabel }: PlayerListRowProps) {
           <p className="text-sm font-semibold tabular-nums text-gold-700 dark:text-gold-400">
             {player.underratedScore ?? '—'}
           </p>
-          <p className="text-xs text-fume-500 dark:text-fume-400">underrated</p>
+          <p className="text-xs text-fume-500 dark:text-fume-400">Ledger</p>
         </div>
       </Link>
     </li>
