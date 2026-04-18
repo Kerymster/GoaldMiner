@@ -5,6 +5,7 @@
 
 export type ScoutReportPlayerInformation = {
   name: string
+  /** Backend field name; UI uses ISO `YYYY-MM-DD` via `<input type="date" />`. */
   ageOrDob: string
   nationality: string
   heightWeight: string

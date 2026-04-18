@@ -130,6 +130,46 @@ body {
     cursor: pointer;
   }
 
+  /*
+   * Native date/time pickers ship a dark calendar icon; on dark `surface-field`
+   * backgrounds it disappears. Lighten the indicator in dark UI only.
+   */
+  @media (prefers-color-scheme: dark) {
+    input[type='date']::-webkit-calendar-picker-indicator,
+    input[type='datetime-local']::-webkit-calendar-picker-indicator,
+    input[type='month']::-webkit-calendar-picker-indicator,
+    input[type='week']::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.85;
+      filter: invert(1) brightness(1.05);
+    }
+
+    input[type='date']::-moz-calendar-picker-indicator,
+    input[type='datetime-local']::-moz-calendar-picker-indicator,
+    input[type='month']::-moz-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.85;
+      filter: invert(1) brightness(1.05);
+    }
+  }
+
+  .dark input[type='date']::-webkit-calendar-picker-indicator,
+  .dark input[type='datetime-local']::-webkit-calendar-picker-indicator,
+  .dark input[type='month']::-webkit-calendar-picker-indicator,
+  .dark input[type='week']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.85;
+    filter: invert(1) brightness(1.05);
+  }
+
+  .dark input[type='date']::-moz-calendar-picker-indicator,
+  .dark input[type='datetime-local']::-moz-calendar-picker-indicator,
+  .dark input[type='month']::-moz-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.85;
+    filter: invert(1) brightness(1.05);
+  }
+
   button:disabled,
   select:disabled,
   input[type='button']:disabled,

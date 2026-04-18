@@ -39,17 +39,25 @@ export function StepPlayerInformation({ form, setForm, errors }: ScoutReportStep
           }))
         }
       />
-      <ScoutReportField
-        label="Age / DOB"
-        value={form.playerInformation.ageOrDob}
-        error={errors.ageOrDob}
-        onChange={(ageOrDob) =>
-          setForm((f) => ({
-            ...f,
-            playerInformation: { ...f.playerInformation, ageOrDob },
-          }))
-        }
-      />
+      <label className={reportLabelClass}>
+        Date of Birth
+        <input
+          type="date"
+          value={form.playerInformation.ageOrDob}
+          onChange={(e) =>
+            setForm((f) => ({
+              ...f,
+              playerInformation: {
+                ...f.playerInformation,
+                ageOrDob: e.target.value,
+              },
+            }))
+          }
+          aria-invalid={Boolean(errors.ageOrDob)}
+          className={`${reportFieldClass} ${errors.ageOrDob ? reportFieldErrorClass : ''}`}
+        />
+        <FieldError message={errors.ageOrDob} />
+      </label>
       <ScoutReportField
         label="Nationality"
         value={form.playerInformation.nationality}

@@ -10,7 +10,10 @@ export function DetailPlayerInformationSection({ form }: { form: ScoutReportForm
       <div className={detailGrid}>
         <DetailRow label="Report date" value={formatReportDisplayDate(form.reportDate)} />
         <DetailRow label="Name" value={p.name} />
-        <DetailRow label="Age / DOB" value={p.ageOrDob} />
+        <DetailRow
+          label="Date of Birth"
+          value={formatReportDisplayDate(p.ageOrDob)}
+        />
         <DetailRow label="Nationality" value={p.nationality} />
         <DetailRow label="Height / weight" value={p.heightWeight} />
         <DetailRow label="Preferred foot" value={p.preferredFoot} />
