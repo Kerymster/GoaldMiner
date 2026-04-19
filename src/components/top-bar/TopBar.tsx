@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 import { TopBarActions } from './TopBarActions'
 import { titleFromPath } from './titleFromPath'
 
 export function TopBar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { pathname } = useLocation()
+  const { user } = useAuth()
   const { title, subtitle } = titleFromPath(pathname)
+  const accountLabel = user?.email ?? user?.phone ?? 'Account'
 
   return (
     <header className="sticky top-0 z-30 border-b border-fume-200/80 bg-shell/80 backdrop-blur-xl backdrop-saturate-150 dark:border-fume-800 dark:bg-fume-950/88">
@@ -19,9 +22,7 @@ export function TopBar() {
             <p className="truncate text-xs text-fume-500 dark:text-fume-400">
               {subtitle ? `${subtitle} · ` : null}
               <span className="text-fume-600 dark:text-fume-400">Signed in as </span>
-              <span className="font-medium text-fume-800 dark:text-fume-200">
-                demo@scoutledger.app
-              </span>
+              <span className="font-medium text-fume-800 dark:text-fume-200">{accountLabel}</span>
             </p>
           </div>
           <div className="shrink-0 sm:hidden">

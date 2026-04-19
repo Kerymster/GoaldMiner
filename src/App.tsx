@@ -10,6 +10,7 @@ import { TeamsPage } from './pages/teams/TeamsPage'
 import { CreateReportPage } from './pages/player-reports/CreateReportPage'
 import { ScoutReportDetailPage } from './pages/player-reports/detail/ScoutReportDetailPage'
 import { ViewReportsPage } from './pages/player-reports/ViewReportsPage'
+import { ProtectedRoute } from './components/ProtectedRoute'
 import { LoginPage } from './pages/auth/LoginPage'
 import { RegisterPage } from './pages/auth/RegisterPage'
 
@@ -19,23 +20,25 @@ export default function App() {
       <Routes>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
-        <Route element={<Layout />}>
-          <Route index element={<Navigate to="/players" replace />} />
-          <Route path="players" element={<AllPlayersPage />} />
-          <Route path="players/:id" element={<PlayerDetailPage />} />
-          <Route path="leagues" element={<AllLeaguesPage />} />
-          <Route path="leagues/:leagueId" element={<LeagueDetailPage />} />
-          <Route path="teams" element={<TeamsPage />} />
-          <Route path="teams/:teamId" element={<TeamDetailPage />} />
-          <Route path="compare" element={<ComparePage />} />
-          <Route path="player-reports" element={<ViewReportsPage />} />
-          <Route path="player-reports/create" element={<CreateReportPage />} />
-          <Route
-            path="player-reports/players/:playerId/reports/:reportId"
-            element={<ScoutReportDetailPage />}
-          />
-          <Route path="player-reports/report/:reportId" element={<Navigate to="/player-reports" replace />} />
-          <Route path="*" element={<Navigate to="/players" replace />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<Layout />}>
+            <Route index element={<Navigate to="/players" replace />} />
+            <Route path="players" element={<AllPlayersPage />} />
+            <Route path="players/:id" element={<PlayerDetailPage />} />
+            <Route path="leagues" element={<AllLeaguesPage />} />
+            <Route path="leagues/:leagueId" element={<LeagueDetailPage />} />
+            <Route path="teams" element={<TeamsPage />} />
+            <Route path="teams/:teamId" element={<TeamDetailPage />} />
+            <Route path="compare" element={<ComparePage />} />
+            <Route path="player-reports" element={<ViewReportsPage />} />
+            <Route path="player-reports/create" element={<CreateReportPage />} />
+            <Route
+              path="player-reports/players/:playerId/reports/:reportId"
+              element={<ScoutReportDetailPage />}
+            />
+            <Route path="player-reports/report/:reportId" element={<Navigate to="/player-reports" replace />} />
+            <Route path="*" element={<Navigate to="/players" replace />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

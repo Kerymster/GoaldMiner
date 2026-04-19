@@ -1,14 +1,30 @@
-import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState, type FormEvent } from 'react'
+import { Link, useLocation, useNavigate, type Location } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+
+function postLoginPath(state: unknown): string {
+  if (!state || typeof state !== 'object') return '/players'
+  const from = (state as { from?: Location }).from
+  const pathname = from?.pathname
+  if (!pathname || !pathname.startsWith('/')) return '/players'
+  if (pathname === '/login' || pathname === '/register') return '/players'
+  return `${pathname}${from?.search ?? ''}${from?.hash ?? ''}`
+}
 
 export function LoginPage() {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const location = useLocation()
+  const { user, loading, login } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate('/players', { replace: true })
+    }
+  }, [loading, user, navigate])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -20,7 +36,7 @@ export function LoginPage() {
       setError(msg)
       return
     }
-    navigate('/players', { replace: true })
+    navigate(postLoginPath(location.state), { replace: true })
   }
 
   return (

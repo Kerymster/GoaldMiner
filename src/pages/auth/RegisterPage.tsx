@@ -1,15 +1,21 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 
 export function RegisterPage() {
   const navigate = useNavigate()
-  const { register } = useAuth()
+  const { user, loading, register } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [info, setInfo] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate('/players', { replace: true })
+    }
+  }, [loading, user, navigate])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
