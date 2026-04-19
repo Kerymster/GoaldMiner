@@ -2,9 +2,9 @@ export type NationalityItem = {
   code: string
   country: string
   nationality: string
-  flagPng: string | null
-  flagSvg: string | null
-  flagAlt: string | null
+  flag_png: string | null
+  flag_svg: string | null
+  flag_alt: string | null
 }
 
 export type NationalitiesListResponse = {

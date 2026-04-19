@@ -25,8 +25,8 @@ import {
 } from './reportFormStyles'
 
 function NationalityFlag({ item, className }: { item: NationalityItem; className?: string }) {
-  const src = item.flagPng ?? item.flagSvg
-  const alt = item.flagAlt ?? `${item.country} flag`
+  const src = item.flag_png ?? item.flag_svg
+  const alt = item.flag_alt ?? `${item.country} flag`
   if (!src) {
     return (
       <span
