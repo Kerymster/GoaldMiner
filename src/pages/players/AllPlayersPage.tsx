@@ -1,9 +1,7 @@
 import { PageHeader } from '../../components/PageHeader'
 import { ListPagination } from '../../components/ListPagination'
 import { usePlayersList } from '../../hooks/usePlayersList'
-import type { LeagueMeta, Player } from '../../types/api'
 import { useAppSelector } from '../../store/hooks'
-import { selectLeaguesItems } from '../../store/selectors/leaguesSelectors'
 import { PlayerListFilters } from './PlayerListFilters'
 import { PlayerListRow } from './PlayerListRow'
 import { playerListSurface } from './playerListStyles'
@@ -13,18 +11,15 @@ const TITLE = 'Players'
 const DESCRIPTION =
   'Spotlight on performers who punch above their headline attention.'
 
-function leagueLabelForPlayer(player: Player, leagues: LeagueMeta[]): string {
-  const league = leagues.find((l) => l.leagueId === player.leagueId)
-  return league?.name ?? player.leagueId ?? ''
-}
-
 export function AllPlayersPage() {
-  const leagues = useAppSelector(selectLeaguesItems)
+  const nationalities = useAppSelector((s) => s.nationalities.items)
   const {
     page,
     setPage,
-    leagueId,
-    setLeagueId,
+    q,
+    setQ,
+    countryId,
+    setCountryId,
     sort,
     setSort,
     data,
@@ -42,17 +37,13 @@ export function AllPlayersPage() {
       />
 
       <PlayerListFilters
-        leagues={leagues}
-        leagueId={leagueId}
-        onLeagueIdChange={(v) => {
-          setLeagueId(v)
-          setPage(1)
-        }}
+        nationalities={nationalities}
+        q={q}
+        onQChange={setQ}
+        countryId={countryId}
+        onCountryIdChange={setCountryId}
         sort={sort}
-        onSortChange={(v) => {
-          setSort(v)
-          setPage(1)
-        }}
+        onSortChange={setSort}
       />
 
       {error ? (
@@ -66,11 +57,7 @@ export function AllPlayersPage() {
         <>
           <ul className={playerListSurface}>
             {items.map((player) => (
-              <PlayerListRow
-                key={player.id}
-                player={player}
-                leagueLabel={leagueLabelForPlayer(player, leagues)}
-              />
+              <PlayerListRow key={player.id} player={player} />
             ))}
           </ul>
           <ListPagination page={page} setPage={setPage} data={data} />

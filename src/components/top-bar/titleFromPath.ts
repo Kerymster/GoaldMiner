@@ -11,18 +11,6 @@ export function titleFromPath(pathname: string): {
   if (pathname === '/compare') {
     return { title: 'Compare', subtitle: 'Side-by-side view' }
   }
-  if (pathname === '/leagues') {
-    return { title: 'Leagues', subtitle: 'Second-tier focus' }
-  }
-  if (pathname.startsWith('/leagues/')) {
-    return { title: 'League', subtitle: 'Teams and context' }
-  }
-  if (pathname === '/teams') {
-    return { title: 'Teams', subtitle: 'By country and league' }
-  }
-  if (pathname.startsWith('/teams/')) {
-    return { title: 'Team', subtitle: 'Roster' }
-  }
   if (pathname === '/player-reports') {
     return { title: 'Player Reports', subtitle: 'View saved reports' }
   }

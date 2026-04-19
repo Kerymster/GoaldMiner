@@ -43,8 +43,8 @@ Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonl
 
 ### Sayfa başlığı ve rotalar
 
-- Rota sayfalarında mümkünse **`PageHeader`** (`src/components/PageHeader.tsx`) kullanılır: breadcrumb, başlık, açıklama, isteğe bağlı `eyebrow` ve `metaLine` (ör. lig detayında ülke · tier ve yerel lig adı).
-- Lig detayı gibi özel başlık için ayrı “hero” bileşeni yazmak yerine `PageHeader` genişletilir; böylece kart stili ve tipografi tek yerde kalır.
+- Rota sayfalarında mümkünse **`PageHeader`** (`src/components/PageHeader.tsx`) kullanılır: breadcrumb, başlık, açıklama, isteğe bağlı `eyebrow` ve `metaLine`.
+- Liste veya detay için özel “hero” gerekiyorsa `PageHeader` genişletilir; kart stili ve tipografi tek yerde kalmalıdır.
 
 ### Rapor detayı
 
@@ -58,7 +58,7 @@ Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonl
 ## API katmanı
 
 - HTTP istekleri `fetchJson` üzerinden (`src/api/client.ts`); taban URL `VITE_API_URL` / `src/api/config.ts`.
-- Yol önekleri (`/api/players`, `/api/teams`, `/api/leagues`) **`src/api/endpoints.ts`** içinde toplanır; yeni endpoint eklerken önce buraya, sonra ilgili `*.ts` modülüne eklenir.
+- Yol önekleri (`/api/players`, `/api/scout-reports`, `/api/nationalities`) **`src/api/endpoints.ts`** içinde toplanır; yeni endpoint eklerken önce buraya, sonra ilgili `*.ts` modülüne eklenir.
 - Ham path string’leri API modülleri dışında tekrarlanmaz.
 - **Veri çekme ve hook’lar:** İstekler, yükleme/hata durumu ve türetilmiş state mümkün olduğunca **`src/hooks/`** içindeki custom hook’larda toplanır; sayfa ve görünüm bileşenleri mümkün olduğunca sadece hook çıktısını kullanır ve olayları iletir. API fonksiyonları (`src/api/*.ts`) doğrudan bileşen içinde çağrılmak yerine bu hook’lar üzerinden kullanılmayı hedefler. İstisnalar (çok lokal, tek seferlik arama vb.) makul olduğunda kabul edilir; yine de önce mevcut hook’lara ekleme veya genelleştirme düşünülür.
 - **Önce Redux:** Aşağıdaki **Redux** maddesine uygun olarak, istek atmadan önce verinin store’da zaten yüklü olup olmadığı göz önünde bulundurulur.
@@ -84,7 +84,7 @@ Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonl
 
 - Slice’lar `src/features/<özellik>/`; selector’lar `src/store/selectors/` altında tutulabilir.
 - Sayfa bileşenleri mümkün olduğunca ince kalır; veri yükleme ve türetilmiş state uygun yerde hook veya selector ile çözülür.
-- **Tekrar istekten kaçınma:** Lig listesi, takım meta bilgisi gibi paylaşılan ve Redux’ta tutulan genel verilere ihtiyaç varsa önce ilgili **selector** ve slice durumu (`loaded`, `status`, vb.) kontrol edilir; veri zaten uygun şekilde duruyorsa aynı kaynak için yeni API isteği atılmaz. Yalnızca eksik, eski veya sayfa özelinde detay gerekiyorsa (ör. tek kayıt detayı) hedefe uygun istek yapılır.
+- **Tekrar istekten kaçınma:** Ülke / uyruk listesi gibi paylaşılan ve Redux’ta tutulan verilere ihtiyaç varsa önce ilgili slice durumu (`status`, vb.) kontrol edilir; veri zaten yüklüyse aynı kaynak için yeni istek atılmaz. Yalnızca eksik veya sayfa özelinde detay gerekiyorsa hedefe uygun istek yapılır.
 
 ## Ortam
 

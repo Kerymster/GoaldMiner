@@ -3,10 +3,11 @@ import type { Player } from '../../types/api'
 
 type PlayerListRowProps = {
   player: Player
-  leagueLabel: string
 }
 
-export function PlayerListRow({ player, leagueLabel }: PlayerListRowProps) {
+export function PlayerListRow({ player }: PlayerListRowProps) {
+  const meta = [player.team, player.position].filter(Boolean).join(' · ')
+
   return (
     <li>
       <Link
@@ -15,11 +16,7 @@ export function PlayerListRow({ player, leagueLabel }: PlayerListRowProps) {
       >
         <div className="min-w-0">
           <p className="truncate font-medium">{player.name}</p>
-          <p className="truncate text-sm text-fume-500 dark:text-fume-400">
-            {leagueLabel
-              ? `${player.team} · ${leagueLabel} · ${player.position}`
-              : `${player.team} · ${player.position}`}
-          </p>
+          <p className="truncate text-sm text-fume-500 dark:text-fume-400">{meta}</p>
         </div>
         <div className="shrink-0 text-right">
           <p className="text-sm font-semibold tabular-nums text-gold-700 dark:text-gold-400">
