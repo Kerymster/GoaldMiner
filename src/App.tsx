@@ -10,11 +10,15 @@ import { TeamsPage } from './pages/teams/TeamsPage'
 import { CreateReportPage } from './pages/player-reports/CreateReportPage'
 import { ScoutReportDetailPage } from './pages/player-reports/detail/ScoutReportDetailPage'
 import { ViewReportsPage } from './pages/player-reports/ViewReportsPage'
+import { LoginPage } from './pages/auth/LoginPage'
+import { RegisterPage } from './pages/auth/RegisterPage'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
         <Route element={<Layout />}>
           <Route index element={<Navigate to="/players" replace />} />
           <Route path="players" element={<AllPlayersPage />} />

@@ -4,14 +4,17 @@ import { Provider } from 'react-redux'
 import { Bootstrap } from './components/Bootstrap'
 import './index.css'
 import App from './App.tsx'
+import { AuthProvider } from './contexts/AuthProvider'
 import { store } from './store/store'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <Bootstrap>
-        <App />
-      </Bootstrap>
+      <AuthProvider>
+        <Bootstrap>
+          <App />
+        </Bootstrap>
+      </AuthProvider>
     </Provider>
   </StrictMode>,
 )
