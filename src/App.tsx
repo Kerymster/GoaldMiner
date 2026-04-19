@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { ApiUnauthorizedBridge } from './components/ApiUnauthorizedBridge'
 import { Layout } from './components/Layout'
 import { ComparePage } from './pages/compare/ComparePage'
 import { PlayerDetailPage } from './pages/players/PlayerDetailPage'
@@ -13,6 +14,7 @@ import { RegisterPage } from './pages/auth/RegisterPage'
 export default function App() {
   return (
     <BrowserRouter>
+      <ApiUnauthorizedBridge />
       <Routes>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />

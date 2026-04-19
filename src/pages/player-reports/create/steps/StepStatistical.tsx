@@ -7,7 +7,7 @@ export function StepStatistical({ form, setForm, errors }: ScoutReportStepProps)
     <div className="space-y-6">
       <ScoutReportField
         label="Data source"
-        hint="e.g. SofaScore, Wyscout, league site"
+        hint="e.g. SofaScore, Wyscout, club or competition data pages"
         value={form.statisticalSnapshot.dataSource}
         error={errors.dataSource}
         onChange={(dataSource) =>

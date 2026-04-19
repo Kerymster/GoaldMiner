@@ -58,7 +58,8 @@ Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonl
 ## API katmanı
 
 - HTTP istekleri `fetchJson` üzerinden (`src/api/client.ts`); taban URL `VITE_API_URL` / `src/api/config.ts`.
-- Yol önekleri (`/api/players`, `/api/scout-reports`, `/api/nationalities`) **`src/api/endpoints.ts`** içinde toplanır; yeni endpoint eklerken önce buraya, sonra ilgili `*.ts` modülüne eklenir.
+- **Kimlik doğrulama:** Korumalı backend rotalarına Supabase `access_token` merkezi olarak `Authorization: Bearer …` ile eklenir (`client.ts`). **`GET /api/nationalities`** herkese açık olduğu için bu path’te Bearer gönderilmez. 401 yanıtları `ApiUnauthorizedBridge` + `notifyUnauthorized` ile oturumu kapatıp `/login`’e yönlendirir.
+- Yol önekleri (`/api/players`, `/api/scout-reports`, `/api/nationalities`) **`src/api/endpoints.ts`** içinde toplanır; yeni endpoint eklerken önce buraya, sonra ilgili `*.ts` modülüne eklenir. Yeni **public** GET path’leri `client.ts` içindeki `PUBLIC_API_PATHS` kümesine eklenmelidir; aksi halde Bearer beklenir.
 - Ham path string’leri API modülleri dışında tekrarlanmaz.
 - **Veri çekme ve hook’lar:** İstekler, yükleme/hata durumu ve türetilmiş state mümkün olduğunca **`src/hooks/`** içindeki custom hook’larda toplanır; sayfa ve görünüm bileşenleri mümkün olduğunca sadece hook çıktısını kullanır ve olayları iletir. API fonksiyonları (`src/api/*.ts`) doğrudan bileşen içinde çağrılmak yerine bu hook’lar üzerinden kullanılmayı hedefler. İstisnalar (çok lokal, tek seferlik arama vb.) makul olduğunda kabul edilir; yine de önce mevcut hook’lara ekleme veya genelleştirme düşünülür.
 - **Önce Redux:** Aşağıdaki **Redux** maddesine uygun olarak, istek atmadan önce verinin store’da zaten yüklü olup olmadığı göz önünde bulundurulur.

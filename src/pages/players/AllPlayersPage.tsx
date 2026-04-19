@@ -22,6 +22,14 @@ export function AllPlayersPage() {
     setCountryId,
     sort,
     setSort,
+    minRating,
+    setMinRating,
+    maxRating,
+    setMaxRating,
+    minUnderrated,
+    setMinUnderrated,
+    maxUnderrated,
+    setMaxUnderrated,
     data,
     loading,
     error,
@@ -42,6 +50,14 @@ export function AllPlayersPage() {
         onQChange={setQ}
         countryId={countryId}
         onCountryIdChange={setCountryId}
+        minRating={minRating}
+        onMinRatingChange={setMinRating}
+        maxRating={maxRating}
+        onMaxRatingChange={setMaxRating}
+        minUnderrated={minUnderrated}
+        onMinUnderratedChange={setMinUnderrated}
+        maxUnderrated={maxUnderrated}
+        onMaxUnderratedChange={setMaxUnderrated}
         sort={sort}
         onSortChange={setSort}
       />
