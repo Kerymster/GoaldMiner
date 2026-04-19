@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
+.env
 # Local-only dev notes (see DEVELOPMENT.md)
 DEVELOPMENT.local.md
