@@ -1,3 +1,4 @@
+import { proseMuted } from '../../components/pageChromeStyles'
 import type { Player } from '../../types/api'
 import { PlayerRankCard } from './PlayerRankCard'
 
@@ -14,7 +15,7 @@ export function PlayerProfileHeader({ player }: PlayerProfileHeaderProps) {
         <h2 className="text-2xl font-semibold tracking-tight text-fume-950 dark:text-fume-50">
           {player.name}
         </h2>
-        <p className="mt-1 text-fume-600 dark:text-fume-400">{parts.join(' · ')}</p>
+        <p className={`mt-1 ${proseMuted}`}>{parts.join(' · ')}</p>
       </div>
       <PlayerRankCard underratedScore={player.underratedScore} />
     </div>

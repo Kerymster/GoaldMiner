@@ -1,27 +1,31 @@
 import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../../../components/Breadcrumbs'
+import { proseError, proseMuted } from '../../../components/pageChromeStyles'
 import { usePlayerDetail } from '../../../hooks/usePlayerDetail'
 import { PlayerDetailNote } from '../PlayerDetailNote'
 import { PlayerProfileHeader } from '../PlayerProfileHeader'
 import { PlayerStatsGrid } from '../PlayerStatsGrid'
-import { playerDetailCardClass } from '../playerDetailStyles'
-
-const backLinkClass =
-  'text-sm font-medium text-gold-700 underline-offset-4 hover:text-gold-600 hover:underline dark:text-gold-400 dark:hover:text-gold-300'
+import {
+  playerDetailBackLinkClass,
+  playerDetailCardClass,
+  playerDetailFooterLinkClass,
+  playerDetailPageStackClass,
+  playerDetailStateStackClass,
+} from '../playerDetailStyles'
 
 export function PlayerDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { player, loading, error } = usePlayerDetail(id)
 
   if (loading) {
-    return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
+    return <p className={proseMuted}>Loading…</p>
   }
 
   if (error) {
     return (
-      <div className="space-y-4">
-        <p className="text-red-600 dark:text-red-400">{error}</p>
-        <Link to="/players" className={backLinkClass}>
+      <div className={playerDetailStateStackClass}>
+        <p className={proseError}>{error}</p>
+        <Link to="/players" className={playerDetailBackLinkClass}>
           Back to players
         </Link>
       </div>
@@ -30,9 +34,9 @@ export function PlayerDetailPage() {
 
   if (!player) {
     return (
-      <div className="space-y-4">
-        <p className="text-fume-600 dark:text-fume-400">Player not found.</p>
-        <Link to="/players" className={backLinkClass}>
+      <div className={playerDetailStateStackClass}>
+        <p className={proseMuted}>Player not found.</p>
+        <Link to="/players" className={playerDetailBackLinkClass}>
           Back to players
         </Link>
       </div>
@@ -42,7 +46,7 @@ export function PlayerDetailPage() {
   const breadcrumbItems = [{ label: 'Players', to: '/players' }, { label: player.name }]
 
   return (
-    <div className="space-y-8">
+    <div className={playerDetailPageStackClass}>
       <Breadcrumbs items={breadcrumbItems} />
       <div className={playerDetailCardClass}>
         <PlayerProfileHeader player={player} />
@@ -52,10 +56,7 @@ export function PlayerDetailPage() {
         />
         {player.note ? <PlayerDetailNote note={player.note} /> : null}
       </div>
-      <Link
-        to="/players"
-        className="inline-flex text-sm font-medium text-fume-500 hover:text-gold-700 dark:text-fume-400 dark:hover:text-gold-400"
-      >
+      <Link to="/players" className={playerDetailFooterLinkClass}>
         ← All players
       </Link>
     </div>

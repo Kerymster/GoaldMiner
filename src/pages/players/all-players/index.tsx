@@ -1,4 +1,5 @@
 import { PageHeader } from '../../../components/PageHeader'
+import { pageStack, proseErrorSm } from '../../../components/pageChromeStyles'
 import { ListPagination } from '../../../components/ListPagination'
 import { usePlayersList } from '../../../hooks/usePlayersList'
 import { PlayerListFilters } from '../PlayerListFilters'
@@ -33,7 +34,7 @@ export function AllPlayersPage() {
   } = usePlayersList()
 
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <PageHeader
         breadcrumbItems={BREADCRUMB}
         title={TITLE}
@@ -55,9 +56,7 @@ export function AllPlayersPage() {
         onSortChange={setSort}
       />
 
-      {error ? (
-        <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-      ) : null}
+      {error ? <p className={proseErrorSm}>{error}</p> : null}
       {loading ? (
         <p className="text-sm text-fume-500 dark:text-fume-400">Loading…</p>
       ) : null}

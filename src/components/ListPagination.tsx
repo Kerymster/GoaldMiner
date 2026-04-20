@@ -1,5 +1,10 @@
 import type { Dispatch, SetStateAction } from 'react'
 import type { PaginatedResponse } from '../types/api'
+import {
+  paginationBarClass,
+  paginationNavButtonClass,
+  proseMuted,
+} from './pageChromeStyles'
 
 type ListPaginationProps<T = unknown> = {
   page: number
@@ -20,25 +25,23 @@ export function ListPagination<T>({
   if (!data || data.totalPages <= 1) return null
 
   return (
-    <div
-      className={`flex flex-wrap items-center gap-2 text-sm ${className}`.trim()}
-    >
+    <div className={`${paginationBarClass} ${className}`.trim()}>
       <button
         type="button"
         disabled={page <= 1 || loading}
         onClick={() => setPage((p) => Math.max(1, p - 1))}
-        className="cursor-pointer rounded-lg border border-fume-200 px-3 py-1.5 font-medium disabled:cursor-not-allowed disabled:opacity-40 dark:border-fume-700"
+        className={paginationNavButtonClass}
       >
         Previous
       </button>
-      <span className="text-fume-600 dark:text-fume-400">
+      <span className={proseMuted}>
         Page {data.page} of {data.totalPages} ({data.total} total)
       </span>
       <button
         type="button"
         disabled={page >= data.totalPages || loading}
         onClick={() => setPage((p) => Math.min(data.totalPages, p + 1))}
-        className="cursor-pointer rounded-lg border border-fume-200 px-3 py-1.5 font-medium disabled:cursor-not-allowed disabled:opacity-40 dark:border-fume-700"
+        className={paginationNavButtonClass}
       >
         Next
       </button>

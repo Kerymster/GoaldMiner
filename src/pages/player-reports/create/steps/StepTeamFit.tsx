@@ -1,4 +1,5 @@
 import { OverlaySelect } from '../../../../components/OverlaySelect'
+import { pageStack } from '../../../../components/pageChromeStyles'
 import {
   STAFF_RATING_MAX,
   STAFF_RATING_MIN,
@@ -20,7 +21,7 @@ const RATING_OPTIONS = [
 
 export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <ScoutReportField
         label="Which clubs / profiles fit?"
         value={form.teamFit.whichTeams}

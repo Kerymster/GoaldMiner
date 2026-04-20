@@ -1,4 +1,5 @@
 import { PageHeader } from '../../../components/PageHeader'
+import { pageStack } from '../../../components/pageChromeStyles'
 import { CreateReportForm } from '../create/CreateReportForm'
 
 const BREADCRUMB = [
@@ -11,7 +12,7 @@ const DESCRIPTION =
 
 export function CreateReportPage() {
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <PageHeader
         breadcrumbItems={BREADCRUMB}
         title={TITLE}

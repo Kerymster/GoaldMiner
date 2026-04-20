@@ -1,10 +1,11 @@
+import { pageStack } from '../../../../components/pageChromeStyles'
 import { reportSectionTitleClass } from '../reportFormStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
 export function StepStatistical({ form, setForm, errors }: ScoutReportStepProps) {
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <ScoutReportField
         label="Data source"
         hint="e.g. SofaScore, Wyscout, club or competition data pages"

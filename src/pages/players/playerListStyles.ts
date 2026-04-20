@@ -1,3 +1,7 @@
+/**
+ * Players list route — list container surface and filter/input controls.
+ */
+
 export const playerListSurface =
   'divide-y divide-surface-list-divider rounded-xl border border-surface-panel-border bg-surface-panel shadow-sm shadow-fume-950/10 dark:shadow-none'
 

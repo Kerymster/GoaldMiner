@@ -1,10 +1,11 @@
+import { pageStackCompact, proseMutedSm } from '../../../../components/pageChromeStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
 export function StepComparison({ form, setForm, errors }: ScoutReportStepProps) {
   return (
-    <div className="space-y-4">
-      <p className="text-sm text-fume-600 dark:text-fume-400">
+    <div className={pageStackCompact}>
+      <p className={proseMutedSm}>
         Optional — compare playing style and level to reference players.
       </p>
       <ScoutReportField

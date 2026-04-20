@@ -1,10 +1,11 @@
+import { pageStackSpacious } from '../../../../components/pageChromeStyles'
 import { reportSectionTitleClass } from '../reportFormStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
 export function StepTactical({ form, setForm, errors }: ScoutReportStepProps) {
   return (
-    <div className="space-y-8">
+    <div className={pageStackSpacious}>
       <div className="space-y-3">
         <p className={reportSectionTitleClass}>Positioning</p>
         <ScoutReportField

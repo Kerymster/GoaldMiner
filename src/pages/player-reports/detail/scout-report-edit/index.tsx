@@ -7,6 +7,7 @@ import {
 } from '../../../../features/scoutReports/scoutReportsSelectors'
 import type { BreadcrumbItem } from '../../../../components/Breadcrumbs'
 import { PageHeader } from '../../../../components/PageHeader'
+import { pageInlineLinkGold, pageStack } from '../../../../components/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
 import { CreateReportForm } from '../../create/CreateReportForm'
 
@@ -21,10 +22,7 @@ function editFlowBreadcrumbs(lastLabel: string): BreadcrumbItem[] {
 
 function BackToEditReportsLink() {
   return (
-    <Link
-      to="/player-reports/edit"
-      className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
-    >
+    <Link to="/player-reports/edit" className={pageInlineLinkGold}>
       ← Back to edit reports
     </Link>
   )
@@ -73,7 +71,7 @@ export function ScoutReportEditPage() {
 
   if (!playerId || !reportId) {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <EditFlowPageHeader
           breadcrumbLast="Edit"
           title="Report not found"
@@ -86,7 +84,7 @@ export function ScoutReportEditPage() {
 
   if (awaitingData) {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <EditFlowPageHeader
           breadcrumbLast="Edit"
           title="Edit scout report"
@@ -98,7 +96,7 @@ export function ScoutReportEditPage() {
 
   if (bundle.status === 'failed') {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <EditFlowPageHeader
           breadcrumbLast="Edit"
           title="Could not load reports"
@@ -111,7 +109,7 @@ export function ScoutReportEditPage() {
 
   if (!record) {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <EditFlowPageHeader
           breadcrumbLast="Edit"
           title="Report not found"
@@ -123,7 +121,7 @@ export function ScoutReportEditPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <EditFlowPageHeader
         breadcrumbLast="Edit report"
         title="Edit scout report"

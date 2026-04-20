@@ -1,4 +1,10 @@
 import { Link } from 'react-router-dom'
+import {
+  breadcrumbCurrentClass,
+  breadcrumbLinkClass,
+  breadcrumbListClass,
+  breadcrumbSeparatorClass,
+} from './breadcrumbStyles'
 
 export type BreadcrumbItem = {
   label: string
@@ -15,30 +21,23 @@ export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
 
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ol className="flex flex-wrap items-center gap-x-1 gap-y-1 text-sm text-fume-500 dark:text-fume-400">
+      <ol className={breadcrumbListClass}>
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           return (
             <li key={`${item.label}-${index}`} className="flex items-center gap-1">
               {index > 0 ? (
-                <span className="text-fume-300 dark:text-fume-600" aria-hidden>
+                <span className={breadcrumbSeparatorClass} aria-hidden>
                   /
                 </span>
               ) : null}
               {item.to && !isLast ? (
-                <Link
-                  to={item.to}
-                  className="font-medium text-fume-700 underline-offset-4 hover:text-gold-700 hover:underline dark:text-fume-300 dark:hover:text-gold-400"
-                >
+                <Link to={item.to} className={breadcrumbLinkClass}>
                   {item.label}
                 </Link>
               ) : (
                 <span
-                  className={
-                    isLast
-                      ? 'font-medium text-fume-900 dark:text-fume-100'
-                      : undefined
-                  }
+                  className={isLast ? breadcrumbCurrentClass : undefined}
                   aria-current={isLast ? 'page' : undefined}
                 >
                   {item.label}

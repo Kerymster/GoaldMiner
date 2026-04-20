@@ -6,6 +6,7 @@ import {
 import { useComparePlayersPool } from '../../hooks/useComparePlayersPool'
 import { useCompareSelectionSync } from '../../hooks/useCompareSelectionSync'
 import { PageHeader } from '../../components/PageHeader'
+import { pageStack, proseError, proseMuted } from '../../components/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   selectComparePlayerAId,
@@ -32,60 +33,58 @@ export function ComparePage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <PageHeader
           breadcrumbItems={BREADCRUMB}
           title={TITLE}
           description={DESCRIPTION}
         />
-        <p className="text-fume-600 dark:text-fume-400">Loading…</p>
+        <p className={proseMuted}>Loading…</p>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <PageHeader
           breadcrumbItems={BREADCRUMB}
           title={TITLE}
           description={DESCRIPTION}
         />
-        <p className="text-red-600 dark:text-red-400">{error}</p>
+        <p className={proseError}>{error}</p>
       </div>
     )
   }
 
   if (pool.length < 2) {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <PageHeader
           breadcrumbItems={BREADCRUMB}
           title={TITLE}
           description={DESCRIPTION}
         />
-        <p className="text-fume-600 dark:text-fume-400">
-          Need at least two players in the API to compare.
-        </p>
+        <p className={proseMuted}>Need at least two players in the API to compare.</p>
       </div>
     )
   }
 
   if (!a || !b) {
     return (
-      <div className="space-y-6">
+      <div className={pageStack}>
         <PageHeader
           breadcrumbItems={BREADCRUMB}
           title={TITLE}
           description={DESCRIPTION}
         />
-        <p className="text-fume-600 dark:text-fume-400">Loading…</p>
+        <p className={proseMuted}>Loading…</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <PageHeader
         breadcrumbItems={BREADCRUMB}
         title={TITLE}

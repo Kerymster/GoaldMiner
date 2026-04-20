@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { overlayAutocompletePanelClass } from '../../../components/overlayDropdownStyles'
+import { proseError } from '../../../components/pageChromeStyles'
 import {
   overlaySelectOptionHighlightClass,
   overlaySelectOptionInactiveClass,
@@ -158,7 +159,7 @@ export function ScoutReportNationalityField({
           Nationality
           <span className="text-[11px] font-normal normal-case tracking-normal text-fume-600 dark:text-fume-400">
             {status === 'failed' ? (
-              <span className="text-red-600 dark:text-red-400">{loadError}</span>
+              <span className={proseError}>{loadError}</span>
             ) : (
               'No nationalities were returned.'
             )}{' '}

@@ -1,5 +1,9 @@
 import { playerListInputClass } from '../../players/playerListStyles'
 
+/**
+ * Scout report create/edit flow — fields, step panel, validation copy.
+ */
+
 export const reportFieldClass = playerListInputClass
 
 export const reportTextareaClass = `${playerListInputClass} min-h-[5rem] resize-y`
@@ -20,3 +24,7 @@ export const reportFieldErrorClass =
 /** Inline validation + step-level warnings — compact, muted red. */
 export const reportValidationMessageClass =
   'text-[11px] font-normal leading-snug text-red-500/75 dark:text-red-400/65'
+
+/** Step body card in `CreateReportForm` (title + fields + nav). */
+export const reportStepCardClass =
+  'rounded-xl border border-surface-panel-border bg-surface-panel p-5 shadow-sm shadow-fume-950/10 dark:shadow-none sm:p-6'

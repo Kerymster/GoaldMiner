@@ -1,3 +1,8 @@
+/**
+ * App sidebar — primary and nested route links (`AppSidebar`).
+ * Classes are functions so active state merges without string duplication at call sites.
+ */
+
 /** Sidebar nav — dark slate rail */
 export const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   [

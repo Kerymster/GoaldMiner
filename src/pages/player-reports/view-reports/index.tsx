@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react'
 import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
 import { selectScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSelectors'
 import { PageHeader } from '../../../components/PageHeader'
+import {
+  pageHintNarrow,
+  pageStack,
+  proseErrorSm,
+  proseMutedSm,
+} from '../../../components/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { playerListSurface } from '../../players/playerListStyles'
 import { ViewReportsListRow } from '../ViewReportsListRow'
@@ -32,7 +38,7 @@ export function ViewReportsPage() {
   const reportsError = status === 'failed' ? error : null
 
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <PageHeader
         breadcrumbItems={BREADCRUMB}
         title={TITLE}
@@ -51,13 +57,11 @@ export function ViewReportsPage() {
             Reports for {selectedPlayer.name}
           </h2>
           {reportsLoading ? (
-            <p className="text-sm text-fume-600 dark:text-fume-400">Loading reports…</p>
+            <p className={proseMutedSm}>Loading reports…</p>
           ) : reportsError ? (
-            <p className="text-sm text-red-600 dark:text-red-400">{reportsError}</p>
+            <p className={proseErrorSm}>{reportsError}</p>
           ) : reports.length === 0 ? (
-            <p className="text-sm text-fume-600 dark:text-fume-400">
-              No scout reports were returned for this player.
-            </p>
+            <p className={proseMutedSm}>No scout reports were returned for this player.</p>
           ) : (
             <ul className={`${playerListSurface} overflow-hidden`}>
               {reports.map((row) => (
@@ -67,9 +71,7 @@ export function ViewReportsPage() {
           )}
         </div>
       ) : (
-        <p className="max-w-xl text-sm text-fume-600 dark:text-fume-400">
-          Choose a player from search to see their report list here.
-        </p>
+        <p className={pageHintNarrow}>Choose a player from search to see their report list here.</p>
       )}
     </div>
   )

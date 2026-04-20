@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { proseMutedSm, sessionGateLoadingClass } from './pageChromeStyles'
 
 export function ProtectedRoute() {
   const { user, loading } = useAuth()
@@ -7,8 +8,8 @@ export function ProtectedRoute() {
 
   if (loading) {
     return (
-      <div className="flex min-h-dvh items-center justify-center bg-shell font-sans text-fume-600 dark:bg-fume-950 dark:text-fume-400">
-        <p className="text-sm">Loading session…</p>
+      <div className={sessionGateLoadingClass}>
+        <p className={proseMutedSm}>Loading session…</p>
       </div>
     )
   }

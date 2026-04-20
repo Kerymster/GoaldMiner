@@ -1,4 +1,12 @@
+/**
+ * Read-only scout report body — section cards, tabs, label/value grid.
+ * Reference pattern for other feature-level `*Styles.ts` modules (named exports + JSDoc).
+ */
+
 export const detailPageStack = 'space-y-5 lg:space-y-6'
+
+/** Root stack in `ScoutReportDetailBody` (tabs + panels). */
+export const detailBodyShellStack = 'space-y-5'
 
 /** Uses theme surface tokens — see index.css (--surface-panel) */
 export const detailSectionCard =

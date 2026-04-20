@@ -8,8 +8,9 @@ import {
   createEmptyScoutReportForm,
   type ScoutReportForm,
 } from '../../../types/scoutReportForm'
+import { pageStack, proseMutedSm } from '../../../components/pageChromeStyles'
 import { ProTipsPanel } from './ProTipsPanel'
-import { reportValidationMessageClass } from './reportFormStyles'
+import { reportStepCardClass, reportValidationMessageClass } from './reportFormStyles'
 import { ScoutReportStepBody } from './ScoutReportStepBody'
 import {
   findFirstInvalidScoutReportStep,
@@ -116,7 +117,7 @@ export function CreateReportForm({
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_minmax(0,18rem)] lg:items-start">
-      <div className="space-y-6">
+      <div className={pageStack}>
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-fume-500 dark:text-fume-400">
             <span>
@@ -141,12 +142,12 @@ export function CreateReportForm({
           </div>
         </div>
 
-        <div className="rounded-xl border border-surface-panel-border bg-surface-panel p-5 shadow-sm shadow-fume-950/10 dark:shadow-none sm:p-6">
+        <div className={reportStepCardClass}>
           <div className="mb-6 border-b border-surface-divider pb-4">
             <h3 className="text-lg font-semibold tracking-tight text-fume-950 dark:text-fume-50">
               {meta.title}
             </h3>
-            <p className="mt-1 text-sm text-fume-600 dark:text-fume-400">
+            <p className={`mt-1 ${proseMutedSm}`}>
               {meta.description}
             </p>
             {Object.keys(stepErrors).length > 0 ? (

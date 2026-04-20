@@ -1,3 +1,4 @@
+import { pageStack, proseMutedSm } from '../../../../components/pageChromeStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import { reportSectionTitleClass } from '../reportFormStyles'
 import type { ScoutReportForm } from '../../../../types/scoutReportForm'
@@ -15,7 +16,9 @@ function PositionRoleFromPlayerStep({ form }: { form: ScoutReportForm }) {
 
   if (!hasCore && !hasExtra) {
     return (
-      <div className="rounded-lg border border-dashed border-surface-field-border bg-surface-field/30 px-4 py-3 text-sm text-fume-600 dark:text-fume-400">
+      <div
+        className={`rounded-lg border border-dashed border-surface-field-border bg-surface-field/30 px-4 py-3 ${proseMutedSm}`}
+      >
         Position and role from <strong className="font-medium">Player information</strong> will
         appear here after you complete that step.
       </div>
@@ -57,7 +60,7 @@ function PositionRoleFromPlayerStep({ form }: { form: ScoutReportForm }) {
 
 export function StepPlayingStyle({ form, setForm, errors }: ScoutReportStepProps) {
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <PositionRoleFromPlayerStep form={form} />
       <ScoutReportField
         label="System fit"

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { ScoutReportForm } from '../../../types/scoutReportForm'
 import {
+  detailBodyShellStack,
   detailPageStack,
   detailTabButton,
   detailTabButtonActive,
@@ -27,7 +28,7 @@ export function ScoutReportDetailBody({ form }: { form: ScoutReportForm }) {
   const [tab, setTab] = useState<DetailTab>('overview')
 
   return (
-    <div className="space-y-5">
+    <div className={detailBodyShellStack}>
       <div>
         <div className={detailTabList} role="tablist" aria-label="Report sections">
           <button
@@ -80,12 +81,12 @@ export function ScoutReportDetailBody({ form }: { form: ScoutReportForm }) {
           aria-labelledby="tab-analysis"
           className={`${detailPageStack} lg:grid lg:grid-cols-2 lg:items-start lg:gap-5`}
         >
-          <div className="space-y-5 lg:space-y-6">
+          <div className={detailPageStack}>
             <DetailTechnicalSection form={form} />
             <DetailTacticalSection form={form} />
             <DetailPhysicalSection form={form} />
           </div>
-          <div className="space-y-5 lg:space-y-6">
+          <div className={detailPageStack}>
             <DetailMentalSection form={form} />
             <DetailStatisticalSection form={form} />
             <DetailPotentialSection form={form} />

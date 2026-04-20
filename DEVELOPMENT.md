@@ -41,9 +41,19 @@ Tek kaynak: `src/index.css` içindeki `--surface-*` değişkenleri; bileşenlerd
 
 Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonlar yerine bu token’lara bağlanın.
 
+### Tailwind sınıf token’ları (`*Styles.ts`)
+
+Tekrar eden veya anlam taşıyan Tailwind utility zincirleri, `detailStyles.ts` örüntüsüyle **isimlendirilmiş sabitlere** taşınır:
+
+- **Dosya yeri:** Mümkünse özellikle birlikte kullanılan sınıflar **o özelliğin yanında** (örn. `detail/detailStyles.ts`, `create/reportFormStyles.ts`, `players/playerListStyles.ts`). Birden fazla alan paylaşıyorsa `src/components/pageChromeStyles.ts`, `pageHeaderStyles.ts`, `layoutStyles.ts`, `breadcrumbStyles.ts`, `authFormStyles.ts`, `top-bar/topBarStyles.ts` gibi ortak modüller kullanılır.
+- **İçerik:** Her export için kısa bir **`/** … */` JSDoc** (ne zaman kullanılır, hangi bileşenle eşleşir) yazılır. Sınıf dizgisi JSX’te **birebir aynı** kalmalıdır; “yaklaşık” birleştirme yapılmaz.
+- **İsimlendirme:** `pageStack`, `proseMutedSm`, `detailSectionCard` gibi **bağlamı okuyunca anlaşılır** sabit isimleri; gerektiğinde özellik öneki (`detail*`, `report*`, `topBar*`).
+- **Ne zaman çıkarmalı:** Aynı zincir **iki veya daha fazla** dosyada geçiyorsa veya tek dosyada bile uzun bileşik bir blok tekrarlanıyorsa. Tek satırlık, bir daha kullanılmayacak sınıflar JSX’te kalabilir.
+- **Referans:** `src/pages/player-reports/detail/detailStyles.ts` — proje içi örnek “altın standart” modül.
+
 ### Sayfa başlığı ve rotalar
 
-- Rota sayfalarında mümkünse **`PageHeader`** (`src/components/PageHeader.tsx`) kullanılır: breadcrumb, başlık, açıklama, isteğe bağlı `eyebrow` ve `metaLine`.
+- Rota sayfalarında mümkünse **`PageHeader`** (`src/components/PageHeader.tsx`) kullanılır: breadcrumb, başlık, açıklama, isteğe bağlı `eyebrow` ve `metaLine`. Kabuk sınıfları `pageHeaderStyles.ts` üzerinden tutulur.
 - Liste veya detay için özel “hero” gerekiyorsa `PageHeader` genişletilir; kart stili ve tipografi tek yerde kalmalıdır.
 
 ### Rapor detayı

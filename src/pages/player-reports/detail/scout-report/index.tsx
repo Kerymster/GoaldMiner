@@ -5,10 +5,44 @@ import {
   selectScoutReportRow,
   selectScoutReportsForPlayer,
 } from '../../../../features/scoutReports/scoutReportsSelectors'
+import type { BreadcrumbItem } from '../../../../components/Breadcrumbs'
 import { PageHeader } from '../../../../components/PageHeader'
+import { pageInlineLinkGold, pageStack } from '../../../../components/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
 import { DetailReportHero } from '../DetailReportHero'
 import { ScoutReportDetailBody } from '../ScoutReportDetailBody'
+
+const REPORT_DETAIL_BREADCRUMBS: BreadcrumbItem[] = [
+  { label: 'Player Reports', to: '/player-reports' },
+  { label: 'Report' },
+]
+
+function BackToReportsLink() {
+  return (
+    <Link to="/player-reports" className={pageInlineLinkGold}>
+      ← Back to reports
+    </Link>
+  )
+}
+
+type ReportDetailStateShellProps = {
+  title: string
+  description: string
+  backLink?: boolean
+}
+
+function ReportDetailStateShell({ title, description, backLink }: ReportDetailStateShellProps) {
+  return (
+    <div className={pageStack}>
+      <PageHeader
+        breadcrumbItems={REPORT_DETAIL_BREADCRUMBS}
+        title={title}
+        description={description}
+      />
+      {backLink ? <BackToReportsLink /> : null}
+    </div>
+  )
+}
 
 export function ScoutReportDetailPage() {
   const { playerId: playerIdParam, reportId } = useParams<{
@@ -37,84 +71,42 @@ export function ScoutReportDetailPage() {
 
   if (!playerId || !reportId) {
     return (
-      <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
-          ]}
-          title="Report not found"
-          description="Missing player or report in the URL."
-        />
-        <Link
-          to="/player-reports"
-          className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
-        >
-          ← Back to reports
-        </Link>
-      </div>
+      <ReportDetailStateShell
+        title="Report not found"
+        description="Missing player or report in the URL."
+        backLink
+      />
     )
   }
 
   if (awaitingData) {
     return (
-      <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
-          ]}
-          title="Scout report"
-          description="Loading…"
-        />
-      </div>
+      <ReportDetailStateShell title="Scout report" description="Loading…" />
     )
   }
 
   if (bundle.status === 'failed') {
     return (
-      <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
-          ]}
-          title="Could not load reports"
-          description={bundle.error ?? 'Unknown error'}
-        />
-        <Link
-          to="/player-reports"
-          className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
-        >
-          ← Back to reports
-        </Link>
-      </div>
+      <ReportDetailStateShell
+        title="Could not load reports"
+        description={bundle.error ?? 'Unknown error'}
+        backLink
+      />
     )
   }
 
   if (!record) {
     return (
-      <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
-          ]}
-          title="Report not found"
-          description="No report with this id for this player. Open it from the report list or check the link."
-        />
-        <Link
-          to="/player-reports"
-          className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
-        >
-          ← Back to reports
-        </Link>
-      </div>
+      <ReportDetailStateShell
+        title="Report not found"
+        description="No report with this id for this player. Open it from the report list or check the link."
+        backLink
+      />
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className={pageStack}>
       <DetailReportHero playerId={playerId} reportId={record.id} form={record.form} />
       <ScoutReportDetailBody form={record.form} />
     </div>
