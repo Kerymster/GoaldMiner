@@ -5,7 +5,9 @@ import { ComparePage } from './pages/compare/ComparePage'
 import { PlayerDetailPage } from './pages/players/PlayerDetailPage'
 import { AllPlayersPage } from './pages/players/AllPlayersPage'
 import { CreateReportPage } from './pages/player-reports/CreateReportPage'
+import { EditReportsPage } from './pages/player-reports/EditReportsPage'
 import { ScoutReportDetailPage } from './pages/player-reports/detail/ScoutReportDetailPage'
+import { ScoutReportEditPage } from './pages/player-reports/detail/ScoutReportEditPage'
 import { ViewReportsPage } from './pages/player-reports/ViewReportsPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { LoginPage } from './pages/auth/LoginPage'
@@ -25,7 +27,12 @@ export default function App() {
             <Route path="players/:id" element={<PlayerDetailPage />} />
             <Route path="compare" element={<ComparePage />} />
             <Route path="player-reports" element={<ViewReportsPage />} />
+            <Route path="player-reports/edit" element={<EditReportsPage />} />
             <Route path="player-reports/create" element={<CreateReportPage />} />
+            <Route
+              path="player-reports/players/:playerId/reports/:reportId/edit"
+              element={<ScoutReportEditPage />}
+            />
             <Route
               path="player-reports/players/:playerId/reports/:reportId"
               element={<ScoutReportDetailPage />}

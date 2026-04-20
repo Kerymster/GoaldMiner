@@ -81,6 +81,11 @@ export function AppSidebar() {
                   View reports
                 </SidebarRouteSublink>
               </li>
+              <li>
+                <SidebarRouteSublink to="/player-reports/edit" end>
+                  Edit reports
+                </SidebarRouteSublink>
+              </li>
             </ul>
           </details>
         </div>

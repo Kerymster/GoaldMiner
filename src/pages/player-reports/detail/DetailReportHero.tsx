@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   STAFF_RATING_MAX,
   STAFF_RATING_MIN,
@@ -52,9 +53,11 @@ function StaffRatingStars({ rating }: { rating: number }) {
 }
 
 export function DetailReportHero({
+  playerId,
   reportId,
   form,
 }: {
+  playerId?: string
   reportId: string
   form: ScoutReportForm
 }) {
@@ -117,6 +120,14 @@ export function DetailReportHero({
             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold-400">
               Scout report
             </p>
+            {playerId ? (
+              <Link
+                to={`/player-reports/players/${encodeURIComponent(playerId)}/reports/${encodeURIComponent(reportId)}/edit`}
+                className="inline-flex items-center rounded-full border border-gold-500/45 bg-gold-500/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold-300 transition hover:border-gold-400/60 hover:bg-gold-500/20"
+              >
+                Edit report
+              </Link>
+            ) : null}
             <button
               type="button"
               onClick={copyId}

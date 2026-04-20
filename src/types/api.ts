@@ -33,10 +33,38 @@ export type ApiErr = {
   kind: 'ApiErr'
   status: number
   message: string
+  /** Present on some 400 responses (e.g. validation `issues` from the API). */
+  issues?: unknown
 }
 
-export function createApiErr(status: number, message: string): ApiErr {
-  return { kind: 'ApiErr', status, message }
+export function createApiErr(
+  status: number,
+  message: string,
+  issues?: unknown,
+): ApiErr {
+  return { kind: 'ApiErr', status, message, issues }
+}
+
+/** Turns API `issues` (array of strings or { path, message }) into display text. */
+export function formatApiIssuesSummary(issues: unknown): string {
+  if (!Array.isArray(issues) || issues.length === 0) return ''
+  return issues
+    .map((item) => {
+      if (typeof item === 'string') return item
+      if (item && typeof item === 'object') {
+        const o = item as { path?: unknown; message?: unknown }
+        const path = typeof o.path === 'string' ? o.path : null
+        const message = typeof o.message === 'string' ? o.message : null
+        if (path && message) return `${path}: ${message}`
+        if (message) return message
+      }
+      try {
+        return JSON.stringify(item)
+      } catch {
+        return String(item)
+      }
+    })
+    .join('\n')
 }
 
 export function isApiErr(e: unknown): e is ApiErr {

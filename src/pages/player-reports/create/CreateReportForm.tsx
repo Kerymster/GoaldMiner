@@ -1,5 +1,8 @@
 import { useCallback, useState, type SetStateAction } from 'react'
-import { createScoutReport } from '../../../api/scoutReports'
+import { createScoutReport, updateScoutReport } from '../../../api/scoutReports'
+import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
+import { useAppDispatch } from '../../../store/hooks'
+import { formatApiIssuesSummary, isApiErr } from '../../../types/api'
 import {
   SCOUT_REPORT_STEPS,
   createEmptyScoutReportForm,
@@ -9,13 +12,29 @@ import { ProTipsPanel } from './ProTipsPanel'
 import { reportValidationMessageClass } from './reportFormStyles'
 import { ScoutReportStepBody } from './ScoutReportStepBody'
 import {
+  findFirstInvalidScoutReportStep,
   hasStepErrors,
   validateScoutReportStep,
   type ScoutReportStepErrors,
 } from './scoutReportStepValidation'
 
-export function CreateReportForm() {
-  const [form, setForm] = useState<ScoutReportForm>(createEmptyScoutReportForm)
+export type CreateReportFormProps = {
+  mode?: 'create' | 'edit'
+  initialForm?: ScoutReportForm
+  reportId?: string
+  playerId?: string
+}
+
+export function CreateReportForm({
+  mode = 'create',
+  initialForm,
+  reportId,
+  playerId,
+}: CreateReportFormProps = {}) {
+  const dispatch = useAppDispatch()
+  const [form, setForm] = useState<ScoutReportForm>(() =>
+    initialForm ?? createEmptyScoutReportForm(),
+  )
   const [stepErrors, setStepErrors] = useState<ScoutReportStepErrors>({})
   const [step, setStep] = useState(0)
   const [saveStatus, setSaveStatus] = useState<
@@ -54,25 +73,44 @@ export function CreateReportForm() {
   }, [step, form])
 
   const handleSave = useCallback(async () => {
-    const errs = validateScoutReportStep(step, form)
-    if (hasStepErrors(errs)) {
-      setStepErrors(errs)
+    const invalid = findFirstInvalidScoutReportStep(form)
+    if (invalid) {
+      setStep(invalid.step)
+      setStepErrors(invalid.errors)
+      setSaveStatus('idle')
+      setSaveMessage(null)
       return
     }
     setStepErrors({})
     setSaveStatus('saving')
     setSaveMessage(null)
     try {
-      await createScoutReport(form)
-      setSaveStatus('success')
-      setSaveMessage('Report saved successfully.')
+      if (mode === 'edit' && reportId) {
+        const updated = await updateScoutReport(reportId, form)
+        setForm(updated)
+        if (playerId) {
+          void dispatch(loadScoutReportsForPlayer(playerId))
+        }
+        setSaveStatus('success')
+        setSaveMessage('Report updated successfully.')
+      } else {
+        await createScoutReport(form)
+        setSaveStatus('success')
+        setSaveMessage('Report saved successfully.')
+      }
     } catch (e) {
       setSaveStatus('error')
-      setSaveMessage(
-        e instanceof Error ? e.message : 'Save failed. Check the API and try again.',
-      )
+      if (isApiErr(e) && e.status === 400) {
+        const detail = formatApiIssuesSummary(e.issues)
+        const base = e.message || 'Request could not be validated.'
+        setSaveMessage(detail ? `${base}\n\n${detail}` : base)
+      } else {
+        setSaveMessage(
+          e instanceof Error ? e.message : 'Save failed. Check the API and try again.',
+        )
+      }
     }
-  }, [form, step])
+  }, [dispatch, form, mode, playerId, reportId])
 
   const progress = ((step + 1) / SCOUT_REPORT_STEPS.length) * 100
 
@@ -143,16 +181,19 @@ export function CreateReportForm() {
                 >
                   Next
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => void handleSave()}
-                  disabled={saveStatus === 'saving'}
-                  className="cursor-pointer rounded-lg bg-gold-600 px-4 py-2 text-sm font-semibold text-fume-950 shadow-sm transition-colors hover:bg-gold-500 disabled:cursor-wait disabled:opacity-70"
-                >
-                  {saveStatus === 'saving' ? 'Saving…' : 'Save report'}
-                </button>
-              )}
+              ) : null}
+              <button
+                type="button"
+                onClick={() => void handleSave()}
+                disabled={saveStatus === 'saving'}
+                className="cursor-pointer rounded-lg border border-gold-600/80 bg-gold-600/15 px-4 py-2 text-sm font-semibold text-fume-900 shadow-sm transition-colors hover:bg-gold-600/25 disabled:cursor-wait disabled:opacity-70 dark:border-gold-500/50 dark:text-gold-100 dark:hover:bg-gold-500/20"
+              >
+                {saveStatus === 'saving'
+                  ? 'Saving…'
+                  : mode === 'edit'
+                    ? 'Update report'
+                    : 'Save report'}
+              </button>
             </div>
           </div>
 
@@ -161,7 +202,7 @@ export function CreateReportForm() {
               className={
                 saveStatus === 'success'
                   ? 'mt-4 text-sm text-sea-700 dark:text-sea-400'
-                  : `mt-4 ${reportValidationMessageClass}`
+                  : `mt-4 whitespace-pre-line ${reportValidationMessageClass}`
               }
               role="status"
             >

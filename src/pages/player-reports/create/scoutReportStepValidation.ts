@@ -3,6 +3,7 @@ import {
   isPositionCode,
 } from '../../../data/positionRoles'
 import {
+  SCOUT_REPORT_STEPS,
   STAFF_RATING_MAX,
   STAFF_RATING_MIN,
   type ScoutReportForm,
@@ -191,4 +192,16 @@ export function validateScoutReportStep(
 
 export function hasStepErrors(errors: ScoutReportStepErrors): boolean {
   return Object.keys(errors).length > 0
+}
+
+/** First wizard step that fails validation, or `null` if the full form is valid. */
+export function findFirstInvalidScoutReportStep(form: ScoutReportForm): {
+  step: number
+  errors: ScoutReportStepErrors
+} | null {
+  for (let s = 0; s < SCOUT_REPORT_STEPS.length; s++) {
+    const errors = validateScoutReportStep(s, form)
+    if (hasStepErrors(errors)) return { step: s, errors }
+  }
+  return null
 }

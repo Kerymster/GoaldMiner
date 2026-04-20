@@ -65,7 +65,11 @@ export async function fetchJson<T>(path: string, init?: RequestInit): Promise<T>
       typeof (body as { error: unknown }).error === 'string'
         ? (body as { error: string }).error
         : res.statusText
-    throw createApiErr(res.status, msg)
+    const issues =
+      typeof body === 'object' && body !== null && 'issues' in body
+        ? (body as { issues: unknown }).issues
+        : undefined
+    throw createApiErr(res.status, msg, issues)
   }
   return body as T
 }

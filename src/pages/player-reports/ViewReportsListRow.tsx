@@ -25,11 +25,17 @@ function excerpt(text: string, max = 140) {
 type ViewReportsListRowProps = {
   playerId: string
   row: PlayerScoutReportRow
+  variant?: 'view' | 'edit'
 }
 
-export function ViewReportsListRow({ playerId, row }: ViewReportsListRowProps) {
+export function ViewReportsListRow({
+  playerId,
+  row,
+  variant = 'view',
+}: ViewReportsListRowProps) {
   const { id, form } = row
-  const to = `/player-reports/players/${encodeURIComponent(playerId)}/reports/${encodeURIComponent(id)}`
+  const base = `/player-reports/players/${encodeURIComponent(playerId)}/reports/${encodeURIComponent(id)}`
+  const to = variant === 'edit' ? `${base}/edit` : base
 
   return (
     <li>
@@ -53,7 +59,9 @@ export function ViewReportsListRow({ playerId, row }: ViewReportsListRowProps) {
           <span className="text-[10px] font-medium uppercase tracking-wide text-fume-400 dark:text-fume-500">
             {id}
           </span>
-          <span className="text-xs font-semibold text-gold-700 dark:text-gold-400">Open →</span>
+          <span className="text-xs font-semibold text-gold-700 dark:text-gold-400">
+            {variant === 'edit' ? 'Edit →' : 'Open →'}
+          </span>
         </span>
       </Link>
     </li>

@@ -7,10 +7,9 @@ import {
 } from '../../../features/scoutReports/scoutReportsSelectors'
 import { PageHeader } from '../../../components/PageHeader'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { DetailReportHero } from './DetailReportHero'
-import { ScoutReportDetailBody } from './ScoutReportDetailBody'
+import { CreateReportForm } from '../create/CreateReportForm'
 
-export function ScoutReportDetailPage() {
+export function ScoutReportEditPage() {
   const { playerId: playerIdParam, reportId } = useParams<{
     playerId: string
     reportId: string
@@ -41,16 +40,17 @@ export function ScoutReportDetailPage() {
         <PageHeader
           breadcrumbItems={[
             { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
+            { label: 'Edit reports', to: '/player-reports/edit' },
+            { label: 'Edit' },
           ]}
           title="Report not found"
           description="Missing player or report in the URL."
         />
         <Link
-          to="/player-reports"
+          to="/player-reports/edit"
           className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
         >
-          ← Back to reports
+          ← Back to edit reports
         </Link>
       </div>
     )
@@ -62,9 +62,10 @@ export function ScoutReportDetailPage() {
         <PageHeader
           breadcrumbItems={[
             { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
+            { label: 'Edit reports', to: '/player-reports/edit' },
+            { label: 'Edit' },
           ]}
-          title="Scout report"
+          title="Edit scout report"
           description="Loading…"
         />
       </div>
@@ -77,16 +78,17 @@ export function ScoutReportDetailPage() {
         <PageHeader
           breadcrumbItems={[
             { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
+            { label: 'Edit reports', to: '/player-reports/edit' },
+            { label: 'Edit' },
           ]}
           title="Could not load reports"
           description={bundle.error ?? 'Unknown error'}
         />
         <Link
-          to="/player-reports"
+          to="/player-reports/edit"
           className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
         >
-          ← Back to reports
+          ← Back to edit reports
         </Link>
       </div>
     )
@@ -98,16 +100,17 @@ export function ScoutReportDetailPage() {
         <PageHeader
           breadcrumbItems={[
             { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Report' },
+            { label: 'Edit reports', to: '/player-reports/edit' },
+            { label: 'Edit' },
           ]}
           title="Report not found"
-          description="No report with this id for this player. Open it from the report list or check the link."
+          description="No report with this id for this player. Open it from the edit list or check the link."
         />
         <Link
-          to="/player-reports"
+          to="/player-reports/edit"
           className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
         >
-          ← Back to reports
+          ← Back to edit reports
         </Link>
       </div>
     )
@@ -115,8 +118,22 @@ export function ScoutReportDetailPage() {
 
   return (
     <div className="space-y-6">
-      <DetailReportHero playerId={playerId} reportId={record.id} form={record.form} />
-      <ScoutReportDetailBody form={record.form} />
+      <PageHeader
+        breadcrumbItems={[
+          { label: 'Player Reports', to: '/player-reports' },
+          { label: 'Edit reports', to: '/player-reports/edit' },
+          { label: 'Edit report' as const },
+        ]}
+        title="Edit scout report"
+        description="Update the same step-by-step template; changes are saved to the existing report."
+      />
+      <CreateReportForm
+        key={record.id}
+        mode="edit"
+        initialForm={record.form}
+        reportId={record.id}
+        playerId={playerId}
+      />
     </div>
   )
 }
