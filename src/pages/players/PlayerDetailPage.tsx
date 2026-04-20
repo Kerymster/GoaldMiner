@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../../components/Breadcrumbs'
 import { usePlayerDetail } from '../../hooks/usePlayerDetail'
-import { useAppSelector } from '../../store/hooks'
 import { PlayerDetailNote } from './PlayerDetailNote'
 import { PlayerProfileHeader } from './PlayerProfileHeader'
 import { PlayerStatsGrid } from './PlayerStatsGrid'
@@ -13,7 +12,6 @@ const backLinkClass =
 export function PlayerDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { player, loading, error } = usePlayerDetail(id)
-  const nationalities = useAppSelector((s) => s.nationalities.items)
 
   if (loading) {
     return <p className="text-fume-600 dark:text-fume-400">Loading…</p>
@@ -41,17 +39,13 @@ export function PlayerDetailPage() {
     )
   }
 
-  const countryLabel = player.countryId
-    ? nationalities.find((n) => n.code === player.countryId)?.country
-    : undefined
-
   const breadcrumbItems = [{ label: 'Players', to: '/players' }, { label: player.name }]
 
   return (
     <div className="space-y-8">
       <Breadcrumbs items={breadcrumbItems} />
       <div className={playerDetailCardClass}>
-        <PlayerProfileHeader player={player} countryLabel={countryLabel} />
+        <PlayerProfileHeader player={player} />
         <PlayerStatsGrid
           rating={player.rating}
           underratedScore={player.underratedScore}

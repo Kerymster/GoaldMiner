@@ -1,7 +1,22 @@
 import { OverlaySelect } from '../../../../components/OverlaySelect'
+import {
+  STAFF_RATING_MAX,
+  STAFF_RATING_MIN,
+} from '../../../../types/scoutReportForm'
 import { FieldError, ScoutReportField } from '../ScoutReportField'
 import { reportFieldErrorClass, reportLabelClass } from '../reportFormStyles'
 import type { ScoutReportStepProps } from './stepProps'
+
+const RATING_OPTIONS = [
+  { value: '', label: 'Not set' },
+  ...Array.from(
+    { length: STAFF_RATING_MAX - STAFF_RATING_MIN + 1 },
+    (_, i) => {
+      const n = STAFF_RATING_MIN + i
+      return { value: String(n), label: String(n) }
+    },
+  ),
+]
 
 export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
   return (
@@ -55,7 +70,7 @@ export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
         multiline
       />
       <label className={reportLabelClass}>
-        Overall rating (1–5)
+        Overall rating (5–10)
         <OverlaySelect
           value={
             form.teamFit.ratingOutOfFive == null ? '' : String(form.teamFit.ratingOutOfFive)
@@ -69,14 +84,7 @@ export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
               },
             }))
           }
-          options={[
-            { value: '', label: 'Not set' },
-            { value: '1', label: '1' },
-            { value: '2', label: '2' },
-            { value: '3', label: '3' },
-            { value: '4', label: '4' },
-            { value: '5', label: '5' },
-          ]}
+          options={RATING_OPTIONS}
           placeholder="Not set"
           aria-invalid={Boolean(errors.ratingOutOfFive)}
           triggerClassName={errors.ratingOutOfFive ? reportFieldErrorClass : ''}

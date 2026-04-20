@@ -85,7 +85,7 @@ Yeni bir “içerik kutusu” eklerken **`dark:bg-fume-900/45`** gibi tekil tonl
 
 - Slice’lar `src/features/<özellik>/`; selector’lar `src/store/selectors/` altında tutulabilir.
 - Sayfa bileşenleri mümkün olduğunca ince kalır; veri yükleme ve türetilmiş state uygun yerde hook veya selector ile çözülür.
-- **Tekrar istekten kaçınma:** Ülke / uyruk listesi gibi paylaşılan ve Redux’ta tutulan verilere ihtiyaç varsa önce ilgili slice durumu (`status`, vb.) kontrol edilir; veri zaten yüklüyse aynı kaynak için yeni istek atılmaz. Yalnızca eksik veya sayfa özelinde detay gerekiyorsa hedefe uygun istek yapılır.
+- **Tekrar istekten kaçınma:** Uyruk listesi gibi paylaşılan ve Redux’ta tutulan verilere ihtiyaç varsa önce ilgili slice durumu (`status`, vb.) kontrol edilir; veri zaten yüklüyse aynı kaynak için yeni istek atılmaz. Yalnızca eksik veya sayfa özelinde detay gerekiyorsa hedefe uygun istek yapılır.
 
 ## Ortam
 

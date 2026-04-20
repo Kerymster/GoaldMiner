@@ -3,12 +3,10 @@ import { PlayerRankCard } from './PlayerRankCard'
 
 type PlayerProfileHeaderProps = {
   player: Player
-  /** Optional country label from `/api/nationalities` (matches `countryId`). */
-  countryLabel?: string
 }
 
-export function PlayerProfileHeader({ player, countryLabel }: PlayerProfileHeaderProps) {
-  const parts = [player.team, countryLabel, player.position].filter(Boolean)
+export function PlayerProfileHeader({ player }: PlayerProfileHeaderProps) {
+  const parts = [player.team, player.nationality, player.position].filter(Boolean)
 
   return (
     <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">

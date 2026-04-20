@@ -1,11 +1,14 @@
 import type { ScoutReportForm } from '../../../../types/scoutReportForm'
+import { formatStaffRatingVerbose } from '../../../../utils/formatStaffRating'
 import { DetailRow, DetailSection } from '../DetailPrimitives'
 import { detailGrid } from '../detailStyles'
 
 export function DetailTeamFitSection({ form }: { form: ScoutReportForm }) {
   const tf = form.teamFit
   const rating =
-    tf.ratingOutOfFive != null ? `${tf.ratingOutOfFive} / 5` : '—'
+    tf.ratingOutOfFive != null
+      ? formatStaffRatingVerbose(tf.ratingOutOfFive)
+      : '—'
   return (
     <DetailSection title="Team fit & recommendation" id="team-fit">
       <div className={detailGrid}>

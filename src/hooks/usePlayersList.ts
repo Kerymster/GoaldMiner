@@ -24,7 +24,6 @@ export function usePlayersList() {
   const [page, setPage] = useState(1)
   const [q, setQ] = useState('')
   const [debouncedQ, setDebouncedQ] = useState('')
-  const [countryId, setCountryId] = useState('')
   const [sort, setSort] = useState<PlayersSort>('underratedScore_desc')
 
   const [minRating, setMinRating] = useState('')
@@ -67,7 +66,7 @@ export function usePlayersList() {
 
   useLayoutEffect(() => {
     setPage(1)
-  }, [debouncedQ, countryId, sort, debouncedNumericKey])
+  }, [debouncedQ, sort, debouncedNumericKey])
 
   useEffect(() => {
     let cancelled = false
@@ -79,7 +78,6 @@ export function usePlayersList() {
           page,
           pageSize: PAGE_SIZE,
           q: debouncedQ || undefined,
-          countryId: countryId || undefined,
           minRating: optQueryNumber(dr),
           maxRating: optQueryNumber(mr),
           minUnderrated: optQueryNumber(minU),
@@ -98,15 +96,13 @@ export function usePlayersList() {
     return () => {
       cancelled = true
     }
-  }, [page, debouncedQ, countryId, sort, dr, mr, minU, maxU])
+  }, [page, debouncedQ, sort, dr, mr, minU, maxU])
 
   return {
     page,
     setPage,
     q,
     setQ,
-    countryId,
-    setCountryId,
     sort,
     setSort,
     minRating,

@@ -1,7 +1,6 @@
 import { PageHeader } from '../../components/PageHeader'
 import { ListPagination } from '../../components/ListPagination'
 import { usePlayersList } from '../../hooks/usePlayersList'
-import { useAppSelector } from '../../store/hooks'
 import { PlayerListFilters } from './PlayerListFilters'
 import { PlayerListRow } from './PlayerListRow'
 import { playerListSurface } from './playerListStyles'
@@ -12,14 +11,11 @@ const DESCRIPTION =
   'Spotlight on performers who punch above their headline attention.'
 
 export function AllPlayersPage() {
-  const nationalities = useAppSelector((s) => s.nationalities.items)
   const {
     page,
     setPage,
     q,
     setQ,
-    countryId,
-    setCountryId,
     sort,
     setSort,
     minRating,
@@ -45,11 +41,8 @@ export function AllPlayersPage() {
       />
 
       <PlayerListFilters
-        nationalities={nationalities}
         q={q}
         onQChange={setQ}
-        countryId={countryId}
-        onCountryIdChange={setCountryId}
         minRating={minRating}
         onMinRatingChange={setMinRating}
         maxRating={maxRating}

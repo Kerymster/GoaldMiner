@@ -2,7 +2,11 @@ import {
   getRolesForPosition,
   isPositionCode,
 } from '../../../data/positionRoles'
-import type { ScoutReportForm } from '../../../types/scoutReportForm'
+import {
+  STAFF_RATING_MAX,
+  STAFF_RATING_MIN,
+  type ScoutReportForm,
+} from '../../../types/scoutReportForm'
 
 /** Field keys are unique within a single step (used for `errors[key]` under inputs). */
 export type ScoutReportStepErrors = Partial<Record<string, string>>
@@ -46,7 +50,7 @@ function validateWeightKgOptional(errors: ScoutReportStepErrors, n: number | nul
 
 /**
  * Validates every field shown on the given wizard step. Empty strings fail.
- * Rating on step 10 must be 1–5 (not “Not set”).
+ * Rating on step 10 must be 5–10 (not “Not set”).
  */
 export function validateScoutReportStep(
   step: number,
@@ -162,7 +166,17 @@ export function validateScoutReportStep(
       need(e, 'whichSystems', tf.whichSystems)
       need(e, 'transferRecommendation', tf.transferRecommendation)
       need(e, 'finalVerdict', tf.finalVerdict)
-      if (tf.ratingOutOfFive == null) e.ratingOutOfFive = REQUIRED
+      {
+        const r = tf.ratingOutOfFive
+        if (r == null) e.ratingOutOfFive = REQUIRED
+        else if (
+          !Number.isInteger(r) ||
+          r < STAFF_RATING_MIN ||
+          r > STAFF_RATING_MAX
+        ) {
+          e.ratingOutOfFive = `Use ${STAFF_RATING_MIN}–${STAFF_RATING_MAX}`
+        }
+      }
       break
     }
     case 11:

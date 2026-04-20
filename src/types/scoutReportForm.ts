@@ -146,9 +146,11 @@ export type ScoutReportTeamFit = {
   whichSystems: string
   transferRecommendation: string
   finalVerdict: string
-  /** 1–5, null = not selected */
   ratingOutOfFive: number | null
 }
+
+export const STAFF_RATING_MIN = 5
+export const STAFF_RATING_MAX = 10
 
 export type ScoutReportForm = {
   reportDate: string

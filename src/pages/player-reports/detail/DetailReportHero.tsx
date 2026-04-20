@@ -1,5 +1,9 @@
 import { useState } from 'react'
-import type { ScoutReportForm } from '../../../types/scoutReportForm'
+import {
+  STAFF_RATING_MAX,
+  STAFF_RATING_MIN,
+  type ScoutReportForm,
+} from '../../../types/scoutReportForm'
 import { formatReportDisplayDate } from './formatReportDisplayDate'
 
 function initialsFromName(name: string) {
@@ -9,23 +13,42 @@ function initialsFromName(name: string) {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
 }
 
-function RatingStars({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-0.5" aria-label={`Rating ${rating} out of 5`}>
-      {Array.from({ length: 5 }, (_, i) => (
-        <span
-          key={i}
-          className={
-            i < rating
-              ? 'text-gold-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.35)]'
-              : 'text-fume-600 dark:text-fume-700'
-          }
-        >
-          ★
-        </span>
-      ))}
-    </div>
-  )
+const starOn =
+  'text-gold-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.35)]'
+const starOff = 'text-fume-600 dark:text-fume-700'
+
+function StaffRatingStars({ rating }: { rating: number }) {
+  if (rating >= STAFF_RATING_MIN && rating <= STAFF_RATING_MAX) {
+    const steps = STAFF_RATING_MAX - STAFF_RATING_MIN + 1
+    const filled = rating - (STAFF_RATING_MIN - 1)
+    return (
+      <div
+        className="flex items-center gap-0.5"
+        aria-label={`Rating ${rating} on a scale from ${STAFF_RATING_MIN} to ${STAFF_RATING_MAX}`}
+      >
+        {Array.from({ length: steps }, (_, i) => (
+          <span key={i} className={i < filled ? starOn : starOff}>
+            ★
+          </span>
+        ))}
+      </div>
+    )
+  }
+  if (rating >= 1 && rating <= 4) {
+    return (
+      <div
+        className="flex items-center gap-0.5"
+        aria-label={`Rating ${rating} out of 5`}
+      >
+        {Array.from({ length: 5 }, (_, i) => (
+          <span key={i} className={i < rating ? starOn : starOff}>
+            ★
+          </span>
+        ))}
+      </div>
+    )
+  }
+  return null
 }
 
 export function DetailReportHero({
@@ -39,6 +62,15 @@ export function DetailReportHero({
   const name = p.name || 'Player'
   const club = p.club?.trim()
   const rating = form.teamFit.ratingOutOfFive
+
+  const ratingCaption =
+    rating != null
+      ? rating >= STAFF_RATING_MIN && rating <= STAFF_RATING_MAX
+        ? `${rating} (${STAFF_RATING_MIN}–${STAFF_RATING_MAX})`
+        : rating >= 1 && rating <= 4
+          ? `${rating}/5`
+          : String(rating)
+      : null
   const [copied, setCopied] = useState(false)
 
   const positionLine = [p.position?.trim(), (p.mostlyUsedRole ?? '').trim()]
@@ -133,8 +165,10 @@ export function DetailReportHero({
             <div className="flex flex-col gap-1.5 sm:items-end">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-fume-500">Staff rating</p>
               <div className="flex items-center gap-2">
-                <RatingStars rating={rating} />
-                <span className="text-sm font-semibold tabular-nums text-gold-300">{rating}/5</span>
+                <StaffRatingStars rating={rating} />
+                <span className="text-sm font-semibold tabular-nums text-gold-300">
+                  {ratingCaption}
+                </span>
               </div>
             </div>
           ) : null}

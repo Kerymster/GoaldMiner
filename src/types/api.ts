@@ -14,13 +14,12 @@ export type PaginatedResponse<T> = {
 export type Player = {
   id: string
   name: string
-  /** Club name — free text (aligned with scout report `club`). */
   team: string
+  nationality?: string
   position: string
   rating?: number
   underratedScore?: number
   note?: string
-  countryId?: string
 }
 
 export type PlayersSort =

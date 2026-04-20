@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { PlayerScoutReportRow } from '../../api/players'
+import { formatStaffRatingCompact } from '../../utils/formatStaffRating'
 
 const linkClass =
   'flex flex-col gap-2 px-4 py-4 transition-colors hover:bg-fume-50/90 dark:hover:bg-surface-panel-hover/45 sm:flex-row sm:items-start sm:justify-between sm:px-5'
@@ -40,7 +41,7 @@ export function ViewReportsListRow({ playerId, row }: ViewReportsListRowProps) {
               {' '}
               · {form.playerInformation.club || 'Club —'}
               {form.teamFit.ratingOutOfFive != null
-                ? ` · ${form.teamFit.ratingOutOfFive}/5`
+                ? ` · ${formatStaffRatingCompact(form.teamFit.ratingOutOfFive)}`
                 : ''}
             </span>
           </p>

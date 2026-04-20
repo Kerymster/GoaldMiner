@@ -1,14 +1,10 @@
 import { OverlaySelect } from '../../components/OverlaySelect'
-import type { NationalityItem } from '../../types/nationalities'
 import type { PlayersSort } from '../../types/api'
 import { playerListInputClass } from './playerListStyles'
 
 type PlayerListFiltersProps = {
-  nationalities: NationalityItem[]
   q: string
   onQChange: (value: string) => void
-  countryId: string
-  onCountryIdChange: (value: string) => void
   minRating: string
   onMinRatingChange: (value: string) => void
   maxRating: string
@@ -22,11 +18,8 @@ type PlayerListFiltersProps = {
 }
 
 export function PlayerListFilters({
-  nationalities,
   q,
   onQChange,
-  countryId,
-  onCountryIdChange,
   minRating,
   onMinRatingChange,
   maxRating,
@@ -38,13 +31,6 @@ export function PlayerListFilters({
   sort,
   onSortChange,
 }: PlayerListFiltersProps) {
-  const countryOptions = [
-    { value: '', label: 'All countries' },
-    ...[...nationalities]
-      .sort((a, b) => a.country.localeCompare(b.country))
-      .map((n) => ({ value: n.code, label: n.country })),
-  ]
-
   const sortOptions: { value: PlayersSort; label: string }[] = [
     { value: 'underratedScore_desc', label: 'Ledger score (high → low)' },
     { value: 'underratedScore_asc', label: 'Ledger score (low → high)' },
@@ -69,16 +55,6 @@ export function PlayerListFilters({
             className={`${playerListInputClass} min-h-[2.25rem] min-w-0 font-normal normal-case tracking-normal placeholder:text-fume-500 dark:placeholder:text-fume-500`}
           />
         </label>
-        <div className="flex flex-col gap-1 text-xs font-medium uppercase tracking-wide text-fume-500 dark:text-fume-400">
-          <span>Country</span>
-          <OverlaySelect
-            value={countryId}
-            onChange={onCountryIdChange}
-            options={countryOptions}
-            placeholder="All countries"
-            triggerClassName="min-w-[10rem]"
-          />
-        </div>
         <div className="flex flex-col gap-1 text-xs font-medium uppercase tracking-wide text-fume-500 dark:text-fume-400">
           <span>Sort</span>
           <OverlaySelect

@@ -14,7 +14,6 @@ export type PlayerScoutReportRow = {
 
 export type PlayersQuery = {
   q?: string
-  countryId?: string
   minRating?: number
   maxRating?: number
   minUnderrated?: number
@@ -27,7 +26,6 @@ export type PlayersQuery = {
 function toSearchParams(q: PlayersQuery): string {
   const p = new URLSearchParams()
   if (q.q?.trim()) p.set('q', q.q.trim())
-  if (q.countryId?.trim()) p.set('countryId', q.countryId.trim())
   if (q.minRating != null && Number.isFinite(q.minRating)) {
     p.set('minRating', String(q.minRating))
   }
