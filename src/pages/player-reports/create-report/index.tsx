@@ -1,5 +1,5 @@
-import { PageHeader } from '../../components/PageHeader'
-import { CreateReportForm } from './create/CreateReportForm'
+import { PageHeader } from '../../../components/PageHeader'
+import { CreateReportForm } from '../create/CreateReportForm'
 
 const BREADCRUMB = [
   { label: 'Player Reports', to: '/player-reports' },

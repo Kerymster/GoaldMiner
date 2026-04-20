@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react'
-import { loadScoutReportsForPlayer } from '../../features/scoutReports/scoutReportsSlice'
-import { selectScoutReportsForPlayer } from '../../features/scoutReports/scoutReportsSelectors'
-import { PageHeader } from '../../components/PageHeader'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { playerListSurface } from '../players/playerListStyles'
-import { ViewReportsListRow } from './ViewReportsListRow'
+import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
+import { selectScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSelectors'
+import { PageHeader } from '../../../components/PageHeader'
+import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { playerListSurface } from '../../players/playerListStyles'
+import { ViewReportsListRow } from '../ViewReportsListRow'
 import {
   ViewReportsPlayerSearch,
   type ViewReportsSelectedPlayer,
-} from './ViewReportsPlayerSearch'
+} from '../ViewReportsPlayerSearch'
 
 const BREADCRUMB = [{ label: 'Player Reports' as const }]
-const TITLE = 'View reports'
+const TITLE = 'Edit reports'
 const DESCRIPTION =
-  'Search the roster, pick a player, then open a report. Lists are loaded from the API and cached in the app store; each report link includes the player id.'
+  'Search the roster, pick a player, then open a report to edit. The same multi-step form as create is used, with your changes saved to the existing report.'
 
-export function ViewReportsPage() {
+export function EditReportsPage() {
   const dispatch = useAppDispatch()
   const [selectedPlayer, setSelectedPlayer] = useState<ViewReportsSelectedPlayer | null>(null)
 
@@ -61,14 +61,19 @@ export function ViewReportsPage() {
           ) : (
             <ul className={`${playerListSurface} overflow-hidden`}>
               {reports.map((row) => (
-                <ViewReportsListRow key={row.id} playerId={selectedPlayer.id} row={row} />
+                <ViewReportsListRow
+                  key={row.id}
+                  playerId={selectedPlayer.id}
+                  row={row}
+                  variant="edit"
+                />
               ))}
             </ul>
           )}
         </div>
       ) : (
         <p className="max-w-xl text-sm text-fume-600 dark:text-fume-400">
-          Choose a player from search to see their report list here.
+          Choose a player from search to see reports you can edit here.
         </p>
       )}
     </div>

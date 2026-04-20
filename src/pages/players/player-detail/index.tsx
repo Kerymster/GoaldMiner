@@ -1,10 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
-import { Breadcrumbs } from '../../components/Breadcrumbs'
-import { usePlayerDetail } from '../../hooks/usePlayerDetail'
-import { PlayerDetailNote } from './PlayerDetailNote'
-import { PlayerProfileHeader } from './PlayerProfileHeader'
-import { PlayerStatsGrid } from './PlayerStatsGrid'
-import { playerDetailCardClass } from './playerDetailStyles'
+import { Breadcrumbs } from '../../../components/Breadcrumbs'
+import { usePlayerDetail } from '../../../hooks/usePlayerDetail'
+import { PlayerDetailNote } from '../PlayerDetailNote'
+import { PlayerProfileHeader } from '../PlayerProfileHeader'
+import { PlayerStatsGrid } from '../PlayerStatsGrid'
+import { playerDetailCardClass } from '../playerDetailStyles'
 
 const backLinkClass =
   'text-sm font-medium text-gold-700 underline-offset-4 hover:text-gold-600 hover:underline dark:text-gold-400 dark:hover:text-gold-300'

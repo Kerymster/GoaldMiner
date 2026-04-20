@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
+import { loadScoutReportsForPlayer } from '../../../../features/scoutReports/scoutReportsSlice'
 import {
   selectScoutReportRow,
   selectScoutReportsForPlayer,
-} from '../../../features/scoutReports/scoutReportsSelectors'
-import { PageHeader } from '../../../components/PageHeader'
-import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { DetailReportHero } from './DetailReportHero'
-import { ScoutReportDetailBody } from './ScoutReportDetailBody'
+} from '../../../../features/scoutReports/scoutReportsSelectors'
+import { PageHeader } from '../../../../components/PageHeader'
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
+import { DetailReportHero } from '../DetailReportHero'
+import { ScoutReportDetailBody } from '../ScoutReportDetailBody'
 
 export function ScoutReportDetailPage() {
   const { playerId: playerIdParam, reportId } = useParams<{

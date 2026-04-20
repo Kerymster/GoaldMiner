@@ -1,13 +1,50 @@
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
+import { loadScoutReportsForPlayer } from '../../../../features/scoutReports/scoutReportsSlice'
 import {
   selectScoutReportRow,
   selectScoutReportsForPlayer,
-} from '../../../features/scoutReports/scoutReportsSelectors'
-import { PageHeader } from '../../../components/PageHeader'
-import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { CreateReportForm } from '../create/CreateReportForm'
+} from '../../../../features/scoutReports/scoutReportsSelectors'
+import type { BreadcrumbItem } from '../../../../components/Breadcrumbs'
+import { PageHeader } from '../../../../components/PageHeader'
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
+import { CreateReportForm } from '../../create/CreateReportForm'
+
+const EDIT_FLOW_CRUMB_PREFIX: [BreadcrumbItem, BreadcrumbItem] = [
+  { label: 'Player Reports', to: '/player-reports' },
+  { label: 'Edit reports', to: '/player-reports/edit' },
+]
+
+function editFlowBreadcrumbs(lastLabel: string): BreadcrumbItem[] {
+  return [...EDIT_FLOW_CRUMB_PREFIX, { label: lastLabel }]
+}
+
+function BackToEditReportsLink() {
+  return (
+    <Link
+      to="/player-reports/edit"
+      className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
+    >
+      ← Back to edit reports
+    </Link>
+  )
+}
+
+type EditFlowHeaderProps = {
+  breadcrumbLast: string
+  title: string
+  description: string
+}
+
+function EditFlowPageHeader({ breadcrumbLast, title, description }: EditFlowHeaderProps) {
+  return (
+    <PageHeader
+      breadcrumbItems={editFlowBreadcrumbs(breadcrumbLast)}
+      title={title}
+      description={description}
+    />
+  )
+}
 
 export function ScoutReportEditPage() {
   const { playerId: playerIdParam, reportId } = useParams<{
@@ -37,21 +74,12 @@ export function ScoutReportEditPage() {
   if (!playerId || !reportId) {
     return (
       <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Edit reports', to: '/player-reports/edit' },
-            { label: 'Edit' },
-          ]}
+        <EditFlowPageHeader
+          breadcrumbLast="Edit"
           title="Report not found"
           description="Missing player or report in the URL."
         />
-        <Link
-          to="/player-reports/edit"
-          className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
-        >
-          ← Back to edit reports
-        </Link>
+        <BackToEditReportsLink />
       </div>
     )
   }
@@ -59,12 +87,8 @@ export function ScoutReportEditPage() {
   if (awaitingData) {
     return (
       <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Edit reports', to: '/player-reports/edit' },
-            { label: 'Edit' },
-          ]}
+        <EditFlowPageHeader
+          breadcrumbLast="Edit"
           title="Edit scout report"
           description="Loading…"
         />
@@ -75,21 +99,12 @@ export function ScoutReportEditPage() {
   if (bundle.status === 'failed') {
     return (
       <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Edit reports', to: '/player-reports/edit' },
-            { label: 'Edit' },
-          ]}
+        <EditFlowPageHeader
+          breadcrumbLast="Edit"
           title="Could not load reports"
           description={bundle.error ?? 'Unknown error'}
         />
-        <Link
-          to="/player-reports/edit"
-          className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
-        >
-          ← Back to edit reports
-        </Link>
+        <BackToEditReportsLink />
       </div>
     )
   }
@@ -97,33 +112,20 @@ export function ScoutReportEditPage() {
   if (!record) {
     return (
       <div className="space-y-6">
-        <PageHeader
-          breadcrumbItems={[
-            { label: 'Player Reports', to: '/player-reports' },
-            { label: 'Edit reports', to: '/player-reports/edit' },
-            { label: 'Edit' },
-          ]}
+        <EditFlowPageHeader
+          breadcrumbLast="Edit"
           title="Report not found"
           description="No report with this id for this player. Open it from the edit list or check the link."
         />
-        <Link
-          to="/player-reports/edit"
-          className="text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400"
-        >
-          ← Back to edit reports
-        </Link>
+        <BackToEditReportsLink />
       </div>
     )
   }
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        breadcrumbItems={[
-          { label: 'Player Reports', to: '/player-reports' },
-          { label: 'Edit reports', to: '/player-reports/edit' },
-          { label: 'Edit report' as const },
-        ]}
+      <EditFlowPageHeader
+        breadcrumbLast="Edit report"
         title="Edit scout report"
         description="Update the same step-by-step template; changes are saved to the existing report."
       />
