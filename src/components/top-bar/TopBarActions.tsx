@@ -1,5 +1,5 @@
 import { overlayMenuPanelClass } from '../overlayDropdownStyles'
-import { IconBell, IconChevronDown } from '../icons'
+import { Icon } from '../icons'
 import { useAuth } from '../../hooks/useAuth'
 
 function accountInitials(handle: string | undefined): string {
@@ -30,7 +30,7 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
         title="Notifications (mock)"
         className="cursor-pointer rounded-lg p-2 text-fume-500 transition-colors hover:bg-fume-200/80 hover:text-fume-800 dark:text-fume-400 dark:hover:bg-fume-800 dark:hover:text-fume-100"
       >
-        <IconBell className="h-5 w-5" />
+        <Icon name="bell" className="h-5 w-5" />
       </button>
 
       <div className="relative">
@@ -44,7 +44,8 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-600 text-xs font-bold text-white shadow-sm dark:bg-gold-500">
             {initials}
           </span>
-          <IconChevronDown
+          <Icon
+            name="chevronDown"
             className={`hidden h-4 w-4 text-fume-500 transition-transform sm:block ${menuOpen ? 'rotate-180' : ''}`}
           />
         </button>

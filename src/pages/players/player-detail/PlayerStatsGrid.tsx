@@ -31,7 +31,12 @@ export function PlayerStatsGrid({ player }: PlayerStatsGridProps) {
   const roles = [player.mostlyUsedRole, player.otherRoles].filter(Boolean).join(' · ')
 
   const items = [
-    { label: 'Overall rating', value: rating ?? '—', emphasize: true },
+    {
+      label: 'Overall rating',
+      value: rating ?? '—',
+      emphasize: true,
+      valueClassName: 'text-gold-800 dark:text-gold-300',
+    },
     { label: 'Date of birth', value: formatDobLabel(player.ageOrDob) },
     { label: 'Preferred foot', value: player.preferredFoot || '—' },
     { label: 'Physical', value: physical || '—' },
@@ -48,7 +53,7 @@ export function PlayerStatsGrid({ player }: PlayerStatsGridProps) {
               item.emphasize
                 ? playerStatsValueStrongClass
                 : playerStatsValueDefaultClass
-            }`}
+            } ${item.valueClassName ?? ''}`}
           >
             {item.value}
           </dd>

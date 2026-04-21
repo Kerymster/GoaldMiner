@@ -30,7 +30,7 @@ export const playerDetailReportsActionWrapClass = 'mt-8 flex justify-end'
 
 /** Long-form note under stats — bordered, relaxed line height. */
 export const playerDetailNoteClass =
-  'mt-8 border-t border-surface-divider pt-6 text-sm leading-relaxed text-fume-600 dark:text-fume-400'
+  'mt-8 border-t border-surface-divider pt-6 text-sm leading-relaxed text-gold-800 dark:text-gold-300'
 
 /** Profile header wrapper with divider and responsive layout. */
 export const playerProfileHeaderWrapClass =
@@ -74,7 +74,8 @@ export const playerStatsValueStrongClass =
   'text-lg font-semibold tabular-nums text-fume-900 dark:text-fume-100'
 
 /** Default stat value style for descriptive fields. */
-export const playerStatsValueDefaultClass = 'text-sm text-fume-700 dark:text-fume-300'
+export const playerStatsValueDefaultClass =
+  'text-sm font-medium text-fume-800 dark:text-fume-200'
 
 /** Full-width roles card at the bottom of stat grid. */
 export const playerStatsRolesCardClass =
