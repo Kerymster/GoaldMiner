@@ -1,5 +1,5 @@
-import { OverlaySelect } from '../../components/OverlaySelect'
-import type { PlayersSort } from '../../types/api'
+import { OverlaySelect } from '../../../components/OverlaySelect'
+import type { PlayersSort } from '../../../types/api'
 import { playerListInputClass } from './playerListStyles'
 
 type PlayerListFiltersProps = {

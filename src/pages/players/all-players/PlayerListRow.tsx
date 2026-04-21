@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import type { Player } from '../../types/api'
+import type { Player } from '../../../types/api'
 
 type PlayerListRowProps = {
   player: Player

@@ -1,5 +1,5 @@
-import { proseMuted } from '../../components/pageChromeStyles'
-import type { Player } from '../../types/api'
+import { proseMuted } from '../../../components/pageChromeStyles'
+import type { Player } from '../../../types/api'
 import { PlayerRankCard } from './PlayerRankCard'
 
 type PlayerProfileHeaderProps = {

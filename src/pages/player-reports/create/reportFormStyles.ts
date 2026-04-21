@@ -1,4 +1,4 @@
-import { playerListInputClass } from '../../players/playerListStyles'
+import { playerListInputClass } from '../../players/all-players/playerListStyles'
 
 /**
  * Scout report create/edit flow — fields, step panel, validation copy.

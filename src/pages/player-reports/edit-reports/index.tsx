@@ -9,7 +9,7 @@ import {
   proseMutedSm,
 } from '../../../components/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-import { playerListSurface } from '../../players/playerListStyles'
+import { playerListSurface } from '../../players/all-players/playerListStyles'
 import { ViewReportsListRow } from '../ViewReportsListRow'
 import {
   ViewReportsPlayerSearch,

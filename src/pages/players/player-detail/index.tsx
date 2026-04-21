@@ -2,16 +2,16 @@ import { Link, useParams } from 'react-router-dom'
 import { Breadcrumbs } from '../../../components/Breadcrumbs'
 import { proseError, proseMuted } from '../../../components/pageChromeStyles'
 import { usePlayerDetail } from '../../../hooks/usePlayerDetail'
-import { PlayerDetailNote } from '../PlayerDetailNote'
-import { PlayerProfileHeader } from '../PlayerProfileHeader'
-import { PlayerStatsGrid } from '../PlayerStatsGrid'
+import { PlayerDetailNote } from './PlayerDetailNote'
+import { PlayerProfileHeader } from './PlayerProfileHeader'
+import { PlayerStatsGrid } from './PlayerStatsGrid'
 import {
   playerDetailBackLinkClass,
   playerDetailCardClass,
   playerDetailFooterLinkClass,
   playerDetailPageStackClass,
   playerDetailStateStackClass,
-} from '../playerDetailStyles'
+} from './playerDetailStyles'
 
 export function PlayerDetailPage() {
   const { id } = useParams<{ id: string }>()

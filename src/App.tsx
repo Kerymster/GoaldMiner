@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { ApiUnauthorizedBridge } from './components/ApiUnauthorizedBridge'
+import { ApiUnauthorizedBridge } from './bootstrap/ApiUnauthorizedBridge'
 import { Layout } from './components/Layout'
 import { ComparePage } from './pages/compare'
 import { PlayerDetailPage } from './pages/players/player-detail'

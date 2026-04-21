@@ -1,12 +1,3 @@
-/**
- * Shared floating overlay panels (combobox results, anchored menus).
- * Uses global `scrollbar-none` from `index.css` — scroll still works via wheel/trackpad.
- *
- * Visually lifted from page content: deeper shadow, gold ring, and in dark mode a
- * slightly lighter surface (`fume-700`) than list cards (`surface-panel` ≈ fume-800)
- * so the menu reads clearly as a floating layer.
- */
-
 /** Full-width list under an input (nationality, player search, OverlaySelect, etc.). */
 export const overlayAutocompletePanelClass =
   'absolute left-0 right-0 top-[calc(100%+6px)] z-[70] max-h-80 overflow-auto scrollbar-none rounded-xl border border-surface-panel-border bg-surface-panel shadow-xl shadow-fume-950/14 ring-1 ring-fume-950/10 dark:border-fume-400/40 dark:bg-fume-700 dark:shadow-[0_24px_48px_-8px_rgba(0,0,0,0.55)] dark:ring-gold-400/25'
