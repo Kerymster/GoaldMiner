@@ -51,6 +51,19 @@ Tekrar eden veya anlam taşıyan Tailwind utility zincirleri, `detailStyles.ts` 
 - **Ne zaman çıkarmalı:** Aynı zincir **iki veya daha fazla** dosyada geçiyorsa veya tek dosyada bile uzun bileşik bir blok tekrarlanıyorsa. Tek satırlık, bir daha kullanılmayacak sınıflar JSX’te kalabilir.
 - **Referans:** `src/pages/player-reports/detail/detailStyles.ts` — proje içi örnek “altın standart” modül.
 
+### Primary / Secondary CTA butonları
+
+Tek kaynak: **`src/components/pageChromeStyles.ts`** içindeki **`primaryCtaButtonClass`** ve **`secondaryCtaButtonClass`**. Yeni ana / yardımcı aksiyon eklerken önce bunları kullanın; aynı iş için yeni altın `border` / `bg` zinciri yazmayın.
+
+| Token | Ne zaman | Örnek kullanım |
+|-------|----------|----------------|
+| **`primaryCtaButtonClass`** | Bir ekranda veya satırda **birincil** eylem: kaydet, oluştur, onayla, listeye ekle, rapora git. Görsel referans oyuncu formundaki **Create / Update player** ile aynıdır (`border-gold-600/80`, `bg-gold-600/15`, …). | Add player, View reports, rapor sihirbazında Save/Update, tab altı **Edit report** (sağa hizalı), onay modalinde **Confirm** (`variant === 'confirmation'`), login/register submit, `playerFormSubmitClass` / `playerListAddActionClass` / `playerDetailReportsLinkClass` bu token’e bağlıdır. |
+| **`secondaryCtaButtonClass`** | **İkincil** eylem: vazgeç, geri, adım atla, modal **Cancel**. Primary ile yan yanaysa hiyerarşi net kalsın diye outlined / nötr yüzey. | Oyuncu formu Cancel, rapor sihirbazı Back ve **Next**, modal iptal. |
+
+**Hizalama:** Form veya kart altındaki aksiyon şeridinde primary genelde **sağda** (ör. `justify-end`, sağ kümede en sağdaki primary). Rapor detayında tabların altındaki **Edit report** primary ve **sağa** hizalıdır (`detailTabActionsRowClass`).
+
+**Özellik stilleri:** Yerel `*Styles.ts` dosyalarında bu token’lere **alias** verilebilir (ör. `playerFormSubmitClass = primaryCtaButtonClass`); yeni isimle aynı görseli çoğaltmayın.
+
 ### Sayfa başlığı ve rotalar
 
 - Rota sayfalarında mümkünse **`PageHeader`** (`src/components/PageHeader.tsx`) kullanılır: breadcrumb, başlık, açıklama, isteğe bağlı `eyebrow` ve `metaLine`. Kabuk sınıfları `pageHeaderStyles.ts` üzerinden tutulur.

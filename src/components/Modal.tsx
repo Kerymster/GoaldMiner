@@ -1,11 +1,11 @@
 import { useEffect, useId, useMemo, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Icon, type IconName } from './icons'
+import { primaryCtaButtonClass, secondaryCtaButtonClass } from './pageChromeStyles'
 import {
   modalBackdropClass,
   modalBodyClass,
   modalButtonBaseClass,
-  modalButtonSecondaryClass,
   modalCloseButtonClass,
   modalContentClass,
   modalDescriptionClass,
@@ -47,8 +47,8 @@ const VARIANT_PRESENTATIONS: Record<ModalVariant, VariantPresentation> = {
     iconName: 'fileCheck',
     iconClass:
       'bg-gold-500/[0.08] text-gold-600 ring-gold-500/15 dark:bg-gold-400/[0.07] dark:text-gold-400 dark:ring-gold-400/20',
-    confirmButtonClass:
-      'border-gold-600 bg-gold-500 text-white hover:bg-gold-600 focus:ring-gold-500 dark:border-gold-500 dark:bg-gold-500 dark:hover:bg-gold-400',
+    /** Superseded by `primaryCtaButtonClass` in footer — kept for typing only. */
+    confirmButtonClass: '',
   },
   danger: {
     iconName: 'alertTriangle',
@@ -122,6 +122,11 @@ export function Modal({
 
   if (!isOpen || typeof document === 'undefined') return null
 
+  const confirmButtonClassName =
+    variant === 'confirmation'
+      ? primaryCtaButtonClass
+      : `${modalButtonBaseClass} ${variantPresentation.confirmButtonClass}`
+
   const onCancelClick = () => {
     onCancel?.()
     onClose()
@@ -169,7 +174,7 @@ export function Modal({
         </div>
         <div className={modalFooterClass}>
           {!hideCancel ? (
-            <button type="button" onClick={onCancelClick} className={`${modalButtonBaseClass} ${modalButtonSecondaryClass}`}>
+            <button type="button" onClick={onCancelClick} className={secondaryCtaButtonClass}>
               {cancelLabel}
             </button>
           ) : null}
@@ -177,7 +182,7 @@ export function Modal({
             type="button"
             onClick={onConfirmClick}
             disabled={isConfirming}
-            className={`${modalButtonBaseClass} ${variantPresentation.confirmButtonClass}`}
+            className={confirmButtonClassName}
           >
             {isConfirming ? 'Processing…' : confirmLabel}
           </button>

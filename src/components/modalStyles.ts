@@ -59,12 +59,6 @@ export const modalButtonBaseClass =
   'inline-flex h-10 items-center justify-center rounded-lg border px-4 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-panel disabled:cursor-not-allowed disabled:opacity-55'
 
 /**
- * Secondary/cancel action style.
- */
-export const modalButtonSecondaryClass =
-  'border-surface-field-border bg-surface-field text-fume-700 hover:bg-fume-100 focus:ring-fume-300 dark:text-fume-100 dark:hover:bg-fume-700'
-
-/**
  * Quiet icon close button in top-right corner.
  */
 export const modalCloseButtonClass =

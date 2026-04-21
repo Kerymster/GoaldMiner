@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { primaryCtaButtonClass } from '../../../components/pageChromeStyles'
 import type { ScoutReportForm } from '../../../types/scoutReportForm'
 import {
   detailBodyShellStack,
   detailPageStack,
+  detailTabActionsRowClass,
   detailTabButton,
   detailTabButtonActive,
   detailTabButtonIdle,
@@ -24,8 +27,18 @@ import { DetailTechnicalSection } from './sections/DetailTechnicalSection'
 
 type DetailTab = 'overview' | 'analysis'
 
-export function ScoutReportDetailBody({ form }: { form: ScoutReportForm }) {
+type ScoutReportDetailBodyProps = {
+  form: ScoutReportForm
+  playerId?: string
+  reportId: string
+}
+
+export function ScoutReportDetailBody({ form, playerId, reportId }: ScoutReportDetailBodyProps) {
   const [tab, setTab] = useState<DetailTab>('overview')
+
+  const editReportTo =
+    playerId &&
+    `/player-reports/players/${encodeURIComponent(playerId)}/reports/${encodeURIComponent(reportId)}/edit`
 
   return (
     <div className={detailBodyShellStack}>
@@ -54,6 +67,13 @@ export function ScoutReportDetailBody({ form }: { form: ScoutReportForm }) {
             Full analysis
           </button>
         </div>
+        {editReportTo ? (
+          <div className={detailTabActionsRowClass}>
+            <Link to={editReportTo} className={primaryCtaButtonClass}>
+              Edit report
+            </Link>
+          </div>
+        ) : null}
         <p className={detailTabHint}>
           {tab === 'overview'
             ? 'Identity, narrative, style, pros/cons, and recommendation — the usual one-page read for staff.'

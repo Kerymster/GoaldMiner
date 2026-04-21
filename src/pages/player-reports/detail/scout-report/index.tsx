@@ -108,7 +108,7 @@ export function ScoutReportDetailPage() {
   return (
     <div className={pageStack}>
       <DetailReportHero playerId={playerId} reportId={record.id} form={record.form} />
-      <ScoutReportDetailBody form={record.form} />
+      <ScoutReportDetailBody form={record.form} playerId={playerId} reportId={record.id} />
     </div>
   )
 }

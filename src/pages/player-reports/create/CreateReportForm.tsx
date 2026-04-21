@@ -9,7 +9,12 @@ import {
   createEmptyScoutReportForm,
   type ScoutReportForm,
 } from '../../../types/scoutReportForm'
-import { pageStack, proseMutedSm } from '../../../components/pageChromeStyles'
+import {
+  pageStack,
+  primaryCtaButtonClass,
+  proseMutedSm,
+  secondaryCtaButtonClass,
+} from '../../../components/pageChromeStyles'
 import { ProTipsPanel } from './ProTipsPanel'
 import { reportStepCardClass, reportValidationMessageClass } from './reportFormStyles'
 import { ScoutReportStepBody } from './ScoutReportStepBody'
@@ -189,32 +194,30 @@ export function CreateReportForm({
               type="button"
               onClick={goBack}
               disabled={step === 0}
-              className="cursor-pointer rounded-lg border border-fume-200 px-4 py-2 text-sm font-medium text-fume-800 transition-colors hover:bg-fume-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-fume-600 dark:text-fume-200 dark:hover:bg-surface-panel-hover/50"
+              className={`${secondaryCtaButtonClass} disabled:cursor-not-allowed disabled:opacity-40`}
             >
               Back
             </button>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-end gap-2">
               {!last ? (
-                <button
-                  type="button"
-                  onClick={goNext}
-                  className="cursor-pointer rounded-lg bg-gold-600 px-4 py-2 text-sm font-semibold text-fume-950 shadow-sm transition-colors hover:bg-gold-500"
-                >
+                <button type="button" onClick={goNext} className={secondaryCtaButtonClass}>
                   Next
                 </button>
               ) : null}
-              <button
-                type="button"
-                onClick={requestSave}
-                disabled={saveStatus === 'saving'}
-                className="cursor-pointer rounded-lg border border-gold-600/80 bg-gold-600/15 px-4 py-2 text-sm font-semibold text-fume-900 shadow-sm transition-colors hover:bg-gold-600/25 disabled:cursor-wait disabled:opacity-70 dark:border-gold-500/50 dark:text-gold-100 dark:hover:bg-gold-500/20"
-              >
-                {saveStatus === 'saving'
-                  ? 'Saving…'
-                  : mode === 'edit'
-                    ? 'Update report'
-                    : 'Save report'}
-              </button>
+              {mode === 'edit' || last ? (
+                <button
+                  type="button"
+                  onClick={requestSave}
+                  disabled={saveStatus === 'saving'}
+                  className={primaryCtaButtonClass}
+                >
+                  {saveStatus === 'saving'
+                    ? 'Saving…'
+                    : mode === 'edit'
+                      ? 'Update report'
+                      : 'Save report'}
+                </button>
+              ) : null}
             </div>
           </div>
 

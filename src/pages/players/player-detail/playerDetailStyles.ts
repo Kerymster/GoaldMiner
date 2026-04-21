@@ -2,6 +2,8 @@
  * Player detail route — profile card, footer links, vertical rhythm.
  */
 
+import { primaryCtaButtonClass } from '../../../components/pageChromeStyles'
+
 export const playerDetailCardClass =
   'rounded-2xl border border-surface-panel-border bg-surface-panel p-6 shadow-sm shadow-fume-950/10 dark:shadow-none'
 
@@ -21,9 +23,8 @@ export const playerDetailBackLinkClass =
 export const playerDetailFooterLinkClass =
   'inline-flex text-sm font-medium text-fume-500 hover:text-gold-700 dark:text-fume-400 dark:hover:text-gold-400'
 
-/** Primary action link to jump from player detail into reports. */
-export const playerDetailReportsLinkClass =
-  'inline-flex items-center rounded-lg border border-gold-500/45 bg-gold-500/15 px-4 py-2 text-sm font-semibold text-gold-800 transition-colors hover:bg-gold-500/25 hover:text-gold-900 dark:border-gold-400/40 dark:bg-gold-400/15 dark:text-gold-300 dark:hover:bg-gold-400/25'
+/** Primary action — open reports list (same gold primary as Create player). */
+export const playerDetailReportsLinkClass = primaryCtaButtonClass
 
 /** Footer action container aligned to the right edge of detail card. */
 export const playerDetailReportsActionWrapClass = 'mt-8 flex flex-wrap justify-end gap-2'

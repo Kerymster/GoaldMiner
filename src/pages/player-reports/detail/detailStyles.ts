@@ -49,6 +49,9 @@ export const detailTabButtonActive =
 export const detailTabButtonIdle =
   'text-fume-600 hover:bg-white/70 dark:text-fume-400 dark:hover:bg-surface-panel/70'
 
+/** Primary CTA under tab strip — right-aligned with wizard actions. */
+export const detailTabActionsRowClass = 'mt-3 flex justify-end'
+
 /** Helper line under tabs (overview / full analysis) */
 export const detailTabHint =
   'mt-2 max-w-2xl pl-2 text-xs leading-relaxed text-fume-600 sm:pl-3 dark:text-fume-400'

@@ -2,6 +2,8 @@
  * Players list route — list container surface and filter/input controls.
  */
 
+import { primaryCtaButtonClass } from '../../../components/pageChromeStyles'
+
 export const playerListSurface =
   'divide-y divide-surface-list-divider rounded-xl border border-surface-panel-border bg-surface-panel shadow-sm shadow-fume-950/10 dark:shadow-none'
 
@@ -26,6 +28,5 @@ export const playerListEmptyStateClass =
 /** Top-right action row for list-level controls (add player). */
 export const playerListActionsRowClass = 'flex justify-end'
 
-/** Add-player CTA with gold emphasis matching roster actions. */
-export const playerListAddActionClass =
-  'inline-flex items-center rounded-lg border border-gold-500/45 bg-gold-500/15 px-4 py-2 text-sm font-semibold text-gold-800 transition-colors hover:bg-gold-500/25 hover:text-gold-900 dark:border-gold-400/40 dark:bg-gold-400/15 dark:text-gold-300 dark:hover:bg-gold-400/25'
+/** Add-player CTA — same gold primary as report wizard / detail actions. */
+export const playerListAddActionClass = primaryCtaButtonClass

@@ -8,7 +8,7 @@ import {
 } from '../../../api/players'
 import { Modal } from '../../../components/Modal'
 import { OverlaySelect } from '../../../components/OverlaySelect'
-import { pageInlineLinkGold, proseErrorSm } from '../../../components/pageChromeStyles'
+import { proseErrorSm, secondaryCtaButtonClass } from '../../../components/pageChromeStyles'
 import { FieldError, ScoutReportField } from '../../player-reports/create/ScoutReportField'
 import { ScoutReportNationalityField } from '../../player-reports/create/ScoutReportNationalityField'
 import {
@@ -363,7 +363,7 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
       {message ? <p className="mt-4 text-sm text-fume-600 dark:text-fume-400">{message}</p> : null}
 
       <div className={playerFormActionsRowClass}>
-        <Link to={cancelTo} className={pageInlineLinkGold}>
+        <Link to={cancelTo} className={secondaryCtaButtonClass}>
           Cancel
         </Link>
         <button
