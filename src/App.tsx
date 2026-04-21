@@ -4,6 +4,8 @@ import { Layout } from './components/Layout'
 import { ComparePage } from './pages/compare'
 import { PlayerDetailPage } from './pages/players/player-detail'
 import { AllPlayersPage } from './pages/players/all-players'
+import { NewPlayerPage } from './pages/players/new'
+import { EditPlayerPage } from './pages/players/edit'
 import { CreateReportPage } from './pages/player-reports/create-report'
 import { EditReportsPage } from './pages/player-reports/edit-reports'
 import { ScoutReportDetailPage } from './pages/player-reports/detail/scout-report'
@@ -24,6 +26,8 @@ export default function App() {
           <Route element={<Layout />}>
             <Route index element={<Navigate to="/players" replace />} />
             <Route path="players" element={<AllPlayersPage />} />
+            <Route path="players/new" element={<NewPlayerPage />} />
+            <Route path="players/:id/edit" element={<EditPlayerPage />} />
             <Route path="players/:id" element={<PlayerDetailPage />} />
             <Route path="compare" element={<ComparePage />} />
             <Route path="player-reports" element={<ViewReportsPage />} />

@@ -26,7 +26,11 @@ export const playerDetailReportsLinkClass =
   'inline-flex items-center rounded-lg border border-gold-500/45 bg-gold-500/15 px-4 py-2 text-sm font-semibold text-gold-800 transition-colors hover:bg-gold-500/25 hover:text-gold-900 dark:border-gold-400/40 dark:bg-gold-400/15 dark:text-gold-300 dark:hover:bg-gold-400/25'
 
 /** Footer action container aligned to the right edge of detail card. */
-export const playerDetailReportsActionWrapClass = 'mt-8 flex justify-end'
+export const playerDetailReportsActionWrapClass = 'mt-8 flex flex-wrap justify-end gap-2'
+
+/** Secondary action link for editing current player profile. */
+export const playerDetailEditLinkClass =
+  'inline-flex items-center rounded-lg border border-surface-field-border bg-surface-soft px-4 py-2 text-sm font-medium text-fume-800 transition-colors hover:border-gold-500/40 hover:text-gold-700 dark:text-fume-200 dark:hover:text-gold-300'
 
 /** Long-form note under stats — bordered, relaxed line height. */
 export const playerDetailNoteClass =

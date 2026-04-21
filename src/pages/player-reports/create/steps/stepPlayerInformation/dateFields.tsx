@@ -55,3 +55,34 @@ export function DateOfBirthField({ value, onChange, error }: DateOfBirthFieldPro
     </label>
   )
 }
+
+type ContractEndDateFieldProps = {
+  value: string
+  onChange: (value: string) => void
+  error?: string
+}
+
+/** Optional contract expiry — stored as ISO `YYYY-MM-DD` (same as other date fields). */
+export function ContractEndDateField({ value, onChange, error }: ContractEndDateFieldProps) {
+  return (
+    <label className={reportLabelClass}>
+      Contract (End date)
+      <input
+        type="date"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-invalid={Boolean(error)}
+        className={[
+          reportFieldClass,
+          error ? reportFieldErrorClass : '',
+          !value
+            ? 'text-fume-500 dark:text-fume-400 [&::-webkit-datetime-edit]:text-fume-500 dark:[&::-webkit-datetime-edit]:text-fume-400 [&::-webkit-datetime-edit-fields-wrapper]:text-fume-500 dark:[&::-webkit-datetime-edit-fields-wrapper]:text-fume-400'
+            : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      />
+      <FieldError message={error} />
+    </label>
+  )
+}

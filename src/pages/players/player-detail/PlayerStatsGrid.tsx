@@ -40,7 +40,7 @@ export function PlayerStatsGrid({ player }: PlayerStatsGridProps) {
     { label: 'Date of birth', value: formatDobLabel(player.ageOrDob) },
     { label: 'Preferred foot', value: player.preferredFoot || '—' },
     { label: 'Physical', value: physical || '—' },
-    { label: 'Contract', value: player.contractIfKnown || '—' },
+    { label: 'Contract (End date)', value: formatDobLabel(player.contractIfKnown) },
   ]
 
   return (

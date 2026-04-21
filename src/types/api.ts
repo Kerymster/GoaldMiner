@@ -24,6 +24,7 @@ export type Player = {
   secondaryPosition?: string
   mostlyUsedRole?: string
   otherRoles?: string
+  /** Contract end date when known (ISO `YYYY-MM-DD`). */
   contractIfKnown?: string
   overallRating?: number
   rating?: number

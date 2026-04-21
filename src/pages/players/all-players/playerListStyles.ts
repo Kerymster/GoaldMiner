@@ -22,3 +22,10 @@ export const playerListResultsDividerLineClass = 'h-px flex-1 bg-surface-divider
 /** Empty-state copy when no player matches filters. */
 export const playerListEmptyStateClass =
   'rounded-xl border border-surface-panel-border bg-surface-panel px-4 py-5 text-sm text-fume-600 dark:text-fume-400'
+
+/** Top-right action row for list-level controls (add player). */
+export const playerListActionsRowClass = 'flex justify-end'
+
+/** Add-player CTA with gold emphasis matching roster actions. */
+export const playerListAddActionClass =
+  'inline-flex items-center rounded-lg border border-gold-500/45 bg-gold-500/15 px-4 py-2 text-sm font-semibold text-gold-800 transition-colors hover:bg-gold-500/25 hover:text-gold-900 dark:border-gold-400/40 dark:bg-gold-400/15 dark:text-gold-300 dark:hover:bg-gold-400/25'

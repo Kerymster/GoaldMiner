@@ -1,4 +1,5 @@
 import { PageHeader } from '../../../components/PageHeader'
+import { Link } from 'react-router-dom'
 import { pageStack, proseErrorSm } from '../../../components/pageChromeStyles'
 import { ListPagination } from '../../../components/ListPagination'
 import { usePlayersList } from '../../../hooks/usePlayersList'
@@ -6,6 +7,8 @@ import { PlayerListFilters } from './PlayerListFilters'
 import { PlayerListRow } from './PlayerListRow'
 import {
   playerListEmptyStateClass,
+  playerListAddActionClass,
+  playerListActionsRowClass,
   playerListResultsDividerClass,
   playerListResultsDividerLabelClass,
   playerListResultsDividerLineClass,
@@ -46,6 +49,12 @@ export function AllPlayersPage() {
         title={TITLE}
         description={DESCRIPTION}
       />
+
+      <div className={playerListActionsRowClass}>
+        <Link to="/players/new" className={playerListAddActionClass}>
+          Add player
+        </Link>
+      </div>
 
       <PlayerListFilters
         q={q}

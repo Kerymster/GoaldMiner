@@ -25,23 +25,21 @@ const DESCRIPTION =
 
 export function ViewReportsPage() {
   const dispatch = useAppDispatch()
-  const [selectedPlayer, setSelectedPlayer] = useState<ViewReportsSelectedPlayer | null>(null)
-  const [searchParams] = useSearchParams()
   const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const [selectedPlayer, setSelectedPlayer] = useState<ViewReportsSelectedPlayer | null>(() => {
+    return (
+      (location.state as { selectedPlayer?: ViewReportsSelectedPlayer } | null)?.selectedPlayer ??
+      null
+    )
+  })
 
   const { status, error, items: reports } = useAppSelector((s) =>
     selectScoutReportsForPlayer(s, selectedPlayer?.id),
   )
 
   useEffect(() => {
-    const statePlayer = (
-      location.state as { selectedPlayer?: ViewReportsSelectedPlayer } | null
-    )?.selectedPlayer
-    if (statePlayer) {
-      setSelectedPlayer(statePlayer)
-      return
-    }
-
+    if (selectedPlayer) return
     const playerId = searchParams.get('playerId')
     if (!playerId) return
 
@@ -64,7 +62,7 @@ export function ViewReportsPage() {
     return () => {
       cancelled = true
     }
-  }, [location.state, searchParams])
+  }, [searchParams, selectedPlayer])
 
   useEffect(() => {
     if (!selectedPlayer) return

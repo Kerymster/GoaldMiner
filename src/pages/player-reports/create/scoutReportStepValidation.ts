@@ -7,6 +7,7 @@ import {
   STAFF_RATING_MAX,
   STAFF_RATING_MIN,
   type ScoutReportForm,
+  type ScoutReportPlayerInformation,
 } from '../../../types/scoutReportForm'
 
 /** Field keys are unique within a single step (used for `errors[key]` under inputs). */
@@ -50,8 +51,48 @@ function validateWeightKgOptional(errors: ScoutReportStepErrors, n: number | nul
 }
 
 /**
+ * Player Information step fields only (no `reportDate`).
+ * Shared by scout report step 0 and Add/Edit player roster forms.
+ */
+export function validatePlayerInformationStep(
+  e: ScoutReportStepErrors,
+  p: ScoutReportPlayerInformation,
+): void {
+  need(e, 'name', p.name)
+  need(e, 'ageOrDob', p.ageOrDob)
+  need(e, 'nationality', p.nationality)
+  needHeightCm(e, p.heightCm)
+  validateWeightKgOptional(e, p.weightKg)
+  need(e, 'preferredFoot', p.preferredFoot)
+  need(e, 'position', p.position)
+  {
+    const pos = p.position.trim()
+    if (pos) {
+      if (!isPositionCode(pos)) {
+        e.position = 'Select a valid position'
+      } else {
+        need(e, 'mostlyUsedRole', p.mostlyUsedRole)
+        const allowed = getRolesForPosition(pos)
+        if (
+          p.mostlyUsedRole.trim() &&
+          allowed.length > 0 &&
+          !allowed.includes(p.mostlyUsedRole.trim())
+        ) {
+          e.mostlyUsedRole = 'Pick a role for this position'
+        }
+      }
+    }
+  }
+  {
+    const sec = p.secondaryPosition.trim()
+    if (sec && !isPositionCode(sec)) e.secondaryPosition = 'Select a valid position or None'
+  }
+  need(e, 'club', p.club)
+}
+
+/**
  * Validates every field shown on the given wizard step. Empty strings fail.
- * Rating on step 10 must be 5–10 (not “Not set”).
+ * Rating on step 10 must be STAFF_RATING_MIN–STAFF_RATING_MAX (not “Not set”).
  */
 export function validateScoutReportStep(
   step: number,
@@ -63,36 +104,7 @@ export function validateScoutReportStep(
   switch (step) {
     case 0:
       need(e, 'reportDate', form.reportDate)
-      need(e, 'name', p.name)
-      need(e, 'ageOrDob', p.ageOrDob)
-      need(e, 'nationality', p.nationality)
-      needHeightCm(e, p.heightCm)
-      validateWeightKgOptional(e, p.weightKg)
-      need(e, 'preferredFoot', p.preferredFoot)
-      need(e, 'position', p.position)
-      {
-        const pos = p.position.trim()
-        if (pos) {
-          if (!isPositionCode(pos)) {
-            e.position = 'Select a valid position'
-          } else {
-            need(e, 'mostlyUsedRole', p.mostlyUsedRole)
-            const allowed = getRolesForPosition(pos)
-            if (
-              p.mostlyUsedRole.trim() &&
-              allowed.length > 0 &&
-              !allowed.includes(p.mostlyUsedRole.trim())
-            ) {
-              e.mostlyUsedRole = 'Pick a role for this position'
-            }
-          }
-        }
-      }
-      {
-        const sec = p.secondaryPosition.trim()
-        if (sec && !isPositionCode(sec)) e.secondaryPosition = 'Select a valid position or None'
-      }
-      need(e, 'club', p.club)
+      validatePlayerInformationStep(e, p)
       break
     case 1:
       need(e, 'systemFit', form.playingStyle.systemFit)

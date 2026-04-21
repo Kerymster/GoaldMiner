@@ -7,7 +7,10 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
-import { overlayAutocompletePanelClass } from './overlayDropdownStyles'
+import {
+  overlayAutocompletePanelAboveClass,
+  overlayAutocompletePanelClass,
+} from './overlayDropdownStyles'
 import {
   overlaySelectOptionDisabledClass,
   overlaySelectOptionHighlightClass,
@@ -40,6 +43,7 @@ export function OverlaySelect({
   placeholder = 'Select…',
   disabled = false,
   triggerClassName,
+  popoverPlacement = 'below',
   'aria-invalid': ariaInvalid,
   id: idProp,
 }: {
@@ -49,6 +53,8 @@ export function OverlaySelect({
   placeholder?: string
   disabled?: boolean
   triggerClassName?: string
+  /** When `above`, the list opens upward (use near bottom of scroll containers). */
+  popoverPlacement?: 'below' | 'above'
   'aria-invalid'?: boolean
   id?: string
 }) {
@@ -133,6 +139,9 @@ export function OverlaySelect({
     .filter(Boolean)
     .join(' ')
 
+  const listboxPanelClass =
+    popoverPlacement === 'above' ? overlayAutocompletePanelAboveClass : overlayAutocompletePanelClass
+
   return (
     <div ref={containerRef} className="relative">
       <button
@@ -171,7 +180,7 @@ export function OverlaySelect({
         </span>
       </button>
       {open && !disabled ? (
-        <div id={listboxId} role="listbox" className={overlayAutocompletePanelClass}>
+        <div id={listboxId} role="listbox" className={listboxPanelClass}>
           {options.map((opt, idx) => {
             const isCurrent = opt.value === value
             const isHi = idx === highlight && !opt.disabled

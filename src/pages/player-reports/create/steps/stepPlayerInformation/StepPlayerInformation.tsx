@@ -1,7 +1,7 @@
 import { ScoutReportField } from '../../ScoutReportField'
 import { ScoutReportNationalityField } from '../../ScoutReportNationalityField'
 import type { ScoutReportStepProps } from '../stepProps'
-import { DateOfBirthField, ReportDateField } from './dateFields'
+import { ContractEndDateField, DateOfBirthField, ReportDateField } from './dateFields'
 import { PhysicalMeasurements } from './physicalMeasurements'
 import { PositionAndRoles } from './positionAndRoles'
 
@@ -67,9 +67,9 @@ export function StepPlayerInformation({ form, setForm, errors }: ScoutReportStep
           }))
         }
       />
-      <ScoutReportField
-        label="Contract (if known)"
+      <ContractEndDateField
         value={pi.contractIfKnown}
+        error={errors.contractIfKnown}
         onChange={(contractIfKnown) =>
           setForm((f) => ({
             ...f,

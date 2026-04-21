@@ -30,6 +30,7 @@ export type ScoutReportPlayerInformation = {
   /** Free-text other roles (not validated against FM lists). */
   otherRoles: string
   club: string
+  /** Contract end date when known; ISO `YYYY-MM-DD` from `<input type="date" />`. */
   contractIfKnown: string
 }
 
@@ -146,10 +147,12 @@ export type ScoutReportTeamFit = {
   whichSystems: string
   transferRecommendation: string
   finalVerdict: string
+  /** Overall rating on a 1–10 scale (field name kept for API compatibility). */
   ratingOutOfFive: number | null
 }
 
-export const STAFF_RATING_MIN = 5
+/** Canonical overall / staff rating scale (scout report Team fit + roster player profile). */
+export const STAFF_RATING_MIN = 1
 export const STAFF_RATING_MAX = 10
 
 export type ScoutReportForm = {

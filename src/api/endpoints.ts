@@ -12,3 +12,8 @@ export const endpoints = {
 export function scoutReportById(id: string): string {
   return `${endpoints.scoutReports}/${encodeURIComponent(id)}`
 }
+
+/** `GET/PATCH /api/players/:id` — canonical player path helper. */
+export function playerById(id: string): string {
+  return `${endpoints.players}/${encodeURIComponent(id)}`
+}

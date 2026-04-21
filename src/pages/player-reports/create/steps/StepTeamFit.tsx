@@ -4,20 +4,12 @@ import {
   STAFF_RATING_MAX,
   STAFF_RATING_MIN,
 } from '../../../../types/scoutReportForm'
+import { overallRatingOverlayOptions } from '../../../../utils/overallRatingSelectOptions'
 import { FieldError, ScoutReportField } from '../ScoutReportField'
 import { reportFieldErrorClass, reportLabelClass } from '../reportFormStyles'
 import type { ScoutReportStepProps } from './stepProps'
 
-const RATING_OPTIONS = [
-  { value: '', label: 'Not set' },
-  ...Array.from(
-    { length: STAFF_RATING_MAX - STAFF_RATING_MIN + 1 },
-    (_, i) => {
-      const n = STAFF_RATING_MIN + i
-      return { value: String(n), label: String(n) }
-    },
-  ),
-]
+const RATING_OPTIONS = overallRatingOverlayOptions()
 
 export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
   return (
@@ -71,7 +63,7 @@ export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
         multiline
       />
       <label className={reportLabelClass}>
-        Overall rating (5–10)
+        Overall rating ({STAFF_RATING_MIN}–{STAFF_RATING_MAX})
         <OverlaySelect
           value={
             form.teamFit.ratingOutOfFive == null ? '' : String(form.teamFit.ratingOutOfFive)

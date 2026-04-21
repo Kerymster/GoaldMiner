@@ -8,6 +8,7 @@ import { PlayerStatsGrid } from './PlayerStatsGrid'
 import {
   playerDetailBackLinkClass,
   playerDetailCardClass,
+  playerDetailEditLinkClass,
   playerDetailFooterLinkClass,
   playerDetailPageStackClass,
   playerDetailReportsActionWrapClass,
@@ -55,6 +56,9 @@ export function PlayerDetailPage() {
         <PlayerStatsGrid player={player} />
         {player.note ? <PlayerDetailNote note={player.note} /> : null}
         <div className={playerDetailReportsActionWrapClass}>
+          <Link to={`/players/${player.id}/edit`} className={playerDetailEditLinkClass}>
+            Edit player
+          </Link>
           <Link
             to={`/player-reports?playerId=${encodeURIComponent(player.id)}`}
             state={{

@@ -32,7 +32,10 @@ export function DetailPlayerInformationSection({ form }: { form: ScoutReportForm
         <DetailRow label="Mostly used role" value={(p.mostlyUsedRole ?? '').trim() || '—'} />
         <DetailRow label="Other roles" value={(p.otherRoles ?? '').trim() || '—'} />
         <DetailRow label="Club" value={p.club} />
-        <DetailRow label="Contract" value={p.contractIfKnown} />
+        <DetailRow
+          label="Contract (End date)"
+          value={formatReportDisplayDate(p.contractIfKnown)}
+        />
       </div>
     </DetailSection>
   )

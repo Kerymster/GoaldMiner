@@ -1,5 +1,5 @@
 import { fetchJson } from './client'
-import { endpoints } from './endpoints'
+import { endpoints, playerById } from './endpoints'
 import type { ScoutReportForm } from '../types/scoutReportForm'
 import type {
   PaginatedResponse,
@@ -22,6 +22,9 @@ export type PlayersQuery = {
   page?: number
   pageSize?: number
 }
+
+export type CreatePlayerInput = Omit<Player, 'id' | 'rating' | 'underratedScore'>
+export type UpdatePlayerInput = Partial<CreatePlayerInput>
 
 function toSearchParams(q: PlayersQuery): string {
   const p = new URLSearchParams()
@@ -54,9 +57,28 @@ export async function getPlayers(
 }
 
 export async function getPlayerById(id: string): Promise<Player> {
-  return fetchJson<Player>(
-    `${endpoints.players}/${encodeURIComponent(id)}`,
-  )
+  return fetchJson<Player>(playerById(id))
+}
+
+/** Creates a roster player without requiring a scout report. */
+export async function createPlayer(input: CreatePlayerInput): Promise<Player> {
+  return fetchJson<Player>(endpoints.players, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+/** Partially updates player profile fields (`PATCH /api/players/:id`). */
+export async function updatePlayer(
+  id: string,
+  input: UpdatePlayerInput,
+): Promise<Player> {
+  return fetchJson<Player>(playerById(id), {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input),
+  })
 }
 
 /** Response from `GET /api/players/:id/scout-reports` — each row exposes the form as `report`. */
@@ -73,7 +95,7 @@ type ApiPlayerScoutReportsResponse = {
 export async function getPlayerScoutReports(
   playerId: string,
 ): Promise<PlayerScoutReportRow[]> {
-  const path = `${endpoints.players}/${encodeURIComponent(playerId)}/scout-reports`
+  const path = `${playerById(playerId)}/scout-reports`
   const body = await fetchJson<ApiPlayerScoutReportsResponse>(path)
   return (body.items ?? []).map((row) => ({ id: row.id, form: row.report }))
 }

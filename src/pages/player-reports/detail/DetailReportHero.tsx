@@ -35,20 +35,6 @@ function StaffRatingStars({ rating }: { rating: number }) {
       </div>
     )
   }
-  if (rating >= 1 && rating <= 4) {
-    return (
-      <div
-        className="flex items-center gap-0.5"
-        aria-label={`Rating ${rating} out of 5`}
-      >
-        {Array.from({ length: 5 }, (_, i) => (
-          <span key={i} className={i < rating ? starOn : starOff}>
-            ★
-          </span>
-        ))}
-      </div>
-    )
-  }
   return null
 }
 
@@ -70,9 +56,7 @@ export function DetailReportHero({
     rating != null
       ? rating >= STAFF_RATING_MIN && rating <= STAFF_RATING_MAX
         ? `${rating} (${STAFF_RATING_MIN}–${STAFF_RATING_MAX})`
-        : rating >= 1 && rating <= 4
-          ? `${rating}/5`
-          : String(rating)
+        : String(rating)
       : null
   const [copied, setCopied] = useState(false)
 
