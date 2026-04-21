@@ -6,6 +6,7 @@ import {
   updatePlayer,
   type UpdatePlayerInput,
 } from '../../../api/players'
+import { Modal } from '../../../components/Modal'
 import { OverlaySelect } from '../../../components/OverlaySelect'
 import { pageInlineLinkGold, proseErrorSm } from '../../../components/pageChromeStyles'
 import { FieldError, ScoutReportField } from '../../player-reports/create/ScoutReportField'
@@ -142,6 +143,7 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
   const [saving, setSaving] = useState(false)
   const [apiError, setApiError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const cancelTo = mode === 'edit' && initialPlayer ? `/players/${initialPlayer.id}` : '/players'
   const isEdit = mode === 'edit'
@@ -159,21 +161,54 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
     setForm(u)
   }, [])
 
-  const onSubmit = async () => {
-    setMessage(null)
-    setApiError(null)
-
+  const validateForSave = (): boolean => {
     const errs: ScoutReportStepErrors = {}
     validatePlayerInformationStep(errs, form.playerInformation)
     validateOptionalOverallRatingStr(errs, overallRatingStr)
     if (hasStepErrors(errs)) {
       setFieldErrors(errs)
-      return
+      return false
     }
     setFieldErrors({})
+    return true
+  }
+
+  const openSaveConfirm = () => {
+    setMessage(null)
+    setApiError(null)
+    if (!validateForSave()) return
 
     if (isEdit && !initialPlayer) {
       setApiError('Missing player context for edit.')
+      return
+    }
+
+    if (isEdit && initialPlayer && initialPayload) {
+      const currentPayload = piToCreateInput(form.playerInformation, {
+        overallRatingStr,
+        noteStr,
+      })
+      const patch = toUpdatePayload(currentPayload, initialPayload)
+      if (Object.keys(patch).length === 0) {
+        setMessage('No changes to save.')
+        return
+      }
+    }
+
+    setConfirmOpen(true)
+  }
+
+  const performSave = async () => {
+    setMessage(null)
+    setApiError(null)
+    if (!validateForSave()) {
+      setConfirmOpen(false)
+      return
+    }
+
+    if (isEdit && !initialPlayer) {
+      setApiError('Missing player context for edit.')
+      setConfirmOpen(false)
       return
     }
 
@@ -188,7 +223,7 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
         const patch = toUpdatePayload(currentPayload, initialPayload)
         if (Object.keys(patch).length === 0) {
           setMessage('No changes to save.')
-          setSaving(false)
+          setConfirmOpen(false)
           return
         }
         const updated = await updatePlayer(initialPlayer.id, patch)
@@ -205,6 +240,7 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
       } else {
         setApiError(e instanceof Error ? e.message : 'Could not save player.')
       }
+      setConfirmOpen(false)
     } finally {
       setSaving(false)
     }
@@ -333,12 +369,30 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
         <button
           type="button"
           className={playerFormSubmitClass}
-          onClick={() => void onSubmit()}
+          onClick={openSaveConfirm}
           disabled={saving}
         >
           {saving ? 'Saving…' : isEdit ? 'Update player' : 'Create player'}
         </button>
       </div>
+
+      <Modal
+        isOpen={confirmOpen}
+        title={isEdit ? 'Update this player?' : 'Create this player?'}
+        description={
+          isEdit
+            ? 'Your changes will be saved to this profile.'
+            : 'This will add a new player profile to the list.'
+        }
+        confirmLabel={isEdit ? 'Update player' : 'Create player'}
+        isConfirming={saving}
+        closeOnBackdrop={!saving}
+        onClose={() => {
+          if (saving) return
+          setConfirmOpen(false)
+        }}
+        onConfirm={() => void performSave()}
+      />
     </section>
   )
 }

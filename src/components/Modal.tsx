@@ -44,26 +44,30 @@ type VariantPresentation = {
 
 const VARIANT_PRESENTATIONS: Record<ModalVariant, VariantPresentation> = {
   confirmation: {
-    iconName: 'circleHelp',
-    iconClass: 'border-gold-200 bg-gold-100 text-gold-800 dark:border-gold-500/45 dark:bg-gold-500/25',
+    iconName: 'fileCheck',
+    iconClass:
+      'bg-gold-500/[0.08] text-gold-600 ring-gold-500/15 dark:bg-gold-400/[0.07] dark:text-gold-400 dark:ring-gold-400/20',
     confirmButtonClass:
       'border-gold-600 bg-gold-500 text-white hover:bg-gold-600 focus:ring-gold-500 dark:border-gold-500 dark:bg-gold-500 dark:hover:bg-gold-400',
   },
   danger: {
     iconName: 'alertTriangle',
-    iconClass: 'border-rose-200 bg-rose-100 text-rose-700 dark:border-rose-500/45 dark:bg-rose-500/20 dark:text-rose-100',
+    iconClass:
+      'bg-rose-500/[0.08] text-rose-600 ring-rose-500/15 dark:bg-rose-400/[0.08] dark:text-rose-300 dark:ring-rose-400/25',
     confirmButtonClass:
       'border-rose-600 bg-rose-600 text-white hover:bg-rose-700 focus:ring-rose-500 dark:border-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400',
   },
   info: {
     iconName: 'info',
-    iconClass: 'border-sky-200 bg-sky-100 text-sky-700 dark:border-sky-500/45 dark:bg-sky-500/20 dark:text-sky-100',
+    iconClass:
+      'bg-sky-500/[0.08] text-sky-600 ring-sky-500/15 dark:bg-sky-400/[0.08] dark:text-sky-300 dark:ring-sky-400/25',
     confirmButtonClass:
       'border-sky-600 bg-sky-600 text-white hover:bg-sky-700 focus:ring-sky-500 dark:border-sky-500 dark:bg-sky-500 dark:hover:bg-sky-400',
   },
   success: {
     iconName: 'checkCircle',
-    iconClass: 'border-sea-200 bg-sea-100 text-sea-700 dark:border-sea-500/45 dark:bg-sea-500/20 dark:text-sea-100',
+    iconClass:
+      'bg-sea-500/[0.08] text-sea-600 ring-sea-500/15 dark:bg-sea-400/[0.08] dark:text-sea-300 dark:ring-sea-400/25',
     confirmButtonClass:
       'border-sea-600 bg-sea-600 text-white hover:bg-sea-700 focus:ring-sea-500 dark:border-sea-500 dark:bg-sea-500 dark:hover:bg-sea-400',
   },
@@ -149,7 +153,7 @@ export function Modal({
         </button>
         <div className={modalContentClass}>
           <span className={`${modalIconWrapBaseClass} ${variantPresentation.iconClass}`} aria-hidden>
-            <Icon name={variantPresentation.iconName} size={18} />
+            <Icon name={variantPresentation.iconName} size={20} strokeWidth={1.75} />
           </span>
           <div className={modalTextStackClass}>
             <h2 id={titleId} className={modalTitleClass}>

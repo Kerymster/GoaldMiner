@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   ChevronDown,
   CircleHelp,
+  FileCheck2,
   Info,
   Search,
   X,
@@ -18,6 +19,7 @@ export type IconName =
   | 'chevronDown'
   | 'circleHelp'
   | 'close'
+  | 'fileCheck'
   | 'info'
   | 'search'
 
@@ -28,6 +30,7 @@ const ICON_MAP: Record<IconName, LucideIcon> = {
   chevronDown: ChevronDown,
   circleHelp: CircleHelp,
   close: X,
+  fileCheck: FileCheck2,
   info: Info,
   search: Search,
 }

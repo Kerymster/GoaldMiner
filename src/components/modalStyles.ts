@@ -21,10 +21,10 @@ export const modalPanelClass =
 export const modalContentClass = 'flex gap-4 px-5 py-5 sm:px-6'
 
 /**
- * Icon holder chip for semantic variants.
+ * Icon holder: soft tile (no nested “circle in circle” with round icons).
  */
 export const modalIconWrapBaseClass =
-  'mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border'
+  'mt-0.5 inline-flex size-10 shrink-0 items-center justify-center rounded-xl shadow-sm ring-1 ring-inset'
 
 /**
  * Text stack next to icon.

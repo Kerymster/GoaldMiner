@@ -1,5 +1,6 @@
 import { useCallback, useState, type SetStateAction } from 'react'
 import { createScoutReport, updateScoutReport } from '../../../api/scoutReports'
+import { Modal } from '../../../components/Modal'
 import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
 import { useAppDispatch } from '../../../store/hooks'
 import { formatApiIssuesSummary, isApiErr } from '../../../types/api'
@@ -42,6 +43,7 @@ export function CreateReportForm({
     'idle' | 'saving' | 'success' | 'error'
   >('idle')
   const [saveMessage, setSaveMessage] = useState<string | null>(null)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const last = step === SCOUT_REPORT_STEPS.length - 1
   const meta = SCOUT_REPORT_STEPS[step]
@@ -73,13 +75,29 @@ export function CreateReportForm({
     setSaveMessage(null)
   }, [step, form])
 
-  const handleSave = useCallback(async () => {
+  const requestSave = useCallback(() => {
     const invalid = findFirstInvalidScoutReportStep(form)
     if (invalid) {
       setStep(invalid.step)
       setStepErrors(invalid.errors)
       setSaveStatus('idle')
       setSaveMessage(null)
+      return
+    }
+    setStepErrors({})
+    setSaveStatus('idle')
+    setSaveMessage(null)
+    setConfirmOpen(true)
+  }, [form])
+
+  const performSave = useCallback(async () => {
+    const invalid = findFirstInvalidScoutReportStep(form)
+    if (invalid) {
+      setStep(invalid.step)
+      setStepErrors(invalid.errors)
+      setSaveStatus('idle')
+      setSaveMessage(null)
+      setConfirmOpen(false)
       return
     }
     setStepErrors({})
@@ -99,6 +117,7 @@ export function CreateReportForm({
         setSaveStatus('success')
         setSaveMessage('Report saved successfully.')
       }
+      setConfirmOpen(false)
     } catch (e) {
       setSaveStatus('error')
       if (isApiErr(e) && e.status === 400) {
@@ -110,6 +129,7 @@ export function CreateReportForm({
           e instanceof Error ? e.message : 'Save failed. Check the API and try again.',
         )
       }
+      setConfirmOpen(false)
     }
   }, [dispatch, form, mode, playerId, reportId])
 
@@ -185,7 +205,7 @@ export function CreateReportForm({
               ) : null}
               <button
                 type="button"
-                onClick={() => void handleSave()}
+                onClick={requestSave}
                 disabled={saveStatus === 'saving'}
                 className="cursor-pointer rounded-lg border border-gold-600/80 bg-gold-600/15 px-4 py-2 text-sm font-semibold text-fume-900 shadow-sm transition-colors hover:bg-gold-600/25 disabled:cursor-wait disabled:opacity-70 dark:border-gold-500/50 dark:text-gold-100 dark:hover:bg-gold-500/20"
               >
@@ -214,6 +234,24 @@ export function CreateReportForm({
       </div>
 
       <ProTipsPanel />
+
+      <Modal
+        isOpen={confirmOpen}
+        title={mode === 'edit' ? 'Update this report?' : 'Save this report?'}
+        description={
+          mode === 'edit'
+            ? 'Your latest answers will replace the existing scout report.'
+            : 'The full report will be saved and listed with your other reports.'
+        }
+        confirmLabel={mode === 'edit' ? 'Update report' : 'Save report'}
+        isConfirming={saveStatus === 'saving'}
+        closeOnBackdrop={saveStatus !== 'saving'}
+        onClose={() => {
+          if (saveStatus === 'saving') return
+          setConfirmOpen(false)
+        }}
+        onConfirm={() => void performSave()}
+      />
     </div>
   )
 }
