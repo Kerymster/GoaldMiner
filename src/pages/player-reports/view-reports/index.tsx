@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
 import { selectScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSelectors'
 import { PageHeader } from '../../../components/PageHeader'
@@ -15,6 +16,7 @@ import {
   ViewReportsPlayerSearch,
   type ViewReportsSelectedPlayer,
 } from '../ViewReportsPlayerSearch'
+import { getPlayerById } from '../../../api/players'
 
 const BREADCRUMB = [{ label: 'Player Reports' as const }]
 const TITLE = 'View reports'
@@ -24,10 +26,45 @@ const DESCRIPTION =
 export function ViewReportsPage() {
   const dispatch = useAppDispatch()
   const [selectedPlayer, setSelectedPlayer] = useState<ViewReportsSelectedPlayer | null>(null)
+  const [searchParams] = useSearchParams()
+  const location = useLocation()
 
   const { status, error, items: reports } = useAppSelector((s) =>
     selectScoutReportsForPlayer(s, selectedPlayer?.id),
   )
+
+  useEffect(() => {
+    const statePlayer = (
+      location.state as { selectedPlayer?: ViewReportsSelectedPlayer } | null
+    )?.selectedPlayer
+    if (statePlayer) {
+      setSelectedPlayer(statePlayer)
+      return
+    }
+
+    const playerId = searchParams.get('playerId')
+    if (!playerId) return
+
+    let cancelled = false
+    ;(async () => {
+      try {
+        const player = await getPlayerById(playerId)
+        if (cancelled) return
+        setSelectedPlayer({
+          id: player.id,
+          name: player.name,
+          team: player.team,
+          position: player.position,
+        })
+      } catch {
+        // Keep empty state if player cannot be resolved.
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [location.state, searchParams])
 
   useEffect(() => {
     if (!selectedPlayer) return

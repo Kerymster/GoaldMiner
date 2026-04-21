@@ -16,7 +16,16 @@ export type Player = {
   name: string
   team: string
   nationality?: string
+  ageOrDob?: string
+  heightCm?: number
+  weightKg?: number
+  preferredFoot?: string
   position: string
+  secondaryPosition?: string
+  mostlyUsedRole?: string
+  otherRoles?: string
+  contractIfKnown?: string
+  overallRating?: number
   rating?: number
   underratedScore?: number
   note?: string

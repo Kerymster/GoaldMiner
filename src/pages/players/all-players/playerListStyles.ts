@@ -7,3 +7,18 @@ export const playerListSurface =
 
 export const playerListInputClass =
   'rounded-lg border border-surface-field-border bg-surface-field px-3 py-2 text-sm text-fume-900 shadow-sm focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:text-fume-100'
+
+/** Separator row between filters and results area. */
+export const playerListResultsDividerClass =
+  'flex items-center gap-3'
+
+/** Small uppercase title used in results divider. */
+export const playerListResultsDividerLabelClass =
+  'text-[11px] font-semibold uppercase tracking-[0.14em] text-fume-500'
+
+/** Thin continuation line beside the divider label. */
+export const playerListResultsDividerLineClass = 'h-px flex-1 bg-surface-divider'
+
+/** Empty-state copy when no player matches filters. */
+export const playerListEmptyStateClass =
+  'rounded-xl border border-surface-panel-border bg-surface-panel px-4 py-5 text-sm text-fume-600 dark:text-fume-400'

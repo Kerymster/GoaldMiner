@@ -61,7 +61,7 @@ export function PlayerListFilters({
             value={sort}
             onChange={(v) => onSortChange(v as PlayersSort)}
             options={sortOptions}
-            triggerClassName="min-w-[12rem]"
+            triggerClassName="min-h-[2.25rem] min-w-[12rem] py-2 font-normal normal-case tracking-normal"
           />
         </div>
       </div>

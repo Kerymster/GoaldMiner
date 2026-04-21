@@ -4,7 +4,13 @@ import { ListPagination } from '../../../components/ListPagination'
 import { usePlayersList } from '../../../hooks/usePlayersList'
 import { PlayerListFilters } from './PlayerListFilters'
 import { PlayerListRow } from './PlayerListRow'
-import { playerListSurface } from './playerListStyles'
+import {
+  playerListEmptyStateClass,
+  playerListResultsDividerClass,
+  playerListResultsDividerLabelClass,
+  playerListResultsDividerLineClass,
+  playerListSurface,
+} from './playerListStyles'
 
 const BREADCRUMB = [{ label: 'Players' as const }]
 const TITLE = 'Players'
@@ -63,12 +69,26 @@ export function AllPlayersPage() {
 
       {!loading && !error ? (
         <>
-          <ul className={playerListSurface}>
-            {items.map((player) => (
-              <PlayerListRow key={player.id} player={player} />
-            ))}
-          </ul>
-          <ListPagination page={page} setPage={setPage} data={data} />
+          <div className={playerListResultsDividerClass}>
+            <span className={playerListResultsDividerLabelClass}>
+              Results {typeof data?.total === 'number' ? `(${data.total})` : ''}
+            </span>
+            <span className={playerListResultsDividerLineClass} aria-hidden />
+          </div>
+          {items.length > 0 ? (
+            <>
+              <ul className={playerListSurface}>
+                {items.map((player) => (
+                  <PlayerListRow key={player.id} player={player} />
+                ))}
+              </ul>
+              <ListPagination page={page} setPage={setPage} data={data} />
+            </>
+          ) : (
+            <p className={playerListEmptyStateClass}>
+              No players found for the current filters. Try broadening your search.
+            </p>
+          )}
         </>
       ) : null}
     </div>

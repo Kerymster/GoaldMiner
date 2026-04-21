@@ -10,6 +10,8 @@ import {
   playerDetailCardClass,
   playerDetailFooterLinkClass,
   playerDetailPageStackClass,
+  playerDetailReportsActionWrapClass,
+  playerDetailReportsLinkClass,
   playerDetailStateStackClass,
 } from './playerDetailStyles'
 
@@ -50,11 +52,24 @@ export function PlayerDetailPage() {
       <Breadcrumbs items={breadcrumbItems} />
       <div className={playerDetailCardClass}>
         <PlayerProfileHeader player={player} />
-        <PlayerStatsGrid
-          rating={player.rating}
-          underratedScore={player.underratedScore}
-        />
+        <PlayerStatsGrid player={player} />
         {player.note ? <PlayerDetailNote note={player.note} /> : null}
+        <div className={playerDetailReportsActionWrapClass}>
+          <Link
+            to={`/player-reports?playerId=${encodeURIComponent(player.id)}`}
+            state={{
+              selectedPlayer: {
+                id: player.id,
+                name: player.name,
+                team: player.team,
+                position: player.position,
+              },
+            }}
+            className={playerDetailReportsLinkClass}
+          >
+            View reports
+          </Link>
+        </div>
       </div>
       <Link to="/players" className={playerDetailFooterLinkClass}>
         ← All players
