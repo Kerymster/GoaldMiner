@@ -17,7 +17,7 @@
   --color-fume-950: #020617;
 
   /* Light-mode page canvas — lifted, cool white (panels stay pure white) */
-  --color-shell: #f6f8fc;
+  --color-shell: #eef2f7;
 
   /* Amber accent (mapped as `gold-*`) */
   --color-gold-50: #fffbeb;
@@ -62,14 +62,14 @@
 
 :root {
   --surface-panel: #ffffff;
-  --surface-panel-border: rgb(226 232 240 / 0.9);
+  --surface-panel-border: rgb(203 213 225 / 0.92);
   --surface-panel-hover: rgb(248 250 252);
-  --surface-inset: rgb(241 245 249 / 0.65);
-  --surface-inset-border: rgb(226 232 240 / 0.9);
+  --surface-inset: rgb(226 232 240 / 0.72);
+  --surface-inset-border: rgb(203 213 225 / 0.9);
   --surface-field: #ffffff;
-  --surface-field-border: rgb(226 232 240);
-  --surface-divider: rgb(241 245 249);
-  --surface-list-divider: rgb(241 245 249);
+  --surface-field-border: rgb(203 213 225 / 0.95);
+  --surface-divider: rgb(226 232 240);
+  --surface-list-divider: rgb(226 232 240);
 }
 
 /* Matches Tailwind default dark mode (prefers-color-scheme). If you switch to class-based dark on <html>, mirror these vars under a `.dark` rule. */

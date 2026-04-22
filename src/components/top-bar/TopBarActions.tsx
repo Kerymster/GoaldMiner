@@ -28,7 +28,7 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
       <button
         type="button"
         title="Notifications (mock)"
-        className="cursor-pointer rounded-lg p-2 text-fume-500 transition-colors hover:bg-fume-200/80 hover:text-fume-800 dark:text-fume-400 dark:hover:bg-fume-800 dark:hover:text-fume-100"
+        className="cursor-pointer rounded-lg p-2 text-fume-400 transition-colors hover:bg-fume-800/70 hover:text-fume-100"
       >
         <Icon name="bell" className="h-5 w-5" />
       </button>
@@ -39,14 +39,14 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
           onClick={() => setMenuOpen((o) => !o)}
           aria-expanded={menuOpen}
           aria-haspopup="menu"
-          className="flex cursor-pointer items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2 transition-colors hover:bg-fume-200/80 dark:hover:bg-fume-800"
+          className="flex cursor-pointer items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2 transition-colors hover:bg-fume-800/70"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-600 text-xs font-bold text-white shadow-sm dark:bg-gold-500">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-gold-500/45 bg-gold-600 text-xs font-bold text-white shadow-sm">
             {initials}
           </span>
           <Icon
             name="chevronDown"
-            className={`hidden h-4 w-4 text-fume-500 transition-transform sm:block ${menuOpen ? 'rotate-180' : ''}`}
+            className={`hidden h-4 w-4 text-fume-400 transition-transform sm:block ${menuOpen ? 'rotate-180' : ''}`}
           />
         </button>
         {menuOpen ? (
@@ -57,11 +57,14 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
               className="fixed inset-0 z-40 cursor-default bg-transparent"
               onClick={() => setMenuOpen(false)}
             />
-            <div role="menu" className={overlayMenuPanelClass}>
+            <div
+              role="menu"
+              className={`${overlayMenuPanelClass} border-fume-700/80 bg-fume-900/98 ring-gold-500/20`}
+            >
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-surface-panel"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-200 hover:bg-fume-800/75"
                 onClick={() => setMenuOpen(false)}
               >
                 Profile
@@ -69,16 +72,16 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-700 hover:bg-fume-100 dark:text-fume-200 dark:hover:bg-surface-panel"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-fume-200 hover:bg-fume-800/75"
                 onClick={() => setMenuOpen(false)}
               >
                 Settings
               </button>
-              <div className="my-1 h-px bg-surface-divider" />
+              <div className="my-1 h-px bg-fume-700/80" />
               <button
                 type="button"
                 role="menuitem"
-                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-gold-800 hover:bg-gold-500/10 dark:text-gold-400 dark:hover:bg-gold-500/10"
+                className="flex w-full cursor-pointer px-4 py-2.5 text-left text-sm text-gold-300 hover:bg-gold-500/12"
                 onClick={() => {
                   setMenuOpen(false)
                   void logout()
