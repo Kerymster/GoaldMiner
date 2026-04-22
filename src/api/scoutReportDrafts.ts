@@ -32,6 +32,31 @@ type PublishScoutReportDraftInput = {
   playerId?: string
 }
 
+function stripNullishDraftFields(value: unknown): unknown {
+  if (value === null || value === undefined) return undefined
+  if (Array.isArray(value)) {
+    const next = value
+      .map((item) => stripNullishDraftFields(item))
+      .filter((item) => item !== undefined)
+    return next
+  }
+  if (typeof value !== 'object') return value
+
+  const input = value as Record<string, unknown>
+  const output: Record<string, unknown> = {}
+  for (const [key, child] of Object.entries(input)) {
+    const normalized = stripNullishDraftFields(child)
+    if (normalized !== undefined) {
+      output[key] = normalized
+    }
+  }
+  return output
+}
+
+function normalizeDraftInput(input: Partial<ScoutReportForm>): Partial<ScoutReportForm> {
+  return (stripNullishDraftFields(input) ?? {}) as Partial<ScoutReportForm>
+}
+
 function parseDraft(body: unknown): StoredScoutReportDraft {
   if (body == null || typeof body !== 'object') {
     throw new Error('Invalid draft response from server.')
@@ -60,7 +85,10 @@ export async function createScoutReportDraft(
   const body = await fetchJson<unknown>(endpoints.scoutReportDrafts, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
+    body: JSON.stringify({
+      ...input,
+      draft: normalizeDraftInput(input.draft),
+    }),
   })
   return parseDraft(body)
 }
@@ -74,10 +102,15 @@ export async function updateScoutReportDraft(
   id: string,
   input: UpdateScoutReportDraftInput,
 ): Promise<StoredScoutReportDraft> {
+  const normalizedDraft =
+    input.draft != null ? normalizeDraftInput(input.draft) : undefined
   const body = await fetchJson<unknown>(scoutReportDraftById(id), {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
+    body: JSON.stringify({
+      ...input,
+      ...(normalizedDraft != null ? { draft: normalizedDraft } : {}),
+    }),
   })
   return parseDraft(body)
 }
