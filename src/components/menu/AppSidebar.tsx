@@ -96,6 +96,37 @@ export function AppSidebar() {
             </ul>
           </details>
         </div>
+
+        <div className="mt-1">
+          <details className="group rounded-lg" open>
+            <summary className={sidebarReportsSummaryClass}>
+              <span className="flex items-center justify-between gap-2">
+                Draft Reports
+                <Icon
+                  name="chevronDown"
+                  className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180"
+                />
+              </span>
+            </summary>
+            <ul className="mt-1 space-y-0.5 border-l border-sea-500/22 pl-2.5">
+              <li>
+                <SidebarRouteSublink to="/draft-reports/create" end>
+                  Create draft
+                </SidebarRouteSublink>
+              </li>
+              <li>
+                <SidebarRouteSublink to="/draft-reports" end>
+                  View drafts
+                </SidebarRouteSublink>
+              </li>
+              <li>
+                <SidebarRouteSublink to="/draft-reports/edit" end>
+                  Edit drafts
+                </SidebarRouteSublink>
+              </li>
+            </ul>
+          </details>
+        </div>
       </div>
     </aside>
   )

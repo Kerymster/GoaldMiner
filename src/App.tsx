@@ -11,6 +11,10 @@ import { EditReportsPage } from './pages/player-reports/edit-reports'
 import { ScoutReportDetailPage } from './pages/player-reports/detail/scout-report'
 import { ScoutReportEditPage } from './pages/player-reports/detail/scout-report-edit'
 import { ViewReportsPage } from './pages/player-reports/view-reports'
+import { CreateDraftReportPage } from './pages/draft-reports/create-report'
+import { EditDraftReportsPage } from './pages/draft-reports/edit-reports'
+import { ViewDraftReportsPage } from './pages/draft-reports/view-reports'
+import { DraftReportEditPage } from './pages/draft-reports/detail/draft-report-edit'
 import { ProtectedRoute } from './components/routing/ProtectedRoute'
 import { LoginPage } from './pages/auth/login'
 import { RegisterPage } from './pages/auth/register'
@@ -42,6 +46,10 @@ export default function App() {
               element={<ScoutReportDetailPage />}
             />
             <Route path="player-reports/report/:reportId" element={<Navigate to="/player-reports" replace />} />
+            <Route path="draft-reports" element={<ViewDraftReportsPage />} />
+            <Route path="draft-reports/edit" element={<EditDraftReportsPage />} />
+            <Route path="draft-reports/create" element={<CreateDraftReportPage />} />
+            <Route path="draft-reports/:draftId/edit" element={<DraftReportEditPage />} />
             <Route path="*" element={<Navigate to="/players" replace />} />
           </Route>
         </Route>
