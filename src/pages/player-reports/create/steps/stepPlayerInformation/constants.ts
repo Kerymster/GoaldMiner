@@ -1,6 +1,6 @@
 import { POSITION_CODES } from '../../../../../data/positionRoles'
 import { SCOUT_PREFERRED_FOOT_OPTIONS } from '../../../../../types/scoutReportForm'
-import type { OverlaySelectOption } from '../../../../../components/OverlaySelect'
+import type { OverlaySelectOption } from '../../../../../components/overlay-select/OverlaySelect'
 
 export const PREFERRED_FOOT_SELECT_OPTIONS: OverlaySelectOption[] =
   SCOUT_PREFERRED_FOOT_OPTIONS.map((v) => ({
@@ -23,3 +23,4 @@ export function parseOptionalRoundedInt(raw: string): number | null {
   const n = Number(raw)
   return Number.isFinite(n) ? Math.round(n) : null
 }
+

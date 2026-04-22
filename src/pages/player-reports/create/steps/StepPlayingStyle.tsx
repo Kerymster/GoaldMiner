@@ -1,4 +1,4 @@
-import { pageStack, proseMutedSm } from '../../../../components/pageChromeStyles'
+import { pageStack, proseMutedSm } from '../../../../components/styles/pageChromeStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import { reportSectionTitleClass } from '../reportFormStyles'
 import type { ScoutReportForm } from '../../../../types/scoutReportForm'
@@ -126,3 +126,4 @@ export function StepPlayingStyle({ form, setForm, errors }: ScoutReportStepProps
     </div>
   )
 }
+

@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom'
-import { AppSidebar } from './AppSidebar'
-import { TopBar } from './top-bar/TopBar'
+import { AppSidebar } from '../menu/AppSidebar'
+import { TopBar } from '../top-bar/TopBar'
 import {
   layoutBodyRowClass,
   layoutMainClass,

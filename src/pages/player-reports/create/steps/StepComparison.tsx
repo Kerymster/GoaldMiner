@@ -1,4 +1,4 @@
-import { pageStackCompact, proseMutedSm } from '../../../../components/pageChromeStyles'
+import { pageStackCompact, proseMutedSm } from '../../../../components/styles/pageChromeStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
@@ -35,3 +35,4 @@ export function StepComparison({ form, setForm, errors }: ScoutReportStepProps) 
     </div>
   )
 }
+

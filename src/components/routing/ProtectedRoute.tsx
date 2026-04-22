@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
-import { proseMutedSm, sessionGateLoadingClass } from './pageChromeStyles'
+import { useAuth } from '../../hooks/useAuth'
+import { proseMutedSm, sessionGateLoadingClass } from '../styles/pageChromeStyles'
 
 export function ProtectedRoute() {
   const { user, loading } = useAuth()

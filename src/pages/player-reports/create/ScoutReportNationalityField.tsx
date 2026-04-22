@@ -6,14 +6,14 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
-import { overlayAutocompletePanelClass } from '../../../components/overlayDropdownStyles'
-import { proseError } from '../../../components/pageChromeStyles'
+import { overlayAutocompletePanelClass } from '../../../components/overlay-select/overlayDropdownStyles'
+import { proseError } from '../../../components/styles/pageChromeStyles'
 import {
   overlaySelectOptionHighlightClass,
   overlaySelectOptionInactiveClass,
   overlaySelectOptionSelectedClass,
   overlaySelectTriggerClass,
-} from '../../../components/overlaySelectStyles'
+} from '../../../components/overlay-select/overlaySelectStyles'
 import { loadNationalities } from '../../../features/nationalities/nationalitiesSlice'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import type { NationalityItem } from '../../../types/nationalities'
@@ -318,3 +318,4 @@ export function ScoutReportNationalityField({
     </div>
   )
 }
+

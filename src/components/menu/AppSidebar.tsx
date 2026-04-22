@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
-import { Icon } from './icons'
+import { Icon } from '../icons'
 import { navLinkClass, navSublinkClass } from './navStyles'
 
 function SidebarRouteSublink({

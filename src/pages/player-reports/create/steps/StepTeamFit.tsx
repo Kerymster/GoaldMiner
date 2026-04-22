@@ -1,5 +1,5 @@
-import { OverlaySelect } from '../../../../components/OverlaySelect'
-import { pageStack } from '../../../../components/pageChromeStyles'
+import { OverlaySelect } from '../../../../components/overlay-select/OverlaySelect'
+import { pageStack } from '../../../../components/styles/pageChromeStyles'
 import {
   STAFF_RATING_MAX,
   STAFF_RATING_MIN,
@@ -87,3 +87,4 @@ export function StepTeamFit({ form, setForm, errors }: ScoutReportStepProps) {
     </div>
   )
 }
+

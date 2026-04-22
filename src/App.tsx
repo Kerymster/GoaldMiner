@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { ApiUnauthorizedBridge } from './bootstrap/ApiUnauthorizedBridge'
-import { Layout } from './components/Layout'
+import { Layout } from './components/layout/Layout'
 import { ComparePage } from './pages/compare'
 import { PlayerDetailPage } from './pages/players/player-detail'
 import { AllPlayersPage } from './pages/players/all-players'
@@ -11,7 +11,7 @@ import { EditReportsPage } from './pages/player-reports/edit-reports'
 import { ScoutReportDetailPage } from './pages/player-reports/detail/scout-report'
 import { ScoutReportEditPage } from './pages/player-reports/detail/scout-report-edit'
 import { ViewReportsPage } from './pages/player-reports/view-reports'
-import { ProtectedRoute } from './components/ProtectedRoute'
+import { ProtectedRoute } from './components/routing/ProtectedRoute'
 import { LoginPage } from './pages/auth/login'
 import { RegisterPage } from './pages/auth/register'
 
@@ -49,3 +49,4 @@ export default function App() {
     </BrowserRouter>
   )
 }
+

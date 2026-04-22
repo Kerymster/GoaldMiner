@@ -1,4 +1,4 @@
-import { OverlaySelect, type OverlaySelectOption } from '../../../../../components/OverlaySelect'
+import { OverlaySelect, type OverlaySelectOption } from '../../../../../components/overlay-select/OverlaySelect'
 import { FieldError } from '../../ScoutReportField'
 import { reportFieldErrorClass, reportLabelClass } from '../../reportFormStyles'
 
@@ -37,3 +37,4 @@ export function LabeledOverlaySelectField({
     </div>
   )
 }
+

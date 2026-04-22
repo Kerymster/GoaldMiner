@@ -37,8 +37,16 @@ export async function createScoutReport(
 export async function updateScoutReport(
   reportId: string,
   payload: ScoutReportForm,
+  options?: {
+    syncPlayer?: boolean
+  },
 ): Promise<ScoutReportForm> {
-  const body = await fetchJson<unknown>(scoutReportById(reportId), {
+  const query = new URLSearchParams()
+  if (options?.syncPlayer != null) {
+    query.set('syncPlayer', String(options.syncPlayer))
+  }
+  const path = query.size > 0 ? `${scoutReportById(reportId)}?${query.toString()}` : scoutReportById(reportId)
+  const body = await fetchJson<unknown>(path, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

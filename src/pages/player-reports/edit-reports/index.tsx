@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
 import { selectScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSelectors'
-import { PageHeader } from '../../../components/PageHeader'
+import { PageHeader } from '../../../components/page-header/PageHeader'
 import {
   pageHintNarrow,
   pageStack,
   proseErrorSm,
   proseMutedSm,
-} from '../../../components/pageChromeStyles'
+} from '../../../components/styles/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { playerListSurface } from '../../players/all-players/playerListStyles'
 import { ViewReportsListRow } from '../ViewReportsListRow'
@@ -81,3 +81,4 @@ export function EditReportsPage() {
     </div>
   )
 }
+

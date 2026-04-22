@@ -3,7 +3,7 @@
  * Field-level styles come from `reportFormStyles` to match scout report create UI.
  */
 
-import { primaryCtaButtonClass } from '../../../components/pageChromeStyles'
+import { primaryCtaButtonClass } from '../../../components/styles/pageChromeStyles'
 
 /** Card shell that contains the entire player form. */
 export const playerFormShellClass =
@@ -15,3 +15,4 @@ export const playerFormActionsRowClass =
 
 /** Submit — global primary CTA (same as Add player, View reports, …). */
 export const playerFormSubmitClass = primaryCtaButtonClass
+

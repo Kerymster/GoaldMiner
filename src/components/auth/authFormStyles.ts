@@ -2,7 +2,7 @@
  * Centered auth card (login / register) — shared shell, fields, actions.
  */
 
-import { primaryCtaButtonClass } from './pageChromeStyles'
+import { primaryCtaButtonClass } from '../styles/pageChromeStyles'
 
 export const authPageRootClass =
   'flex min-h-dvh items-center justify-center bg-shell px-4 font-sans text-fume-900 dark:bg-fume-950 dark:text-fume-100'

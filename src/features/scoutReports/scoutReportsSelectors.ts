@@ -2,18 +2,18 @@ import type { PlayerScoutReportRow } from '../../api/players'
 import type { RootState } from '../../store/store'
 import type { ScoutReportsForPlayerState } from './scoutReportsSlice'
 
-const emptyPlayer = (): ScoutReportsForPlayerState => ({
+const EMPTY_PLAYER_SCOUT_REPORTS: ScoutReportsForPlayerState = {
   status: 'idle',
   error: null,
   items: [],
-})
+}
 
 export function selectScoutReportsForPlayer(
   state: RootState,
   playerId: string | undefined,
 ): ScoutReportsForPlayerState {
-  if (!playerId) return emptyPlayer()
-  return state.scoutReports.byPlayerId[playerId] ?? emptyPlayer()
+  if (!playerId) return EMPTY_PLAYER_SCOUT_REPORTS
+  return state.scoutReports.byPlayerId[playerId] ?? EMPTY_PLAYER_SCOUT_REPORTS
 }
 
 export function selectScoutReportRow(

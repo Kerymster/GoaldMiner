@@ -1,4 +1,4 @@
-import { proseMutedSm } from '../../../../components/pageChromeStyles'
+import { proseMutedSm } from '../../../../components/styles/pageChromeStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
 
@@ -27,3 +27,4 @@ export function StepExecutiveSummary({ form, setForm, errors }: ScoutReportStepP
     </div>
   )
 }
+

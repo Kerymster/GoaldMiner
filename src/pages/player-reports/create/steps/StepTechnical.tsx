@@ -1,4 +1,4 @@
-import { pageStackSpacious } from '../../../../components/pageChromeStyles'
+import { pageStackSpacious } from '../../../../components/styles/pageChromeStyles'
 import { reportSectionTitleClass } from '../reportFormStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
@@ -150,3 +150,4 @@ export function StepTechnical({ form, setForm, errors }: ScoutReportStepProps) {
     </div>
   )
 }
+

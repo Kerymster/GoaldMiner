@@ -1,4 +1,4 @@
-import { OverlaySelect } from '../../../components/OverlaySelect'
+import { OverlaySelect } from '../../../components/overlay-select/OverlaySelect'
 import type { PlayersSort } from '../../../types/api'
 import { playerListInputClass } from './playerListStyles'
 
@@ -114,3 +114,4 @@ export function PlayerListFilters({
     </div>
   )
 }
+

@@ -6,9 +6,9 @@ import {
   updatePlayer,
   type UpdatePlayerInput,
 } from '../../../api/players'
-import { Modal } from '../../../components/Modal'
-import { OverlaySelect } from '../../../components/OverlaySelect'
-import { proseErrorSm, secondaryCtaButtonClass } from '../../../components/pageChromeStyles'
+import { Modal } from '../../../components/modal/Modal'
+import { OverlaySelect } from '../../../components/overlay-select/OverlaySelect'
+import { proseErrorSm, secondaryCtaButtonClass } from '../../../components/styles/pageChromeStyles'
 import { FieldError, ScoutReportField } from '../../player-reports/create/ScoutReportField'
 import { ScoutReportNationalityField } from '../../player-reports/create/ScoutReportNationalityField'
 import {
@@ -396,3 +396,4 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
     </section>
   )
 }
+

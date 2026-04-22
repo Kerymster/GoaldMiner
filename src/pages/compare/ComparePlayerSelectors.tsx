@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { OverlaySelect } from '../../components/OverlaySelect'
+import { OverlaySelect } from '../../components/overlay-select/OverlaySelect'
 import type { Player } from '../../types/api'
 
 type ComparePlayerSelectorsProps = {
@@ -64,3 +64,4 @@ export function ComparePlayerSelectors({
     </div>
   )
 }
+

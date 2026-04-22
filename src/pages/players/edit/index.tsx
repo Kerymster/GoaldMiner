@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
-import { PageHeader } from '../../../components/PageHeader'
-import { pageStack, proseErrorSm, proseMuted } from '../../../components/pageChromeStyles'
+import { PageHeader } from '../../../components/page-header/PageHeader'
+import { pageStack, proseErrorSm, proseMuted } from '../../../components/styles/pageChromeStyles'
 import { usePlayerDetail } from '../../../hooks/usePlayerDetail'
 import { PlayerForm } from '../form/PlayerForm'
 
@@ -52,3 +52,4 @@ export function EditPlayerPage() {
     </div>
   )
 }
+

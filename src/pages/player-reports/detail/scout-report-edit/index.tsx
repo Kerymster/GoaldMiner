@@ -5,9 +5,9 @@ import {
   selectScoutReportRow,
   selectScoutReportsForPlayer,
 } from '../../../../features/scoutReports/scoutReportsSelectors'
-import type { BreadcrumbItem } from '../../../../components/Breadcrumbs'
-import { PageHeader } from '../../../../components/PageHeader'
-import { pageInlineLinkGold, pageStack } from '../../../../components/pageChromeStyles'
+import type { BreadcrumbItem } from '../../../../components/breadcrumbs/Breadcrumbs'
+import { PageHeader } from '../../../../components/page-header/PageHeader'
+import { pageInlineLinkGold, pageStack } from '../../../../components/styles/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks'
 import { CreateReportForm } from '../../create/CreateReportForm'
 
@@ -137,3 +137,4 @@ export function ScoutReportEditPage() {
     </div>
   )
 }
+

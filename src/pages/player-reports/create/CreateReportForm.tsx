@@ -1,6 +1,6 @@
 import { useCallback, useState, type SetStateAction } from 'react'
 import { createScoutReport, updateScoutReport } from '../../../api/scoutReports'
-import { Modal } from '../../../components/Modal'
+import { Modal } from '../../../components/modal/Modal'
 import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSlice'
 import { useAppDispatch } from '../../../store/hooks'
 import { formatApiIssuesSummary, isApiErr } from '../../../types/api'
@@ -14,9 +14,17 @@ import {
   primaryCtaButtonClass,
   proseMutedSm,
   secondaryCtaButtonClass,
-} from '../../../components/pageChromeStyles'
+} from '../../../components/styles/pageChromeStyles'
 import { ProTipsPanel } from './ProTipsPanel'
-import { reportStepCardClass, reportValidationMessageClass } from './reportFormStyles'
+import {
+  reportStepCardClass,
+  reportSyncSettingCardClass,
+  reportSyncSettingCheckboxClass,
+  reportSyncSettingHintClass,
+  reportSyncSettingLabelClass,
+  reportSyncSettingTitleClass,
+  reportValidationMessageClass,
+} from './reportFormStyles'
 import { ScoutReportStepBody } from './ScoutReportStepBody'
 import {
   findFirstInvalidScoutReportStep,
@@ -49,6 +57,7 @@ export function CreateReportForm({
   >('idle')
   const [saveMessage, setSaveMessage] = useState<string | null>(null)
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [syncPlayerOnEdit, setSyncPlayerOnEdit] = useState(false)
 
   const last = step === SCOUT_REPORT_STEPS.length - 1
   const meta = SCOUT_REPORT_STEPS[step]
@@ -110,13 +119,19 @@ export function CreateReportForm({
     setSaveMessage(null)
     try {
       if (mode === 'edit' && reportId) {
-        const updated = await updateScoutReport(reportId, form)
+        const updated = await updateScoutReport(reportId, form, {
+          syncPlayer: syncPlayerOnEdit,
+        })
         setForm(updated)
         if (playerId) {
           void dispatch(loadScoutReportsForPlayer(playerId))
         }
         setSaveStatus('success')
-        setSaveMessage('Report updated successfully.')
+        setSaveMessage(
+          syncPlayerOnEdit
+            ? 'Report and player card updated successfully.'
+            : 'Report updated successfully.',
+        )
       } else {
         await createScoutReport(form)
         setSaveStatus('success')
@@ -136,7 +151,7 @@ export function CreateReportForm({
       }
       setConfirmOpen(false)
     }
-  }, [dispatch, form, mode, playerId, reportId])
+  }, [dispatch, form, mode, playerId, reportId, syncPlayerOnEdit])
 
   const progress = ((step + 1) / SCOUT_REPORT_STEPS.length) * 100
 
@@ -188,6 +203,25 @@ export function CreateReportForm({
             setForm={setFormAndClearStepErrors}
             errors={stepErrors}
           />
+
+          {mode === 'edit' ? (
+            <div className={reportSyncSettingCardClass}>
+              <label className={reportSyncSettingLabelClass}>
+                <input
+                  type="checkbox"
+                  checked={syncPlayerOnEdit}
+                  onChange={(event) => setSyncPlayerOnEdit(event.target.checked)}
+                  className={reportSyncSettingCheckboxClass}
+                />
+                <span className="space-y-0.5">
+                  <span className={reportSyncSettingTitleClass}>Also update player card with these values</span>
+                  <span className={reportSyncSettingHintClass}>
+                    Off by default. Keep this disabled to update only the report snapshot.
+                  </span>
+                </span>
+              </label>
+            </div>
+          ) : null}
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-surface-divider pt-6">
             <button
@@ -243,7 +277,9 @@ export function CreateReportForm({
         title={mode === 'edit' ? 'Update this report?' : 'Save this report?'}
         description={
           mode === 'edit'
-            ? 'Your latest answers will replace the existing scout report.'
+            ? syncPlayerOnEdit
+              ? 'Your latest answers will replace the report and also update the player card.'
+              : 'Your latest answers will replace the existing scout report. Player card will stay unchanged.'
             : 'The full report will be saved and listed with your other reports.'
         }
         confirmLabel={mode === 'edit' ? 'Update report' : 'Save report'}
@@ -258,3 +294,4 @@ export function CreateReportForm({
     </div>
   )
 }
+

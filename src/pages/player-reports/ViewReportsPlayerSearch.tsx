@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { getPlayers } from '../../api/players'
 import type { Player } from '../../types/api'
-import { overlayAutocompletePanelClass } from '../../components/overlayDropdownStyles'
+import { overlayAutocompletePanelClass } from '../../components/overlay-select/overlayDropdownStyles'
 import { Icon } from '../../components/icons'
 import { useDebouncedSearchQuery } from '../../hooks/useDebouncedSearchQuery'
 import { playerMatchesNameOrTeam } from '../../utils/playerNameTeamSearch'
@@ -228,3 +228,4 @@ export function ViewReportsPlayerSearch({
     </div>
   )
 }
+

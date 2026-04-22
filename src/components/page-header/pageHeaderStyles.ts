@@ -1,6 +1,6 @@
 /**
  * `PageHeader` shell — panel card, gold accent bar, title block.
- * Keep in sync with `src/components/PageHeader.tsx`.
+ * Keep in sync with `src/components/page-header/PageHeader.tsx`.
  */
 
 export const pageHeaderShellClass =
@@ -29,3 +29,4 @@ export const pageHeaderMetaLineClass = 'text-sm text-fume-600 dark:text-fume-400
 
 export const pageHeaderDescriptionClass =
   'max-w-2xl text-sm leading-relaxed text-fume-600 dark:text-fume-400'
+

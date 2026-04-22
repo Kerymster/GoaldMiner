@@ -1,7 +1,7 @@
-import { PageHeader } from '../../../components/PageHeader'
+import { PageHeader } from '../../../components/page-header/PageHeader'
 import { Link } from 'react-router-dom'
-import { pageStack, proseErrorSm } from '../../../components/pageChromeStyles'
-import { ListPagination } from '../../../components/ListPagination'
+import { pageStack, proseErrorSm } from '../../../components/styles/pageChromeStyles'
+import { ListPagination } from '../../../components/pagination/ListPagination'
 import { usePlayersList } from '../../../hooks/usePlayersList'
 import { PlayerListFilters } from './PlayerListFilters'
 import { PlayerListRow } from './PlayerListRow'
@@ -103,3 +103,4 @@ export function AllPlayersPage() {
     </div>
   )
 }
+

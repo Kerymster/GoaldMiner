@@ -1,5 +1,5 @@
-import { PageHeader } from '../../../components/PageHeader'
-import { pageStack } from '../../../components/pageChromeStyles'
+import { PageHeader } from '../../../components/page-header/PageHeader'
+import { pageStack } from '../../../components/styles/pageChromeStyles'
 import { CreateReportForm } from '../create/CreateReportForm'
 
 const BREADCRUMB = [
@@ -22,3 +22,4 @@ export function CreateReportPage() {
     </div>
   )
 }
+

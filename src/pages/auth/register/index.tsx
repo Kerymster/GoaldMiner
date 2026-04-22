@@ -13,7 +13,7 @@ import {
   authLeadClass,
   authPageRootClass,
   authSubmitClass,
-} from '../../../components/authFormStyles'
+} from '../../../components/auth/authFormStyles'
 import { useAuth } from '../../../hooks/useAuth'
 
 export function RegisterPage() {
@@ -108,3 +108,4 @@ export function RegisterPage() {
     </div>
   )
 }
+

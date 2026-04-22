@@ -5,8 +5,8 @@ import {
 } from '../../features/compare/compareSlice'
 import { useComparePlayersPool } from '../../hooks/useComparePlayersPool'
 import { useCompareSelectionSync } from '../../hooks/useCompareSelectionSync'
-import { PageHeader } from '../../components/PageHeader'
-import { pageStack, proseError, proseMuted } from '../../components/pageChromeStyles'
+import { PageHeader } from '../../components/page-header/PageHeader'
+import { pageStack, proseError, proseMuted } from '../../components/styles/pageChromeStyles'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   selectComparePlayerAId,
@@ -101,3 +101,4 @@ export function ComparePage() {
     </div>
   )
 }
+

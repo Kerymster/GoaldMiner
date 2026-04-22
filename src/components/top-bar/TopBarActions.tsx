@@ -1,4 +1,4 @@
-import { overlayMenuPanelClass } from '../overlayDropdownStyles'
+import { overlayMenuPanelClass } from '../overlay-select/overlayDropdownStyles'
 import { Icon } from '../icons'
 import { useAuth } from '../../hooks/useAuth'
 

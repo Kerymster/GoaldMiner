@@ -2,7 +2,7 @@
  * Player detail route — profile card, footer links, vertical rhythm.
  */
 
-import { primaryCtaButtonClass } from '../../../components/pageChromeStyles'
+import { primaryCtaButtonClass } from '../../../components/styles/pageChromeStyles'
 
 export const playerDetailCardClass =
   'rounded-2xl border border-surface-panel-border bg-surface-panel p-6 shadow-sm shadow-fume-950/10 dark:shadow-none'
@@ -85,3 +85,4 @@ export const playerStatsValueDefaultClass =
 /** Full-width roles card at the bottom of stat grid. */
 export const playerStatsRolesCardClass =
   'rounded-xl border border-surface-divider bg-surface-soft p-4 sm:col-span-2 lg:col-span-3'
+

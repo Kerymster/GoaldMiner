@@ -1,5 +1,5 @@
-import { PageHeader } from '../../../components/PageHeader'
-import { pageStack } from '../../../components/pageChromeStyles'
+import { PageHeader } from '../../../components/page-header/PageHeader'
+import { pageStack } from '../../../components/styles/pageChromeStyles'
 import { PlayerForm } from '../form/PlayerForm'
 
 const BREADCRUMB = [{ label: 'Players', to: '/players' }, { label: 'Add player' as const }]
@@ -16,3 +16,4 @@ export function NewPlayerPage() {
     </div>
   )
 }
+

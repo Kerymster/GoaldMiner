@@ -1,4 +1,4 @@
-import { Breadcrumbs, type BreadcrumbItem } from './Breadcrumbs'
+import { Breadcrumbs, type BreadcrumbItem } from '../breadcrumbs/Breadcrumbs'
 import {
   pageHeaderAccentBarClass,
   pageHeaderBottomGlowClass,

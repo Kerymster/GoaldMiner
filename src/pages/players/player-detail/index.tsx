@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
-import { Breadcrumbs } from '../../../components/Breadcrumbs'
-import { proseError, proseMuted } from '../../../components/pageChromeStyles'
+import { Breadcrumbs } from '../../../components/breadcrumbs/Breadcrumbs'
+import { proseError, proseMuted } from '../../../components/styles/pageChromeStyles'
 import { usePlayerDetail } from '../../../hooks/usePlayerDetail'
 import { PlayerDetailNote } from './PlayerDetailNote'
 import { PlayerProfileHeader } from './PlayerProfileHeader'
@@ -81,3 +81,4 @@ export function PlayerDetailPage() {
     </div>
   )
 }
+

@@ -1,4 +1,4 @@
-import { proseMuted } from '../../../components/pageChromeStyles'
+import { proseMuted } from '../../../components/styles/pageChromeStyles'
 import type { Player } from '../../../types/api'
 import { PlayerRankCard } from './PlayerRankCard'
 import {
@@ -59,3 +59,4 @@ export function PlayerProfileHeader({ player }: PlayerProfileHeaderProps) {
     </div>
   )
 }
+

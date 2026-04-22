@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { primaryCtaButtonClass } from '../../../components/pageChromeStyles'
+import { primaryCtaButtonClass } from '../../../components/styles/pageChromeStyles'
 import type { ScoutReportForm } from '../../../types/scoutReportForm'
 import {
   detailBodyShellStack,
@@ -117,3 +117,4 @@ export function ScoutReportDetailBody({ form, playerId, reportId }: ScoutReportD
     </div>
   )
 }
+

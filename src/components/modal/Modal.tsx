@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { Icon, type IconName } from './icons'
-import { primaryCtaButtonClass, secondaryCtaButtonClass } from './pageChromeStyles'
+import { Icon, type IconName } from '../icons'
+import { primaryCtaButtonClass, secondaryCtaButtonClass } from '../styles/pageChromeStyles'
 import {
   modalBackdropClass,
   modalBodyClass,

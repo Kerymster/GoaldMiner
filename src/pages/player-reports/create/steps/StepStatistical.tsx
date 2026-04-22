@@ -1,4 +1,4 @@
-import { pageStack } from '../../../../components/pageChromeStyles'
+import { pageStack } from '../../../../components/styles/pageChromeStyles'
 import { reportSectionTitleClass } from '../reportFormStyles'
 import { ScoutReportField } from '../ScoutReportField'
 import type { ScoutReportStepProps } from './stepProps'
@@ -116,3 +116,4 @@ export function StepStatistical({ form, setForm, errors }: ScoutReportStepProps)
     </div>
   )
 }
+

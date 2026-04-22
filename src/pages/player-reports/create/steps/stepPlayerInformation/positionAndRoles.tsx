@@ -6,7 +6,7 @@ import {
 } from '../../../../../data/positionRoles'
 import type { ScoutReportForm } from '../../../../../types/scoutReportForm'
 import type { ScoutReportStepErrors } from '../../scoutReportStepValidation'
-import { OverlaySelect } from '../../../../../components/OverlaySelect'
+import { OverlaySelect } from '../../../../../components/overlay-select/OverlaySelect'
 import { FieldError, ScoutReportField } from '../../ScoutReportField'
 import { reportFieldErrorClass, reportLabelClass } from '../../reportFormStyles'
 import { LabeledOverlaySelectField } from './LabeledOverlaySelectField'
@@ -96,3 +96,4 @@ export function PositionAndRoles({ form, setForm, errors }: PositionAndRolesProp
     </>
   )
 }
+

@@ -12,7 +12,7 @@ import {
   authLeadClass,
   authPageRootClass,
   authSubmitClass,
-} from '../../../components/authFormStyles'
+} from '../../../components/auth/authFormStyles'
 import { useAuth } from '../../../hooks/useAuth'
 
 function postLoginPath(state: unknown): string {
@@ -105,3 +105,4 @@ export function LoginPage() {
     </div>
   )
 }
+

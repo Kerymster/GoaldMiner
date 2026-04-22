@@ -1,10 +1,10 @@
 import type { Dispatch, SetStateAction } from 'react'
-import type { PaginatedResponse } from '../types/api'
+import type { PaginatedResponse } from '../../types/api'
 import {
   paginationBarClass,
   paginationNavButtonClass,
   proseMuted,
-} from './pageChromeStyles'
+} from '../styles/pageChromeStyles'
 
 type ListPaginationProps<T = unknown> = {
   page: number
