@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import type { Player } from '../../types/api'
 
 const compareTableWrap =
-  'overflow-hidden rounded-xl border border-surface-panel-border bg-surface-panel shadow-sm shadow-fume-950/10 dark:shadow-none'
+  'overflow-hidden rounded-xl border border-surface-panel-border bg-surface-panel shadow-md shadow-fume-950/12 ring-1 ring-fume-900/5 dark:shadow-none dark:ring-0'
 
 type CompareStatsTableProps = {
   playerA: Player

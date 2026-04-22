@@ -51,6 +51,14 @@ Tekrar eden veya anlam taşıyan Tailwind utility zincirleri, `detailStyles.ts` 
 - **Ne zaman çıkarmalı:** Aynı zincir **iki veya daha fazla** dosyada geçiyorsa veya tek dosyada bile uzun bileşik bir blok tekrarlanıyorsa. Tek satırlık, bir daha kullanılmayacak sınıflar JSX’te kalabilir.
 - **Referans:** `src/pages/player-reports/detail/detailStyles.ts` — proje içi örnek “altın standart” modül.
 
+#### Uzun Tailwind zinciri disiplini (zorunlu)
+
+- JSX içinde **uzun inline `className` zinciri bırakmayın**. Pratik eşik: yaklaşık **120+ karakter** veya tek bakışta okunamayan bileşik sınıf.
+- Böyle zincirler önce dosya içinde `const ...Class = '...'` olarak çıkarılır; bileşende `className={...}` kullanılır.
+- Zincir birden fazla bileşen/rota tarafından paylaşılıyorsa mutlaka ilgili `*Styles.ts` modülüne taşınır (özellik içi veya `components` ortakları).
+- Seçim/state birleşimleri için taban + varyant yaklaşımı tercih edilir: `baseClass`, `activeClass`, `idleClass` gibi.
+- Her yeni ekran/PR’da kısa kontrol yapılır: “uzun zincirler token’a taşındı mı?” — bu madde code-review checklist’inin parçasıdır.
+
 ### Primary / Secondary CTA butonları
 
 Tek kaynak: **`src/components/pageChromeStyles.ts`** içindeki **`primaryCtaButtonClass`** ve **`secondaryCtaButtonClass`**. Yeni ana / yardımcı aksiyon eklerken önce bunları kullanın; aynı iş için yeni altın `border` / `bg` zinciri yazmayın.

@@ -5,7 +5,7 @@
 import { primaryCtaButtonClass } from '../../../components/styles/pageChromeStyles'
 
 export const playerDetailCardClass =
-  'rounded-2xl border border-surface-panel-border bg-surface-panel p-6 shadow-sm shadow-fume-950/10 dark:shadow-none'
+  'rounded-2xl border border-surface-panel-border bg-surface-panel p-6 shadow-md shadow-fume-950/12 ring-1 ring-fume-900/5 dark:shadow-none dark:ring-0'
 
 /** Error / empty state block (message + back link). */
 export const playerDetailStateStackClass = 'space-y-4'

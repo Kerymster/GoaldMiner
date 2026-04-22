@@ -7,7 +7,7 @@ import { primaryCtaButtonClass } from '../../../components/styles/pageChromeStyl
 
 /** Card shell that contains the entire player form. */
 export const playerFormShellClass =
-  'rounded-2xl border border-surface-panel-border bg-surface-panel p-6 shadow-sm shadow-fume-950/10 dark:shadow-none'
+  'rounded-2xl border border-surface-panel-border bg-surface-panel p-6 shadow-md shadow-fume-950/12 ring-1 ring-fume-900/5 dark:shadow-none dark:ring-0'
 
 /** Bottom action row for cancel + submit controls. */
 export const playerFormActionsRowClass =

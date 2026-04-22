@@ -4,7 +4,6 @@ import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutR
 import { selectScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSelectors'
 import { PageHeader } from '../../../components/page-header/PageHeader'
 import {
-  pageHintNarrow,
   pageStack,
   proseErrorSm,
   proseMutedSm,
@@ -17,6 +16,7 @@ import {
   type ViewReportsSelectedPlayer,
 } from '../ViewReportsPlayerSearch'
 import { getPlayerById } from '../../../api/players'
+import { EmptyState } from '../../../components/empty-state/EmptyState'
 
 const BREADCRUMB = [{ label: 'Player Reports' as const }]
 const TITLE = 'View reports'
@@ -96,7 +96,12 @@ export function ViewReportsPage() {
           ) : reportsError ? (
             <p className={proseErrorSm}>{reportsError}</p>
           ) : reports.length === 0 ? (
-            <p className={proseMutedSm}>No scout reports were returned for this player.</p>
+            <EmptyState
+              title="No reports available yet"
+              description={`We couldn't find scout reports for ${selectedPlayer.name} right now.`}
+              helper="Try another player, or check back after new reports are added."
+              icon="circleHelp"
+            />
           ) : (
             <ul className={`${playerListSurface} overflow-hidden`}>
               {reports.map((row) => (
@@ -106,7 +111,12 @@ export function ViewReportsPage() {
           )}
         </div>
       ) : (
-        <p className={pageHintNarrow}>Choose a player from search to see their report list here.</p>
+        <EmptyState
+          title="Pick a player to reveal reports"
+          description="Use the search box to find a player or team. Once selected, we'll load every available scout report in one place."
+          helper="Tip: searching by team name is often faster in larger squads."
+          icon="search"
+        />
       )}
     </div>
   )

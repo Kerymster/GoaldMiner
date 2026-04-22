@@ -23,6 +23,14 @@ const searchInputClass =
   'w-full rounded-lg border border-surface-field-border bg-surface-field py-2 pl-9 pr-3 text-sm text-fume-900 shadow-sm placeholder:text-fume-400 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/25 dark:text-fume-100 dark:placeholder:text-fume-500'
 
 const panelClass = `${overlayAutocompletePanelClass} py-1`
+const optionBaseClass =
+  'flex w-full cursor-pointer flex-col gap-0.5 px-4 py-2.5 text-left text-sm transition-colors'
+const optionActiveClass = 'bg-gold-500/12 dark:bg-gold-500/15'
+const optionIdleClass = 'hover:bg-fume-100 dark:hover:bg-surface-panel/85'
+const optionTypeBadgeClass =
+  'rounded bg-fume-200/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-fume-600 dark:bg-fume-800 dark:text-fume-400'
+const selectedPlayerPillClass =
+  'inline-flex items-center gap-2 rounded-lg border border-surface-field-border bg-fume-50 px-3 py-1.5 text-sm font-medium text-fume-900 dark:bg-surface-panel/55 dark:text-fume-100'
 
 type ViewReportsPlayerSearchProps = {
   selectedPlayer: ViewReportsSelectedPlayer | null
@@ -181,16 +189,12 @@ export function ViewReportsPlayerSearch({
                       onMouseEnter={() => setHighlight(idx)}
                       onClick={() => pickPlayer(p)}
                       className={[
-                        'flex w-full cursor-pointer flex-col gap-0.5 px-4 py-2.5 text-left text-sm transition-colors',
-                        idx === displayIndex
-                          ? 'bg-gold-500/12 dark:bg-gold-500/15'
-                          : 'hover:bg-fume-100 dark:hover:bg-surface-panel/85',
+                        optionBaseClass,
+                        idx === displayIndex ? optionActiveClass : optionIdleClass,
                       ].join(' ')}
                     >
                       <span className="flex items-center gap-2">
-                        <span className="rounded bg-fume-200/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-fume-600 dark:bg-fume-800 dark:text-fume-400">
-                          Player
-                        </span>
+                        <span className={optionTypeBadgeClass}>Player</span>
                         <span className="font-medium text-fume-900 dark:text-fume-100">
                           {p.name}
                         </span>
@@ -210,7 +214,7 @@ export function ViewReportsPlayerSearch({
       {selectedPlayer ? (
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs text-fume-500 dark:text-fume-400">Selected:</span>
-          <span className="inline-flex items-center gap-2 rounded-lg border border-surface-field-border bg-fume-50 px-3 py-1.5 text-sm font-medium text-fume-900 dark:bg-surface-panel/55 dark:text-fume-100">
+          <span className={selectedPlayerPillClass}>
             {selectedPlayer.name}
             <span className="font-normal text-fume-500 dark:text-fume-400">
               · {selectedPlayer.team} · {selectedPlayer.position}

@@ -3,7 +3,6 @@ import { loadScoutReportsForPlayer } from '../../../features/scoutReports/scoutR
 import { selectScoutReportsForPlayer } from '../../../features/scoutReports/scoutReportsSelectors'
 import { PageHeader } from '../../../components/page-header/PageHeader'
 import {
-  pageHintNarrow,
   pageStack,
   proseErrorSm,
   proseMutedSm,
@@ -15,6 +14,7 @@ import {
   ViewReportsPlayerSearch,
   type ViewReportsSelectedPlayer,
 } from '../ViewReportsPlayerSearch'
+import { EmptyState } from '../../../components/empty-state/EmptyState'
 
 const BREADCRUMB = [{ label: 'Player Reports' as const }]
 const TITLE = 'Edit reports'
@@ -61,7 +61,12 @@ export function EditReportsPage() {
           ) : reportsError ? (
             <p className={proseErrorSm}>{reportsError}</p>
           ) : reports.length === 0 ? (
-            <p className={proseMutedSm}>No scout reports were returned for this player.</p>
+            <EmptyState
+              title="No editable reports found"
+              description={`There are no scout reports to edit for ${selectedPlayer.name} yet.`}
+              helper="Pick another player or create a first report, then return here to update it."
+              icon="circleHelp"
+            />
           ) : (
             <ul className={`${playerListSurface} overflow-hidden`}>
               {reports.map((row) => (
@@ -76,7 +81,12 @@ export function EditReportsPage() {
           )}
         </div>
       ) : (
-        <p className={pageHintNarrow}>Choose a player from search to see reports you can edit here.</p>
+        <EmptyState
+          title="Choose a player to start editing"
+          description="Search by player or team, then select the profile to list reports that can be updated."
+          helper="We'll keep you in the same edit flow used during report creation."
+          icon="fileCheck"
+        />
       )}
     </div>
   )

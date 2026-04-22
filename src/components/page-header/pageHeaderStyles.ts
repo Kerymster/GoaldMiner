@@ -4,7 +4,7 @@
  */
 
 export const pageHeaderShellClass =
-  'relative overflow-hidden rounded-2xl border border-surface-panel-border bg-surface-panel p-5 shadow-sm shadow-fume-950/10 dark:shadow-none sm:p-6 lg:p-7'
+  'relative overflow-hidden rounded-2xl border border-surface-panel-border bg-surface-panel p-5 shadow-md shadow-fume-950/12 ring-1 ring-fume-900/5 dark:shadow-none dark:ring-0 sm:p-6 lg:p-7'
 
 export const pageHeaderBottomGlowClass =
   'pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold-500/30 to-transparent'

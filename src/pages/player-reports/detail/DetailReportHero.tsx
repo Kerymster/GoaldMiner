@@ -17,6 +17,20 @@ function initialsFromName(name: string) {
 const starOn =
   'text-gold-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.35)]'
 const starOff = 'text-fume-400 dark:text-fume-700'
+const heroRootClass =
+  'relative isolate min-h-[200px] overflow-hidden rounded-3xl border-2 border-gold-500/35 bg-gradient-to-br from-white via-fume-50 to-fume-100 text-fume-900 shadow-lg shadow-gold-900/10 dark:border-gold-400/50 dark:from-fume-950 dark:via-fume-950 dark:to-fume-950 dark:text-fume-50 dark:shadow-fume-950/40 sm:min-h-[220px]'
+const heroGlowGoldClass =
+  'pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full bg-gold-500/18 opacity-0 blur-3xl dark:opacity-100 dark:bg-gold-500/18'
+const heroGlowSeaClass =
+  'pointer-events-none absolute -bottom-32 left-0 h-64 w-64 rounded-full bg-sea-500/10 opacity-0 blur-3xl dark:opacity-100 dark:bg-sea-500/10'
+const heroEditLinkClass =
+  'inline-flex items-center rounded-full border border-gold-600/35 bg-gold-500/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold-800 transition hover:border-gold-600/50 hover:bg-gold-500/15 dark:border-gold-500/45 dark:bg-gold-500/15 dark:text-gold-300 dark:hover:border-gold-400/60 dark:hover:bg-gold-500/20'
+const heroCopyButtonClass =
+  'inline-flex items-center gap-1.5 rounded-full border border-fume-300 bg-white/70 px-2.5 py-0.5 text-[10px] font-medium text-fume-700 transition hover:border-gold-500/35 hover:text-fume-900 dark:border-fume-600/80 dark:bg-fume-900/60 dark:text-fume-400 dark:hover:border-gold-500/40 dark:hover:text-fume-200'
+const heroMetaPillClass =
+  'inline-flex items-center rounded-full border border-fume-300 bg-white/70 px-3 py-1 text-xs font-medium text-fume-700 dark:border-fume-600/70 dark:bg-fume-900/40 dark:text-fume-200'
+const heroInitialsClass =
+  'flex h-[5.5rem] w-[5.5rem] shrink-0 items-center justify-center rounded-2xl border border-gold-500/35 bg-gradient-to-br from-white via-gold-50 to-gold-100 text-2xl font-bold tracking-tight text-gold-800 shadow-inner shadow-gold-900/10 dark:from-fume-800/90 dark:via-fume-900 dark:to-fume-950 dark:text-gold-300 dark:shadow-black/30 sm:h-24 sm:w-24 sm:rounded-3xl sm:text-3xl'
 
 function StaffRatingStars({ rating }: { rating: number }) {
   if (rating >= STAFF_RATING_MIN && rating <= STAFF_RATING_MAX) {
@@ -79,7 +93,7 @@ export function DetailReportHero({
   }
 
   return (
-    <div className="relative isolate min-h-[200px] overflow-hidden rounded-3xl border-2 border-gold-500/35 bg-gradient-to-br from-white via-fume-50 to-fume-100 text-fume-900 shadow-lg shadow-gold-900/10 dark:border-gold-400/50 dark:from-fume-950 dark:via-fume-950 dark:to-fume-950 dark:text-fume-50 dark:shadow-fume-950/40 sm:min-h-[220px]">
+    <div className={heroRootClass}>
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.18] dark:opacity-[0.12]"
         style={{
@@ -89,11 +103,11 @@ export function DetailReportHero({
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full bg-gold-500/18 opacity-0 blur-3xl dark:opacity-100 dark:bg-gold-500/18"
+        className={heroGlowGoldClass}
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -bottom-32 left-0 h-64 w-64 rounded-full bg-sea-500/10 opacity-0 blur-3xl dark:opacity-100 dark:bg-sea-500/10"
+        className={heroGlowSeaClass}
         aria-hidden
       />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold-500/35 to-transparent" aria-hidden />
@@ -107,7 +121,7 @@ export function DetailReportHero({
             {playerId ? (
               <Link
                 to={`/player-reports/players/${encodeURIComponent(playerId)}/reports/${encodeURIComponent(reportId)}/edit`}
-                className="inline-flex items-center rounded-full border border-gold-600/35 bg-gold-500/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold-800 transition hover:border-gold-600/50 hover:bg-gold-500/15 dark:border-gold-500/45 dark:bg-gold-500/15 dark:text-gold-300 dark:hover:border-gold-400/60 dark:hover:bg-gold-500/20"
+                className={heroEditLinkClass}
               >
                 Edit report
               </Link>
@@ -115,7 +129,7 @@ export function DetailReportHero({
             <button
               type="button"
               onClick={copyId}
-              className="inline-flex items-center gap-1.5 rounded-full border border-fume-300 bg-white/70 px-2.5 py-0.5 text-[10px] font-medium text-fume-700 transition hover:border-gold-500/35 hover:text-fume-900 dark:border-fume-600/80 dark:bg-fume-900/60 dark:text-fume-400 dark:hover:border-gold-500/40 dark:hover:text-fume-200"
+              className={heroCopyButtonClass}
               title="Copy full report ID"
             >
               <svg className="h-3 w-3 shrink-0 opacity-70" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -140,7 +154,7 @@ export function DetailReportHero({
               {metaItems.map((label) => (
                 <span
                   key={label}
-                  className="inline-flex items-center rounded-full border border-fume-300 bg-white/70 px-3 py-1 text-xs font-medium text-fume-700 dark:border-fume-600/70 dark:bg-fume-900/40 dark:text-fume-200"
+                  className={heroMetaPillClass}
                 >
                   {label}
                 </span>
@@ -151,7 +165,7 @@ export function DetailReportHero({
 
         <div className="flex shrink-0 flex-row items-center gap-5 sm:flex-col sm:items-end">
           <div
-            className="flex h-[5.5rem] w-[5.5rem] shrink-0 items-center justify-center rounded-2xl border border-gold-500/35 bg-gradient-to-br from-white via-gold-50 to-gold-100 text-2xl font-bold tracking-tight text-gold-800 shadow-inner shadow-gold-900/10 dark:from-fume-800/90 dark:via-fume-900 dark:to-fume-950 dark:text-gold-300 dark:shadow-black/30 sm:h-24 sm:w-24 sm:rounded-3xl sm:text-3xl"
+            className={heroInitialsClass}
             aria-hidden
           >
             {initialsFromName(name)}

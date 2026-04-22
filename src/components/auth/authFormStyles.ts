@@ -8,7 +8,7 @@ export const authPageRootClass =
   'flex min-h-dvh items-center justify-center bg-shell px-4 font-sans text-fume-900 dark:bg-fume-950 dark:text-fume-100'
 
 export const authCardClass =
-  'w-full max-w-sm rounded-xl border border-surface-panel-border bg-surface-panel p-6 shadow-sm'
+  'w-full max-w-sm rounded-xl border border-surface-panel-border bg-surface-panel p-6 shadow-md shadow-fume-950/12 ring-1 ring-fume-900/5 dark:ring-0'
 
 export const authHeadingClass = 'text-lg font-semibold tracking-tight'
 

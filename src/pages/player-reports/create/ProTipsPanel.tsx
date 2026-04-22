@@ -1,24 +1,32 @@
+const proTipsPanelClass =
+  'rounded-xl border border-gold-600/30 bg-gradient-to-br from-gold-50 to-gold-100/70 p-4 shadow-sm shadow-gold-900/10 ring-1 ring-gold-800/5 dark:border-gold-500/20 dark:bg-gold-500/10 dark:shadow-none dark:ring-0'
+
+const proTipsHeadingClass =
+  'text-xs font-semibold uppercase tracking-wider text-gold-700 dark:text-gold-400'
+
+const proTipsListClass = 'mt-3 space-y-2 text-sm text-fume-700 dark:text-fume-300'
+
+const proTipsStrongClass = 'font-medium text-fume-900 dark:text-fume-100'
+
 export function ProTipsPanel() {
   return (
-    <aside className="rounded-xl border border-gold-500/25 bg-gold-500/5 p-4 dark:border-gold-500/20 dark:bg-gold-500/10">
-      <p className="text-xs font-semibold uppercase tracking-wider text-gold-700 dark:text-gold-400">
-        Pro tips
-      </p>
-      <ul className="mt-3 space-y-2 text-sm text-fume-700 dark:text-fume-300">
+    <aside className={proTipsPanelClass}>
+      <p className={proTipsHeadingClass}>Pro tips</p>
+      <ul className={proTipsListClass}>
         <li>
-          <span className="font-medium text-fume-900 dark:text-fume-100">Keep it short.</span>{' '}
+          <span className={proTipsStrongClass}>Keep it short.</span>{' '}
           Aim for one to two pages when exported — every field should earn its place.
         </li>
         <li>
-          <span className="font-medium text-fume-900 dark:text-fume-100">Stay objective.</span>{' '}
+          <span className={proTipsStrongClass}>Stay objective.</span>{' '}
           Avoid vague praise; explain why something is a strength or weakness.
         </li>
         <li>
-          <span className="font-medium text-fume-900 dark:text-fume-100">Commit to a verdict.</span>{' '}
+          <span className={proTipsStrongClass}>Commit to a verdict.</span>{' '}
           “Do not sign”, “risky investment”, and “priority target” are all valid outcomes.
         </li>
         <li>
-          <span className="font-medium text-fume-900 dark:text-fume-100">Eye test + data.</span>{' '}
+          <span className={proTipsStrongClass}>Eye test + data.</span>{' '}
           Combine what you see with how the numbers support or challenge it.
         </li>
       </ul>

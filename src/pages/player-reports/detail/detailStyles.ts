@@ -10,7 +10,7 @@ export const detailBodyShellStack = 'space-y-5'
 
 /** Uses theme surface tokens — see index.css (--surface-panel) */
 export const detailSectionCard =
-  'rounded-2xl border border-surface-panel-border bg-surface-panel p-5 shadow-sm shadow-fume-950/10 dark:shadow-none sm:p-6'
+  'rounded-2xl border border-surface-panel-border bg-surface-panel p-5 shadow-md shadow-fume-950/12 ring-1 ring-fume-900/5 dark:shadow-none dark:ring-0 sm:p-6'
 
 /** Section card main title (h2) — row with gold accent */
 export const detailSectionTitle =

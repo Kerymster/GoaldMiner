@@ -3,6 +3,13 @@ import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
 import { Icon } from '../icons'
 import { navLinkClass, navSublinkClass } from './navStyles'
 
+const sidebarRootClass =
+  'flex w-full shrink-0 flex-col border-b border-fume-800/80 bg-fume-900 md:w-60 md:border-r md:border-b-0 md:min-h-dvh md:shadow-[4px_0_24px_-4px_rgba(0,0,0,0.35)]'
+const sidebarBrandLinkClass =
+  'mb-3 block rounded-lg px-2 pb-3 outline-none ring-offset-2 ring-offset-fume-900 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-gold-500/45'
+const sidebarReportsSummaryClass =
+  'cursor-pointer list-none rounded-md px-2 py-1.5 text-xs font-semibold text-fume-400 transition-colors marker:hidden hover:bg-fume-800/50 hover:text-fume-200 [&::-webkit-details-marker]:hidden'
+
 function SidebarRouteSublink({
   to,
   end,
@@ -29,12 +36,9 @@ function SidebarRouteSublink({
 
 export function AppSidebar() {
   return (
-    <aside className="flex w-full shrink-0 flex-col border-b border-fume-800/80 bg-fume-900 md:w-60 md:border-r md:border-b-0 md:min-h-dvh md:shadow-[4px_0_24px_-4px_rgba(0,0,0,0.35)]">
+    <aside className={sidebarRootClass}>
       <div className="flex flex-col gap-1 p-3 md:sticky md:top-0 md:max-h-dvh md:overflow-y-auto">
-        <Link
-          to="/players"
-          className="mb-3 block rounded-lg px-2 pb-3 outline-none ring-offset-2 ring-offset-fume-900 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-gold-500/45"
-        >
+        <Link to="/players" className={sidebarBrandLinkClass}>
           <div className="flex items-start gap-2.5 border-b border-fume-800/80 pb-3">
             <img
               src="/favicon.svg"
@@ -64,7 +68,7 @@ export function AppSidebar() {
 
         <div className="mt-1">
           <details className="group rounded-lg" open>
-            <summary className="cursor-pointer list-none rounded-md px-2 py-1.5 text-xs font-semibold text-fume-400 transition-colors marker:hidden hover:bg-fume-800/50 hover:text-fume-200 [&::-webkit-details-marker]:hidden">
+            <summary className={sidebarReportsSummaryClass}>
               <span className="flex items-center justify-between gap-2">
                 Player Reports
                 <Icon
