@@ -5,8 +5,13 @@ import {
   CheckCircle2,
   ChevronDown,
   CircleHelp,
+  FileEdit,
   FileCheck2,
+  FilePlus2,
+  Files,
+  GitCompareArrows,
   Info,
+  Users,
   Search,
   X,
   type LucideIcon,
@@ -19,8 +24,13 @@ export type IconName =
   | 'chevronDown'
   | 'circleHelp'
   | 'close'
+  | 'fileEdit'
   | 'fileCheck'
+  | 'filePlus'
+  | 'files'
+  | 'gitCompare'
   | 'info'
+  | 'users'
   | 'search'
 
 const ICON_MAP: Record<IconName, LucideIcon> = {
@@ -30,8 +40,13 @@ const ICON_MAP: Record<IconName, LucideIcon> = {
   chevronDown: ChevronDown,
   circleHelp: CircleHelp,
   close: X,
+  fileEdit: FileEdit,
   fileCheck: FileCheck2,
+  filePlus: FilePlus2,
+  files: Files,
+  gitCompare: GitCompareArrows,
   info: Info,
+  users: Users,
   search: Search,
 }
 

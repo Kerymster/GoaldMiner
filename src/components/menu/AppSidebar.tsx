@@ -1,22 +1,81 @@
 import { type ReactNode } from 'react'
 import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
 import { Icon } from '../icons'
-import { navLinkClass, navSublinkClass } from './navStyles'
+import {
+  navLinkClass,
+  navMainContentClass,
+  navMainIconClass,
+  navSublinkClass,
+  navSublinkContentClass,
+  navSublinkIconClass,
+  sidebarBrandDividerClass,
+  sidebarBrandInnerClass,
+  sidebarBrandLinkClass,
+  sidebarBrandLogoClass,
+  sidebarBrandSubtitleClass,
+  sidebarBrandTitleClass,
+  sidebarRailClass,
+  sidebarReportGroupChevronClass,
+  sidebarReportGroupClass,
+  sidebarReportGroupLeadIconClass,
+  sidebarReportGroupListClass,
+  sidebarReportGroupTitleTextWrapClass,
+  sidebarReportGroupTitleWrapClass,
+  sidebarReportGroupsWrapClass,
+  sidebarReportsSummaryClass,
+  sidebarRootClass,
+} from './navStyles'
 
-const sidebarRootClass =
-  'flex w-full shrink-0 flex-col border-b border-fume-800/80 bg-fume-900 md:w-60 md:border-r md:border-b-0 md:min-h-dvh md:shadow-[4px_0_24px_-4px_rgba(0,0,0,0.35)]'
-const sidebarBrandLinkClass =
-  'mb-3 block rounded-lg px-2 pb-3 outline-none ring-offset-2 ring-offset-fume-900 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-gold-500/45'
-const sidebarReportsSummaryClass =
-  'cursor-pointer list-none rounded-md px-2 py-1.5 text-xs font-semibold text-fume-400 transition-colors marker:hidden hover:bg-fume-800/50 hover:text-fume-200 [&::-webkit-details-marker]:hidden'
+type ReportGroupItem = {
+  to: string
+  label: string
+  iconName: 'filePlus' | 'files' | 'fileEdit'
+}
+
+function SidebarReportGroup({
+  title,
+  items,
+  activePrefix,
+}: {
+  title: string
+  items: ReportGroupItem[]
+  activePrefix: string
+}) {
+  const { pathname } = useLocation()
+  const isGroupActive = pathname.startsWith(activePrefix)
+  return (
+    <details className={`group ${sidebarReportGroupClass}`} open={isGroupActive}>
+      <summary className={sidebarReportsSummaryClass}>
+        <span className={sidebarReportGroupTitleWrapClass}>
+          <span className={sidebarReportGroupTitleTextWrapClass}>
+            <Icon name="fileCheck" className={sidebarReportGroupLeadIconClass} />
+            <span>{title}</span>
+          </span>
+          <Icon name="chevronDown" className={sidebarReportGroupChevronClass} />
+        </span>
+      </summary>
+      <ul className={sidebarReportGroupListClass}>
+        {items.map((item) => (
+          <li key={item.to}>
+            <SidebarRouteSublink to={item.to} end iconName={item.iconName}>
+              {item.label}
+            </SidebarRouteSublink>
+          </li>
+        ))}
+      </ul>
+    </details>
+  )
+}
 
 function SidebarRouteSublink({
   to,
   end,
+  iconName,
   children,
 }: {
   to: string
   end?: boolean
+  iconName?: 'filePlus' | 'files' | 'fileEdit'
   children: ReactNode
 }) {
   const { pathname } = useLocation()
@@ -29,7 +88,10 @@ function SidebarRouteSublink({
       className={navSublinkClass({ isActive })}
       aria-current={isActive ? 'page' : undefined}
     >
-      {children}
+      <span className={navSublinkContentClass}>
+        {iconName ? <Icon name={iconName} className={navSublinkIconClass({ isActive })} /> : null}
+        <span>{children}</span>
+      </span>
     </Link>
   )
 }
@@ -37,95 +99,64 @@ function SidebarRouteSublink({
 export function AppSidebar() {
   return (
     <aside className={sidebarRootClass}>
-      <div className="flex flex-col gap-1 p-3 md:sticky md:top-0 md:max-h-dvh md:overflow-y-auto">
+      <div className={sidebarRailClass}>
         <Link to="/players" className={sidebarBrandLinkClass}>
-          <div className="flex items-start gap-2.5 border-b border-fume-800/80 pb-3">
+          <div className={sidebarBrandInnerClass}>
             <img
               src="/favicon.svg"
               alt=""
               width={36}
               height={36}
               decoding="async"
-              className="h-9 w-9 shrink-0 rounded-lg shadow-sm ring-1 ring-fume-800/90"
+              className={sidebarBrandLogoClass}
               aria-hidden
             />
             <div className="min-w-0 flex-1 pt-0.5">
-              <p className="text-base font-bold tracking-tight text-fume-50">ScoutLedger</p>
-              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-400">
+              <p className={sidebarBrandTitleClass}>ScoutLedger</p>
+              <p className={sidebarBrandSubtitleClass}>
                 Scout reports · roster
               </p>
-              <p className="mt-2 h-px w-8 bg-gradient-to-r from-gold-500 to-transparent" />
+              <p className={sidebarBrandDividerClass} />
             </div>
           </div>
         </Link>
 
         <NavLink to="/players" className={navLinkClass}>
-          Players
+          {({ isActive }) => (
+            <span className={navMainContentClass}>
+              <Icon name="users" className={navMainIconClass({ isActive })} />
+              <span>Players</span>
+            </span>
+          )}
         </NavLink>
         <NavLink to="/compare" className={navLinkClass}>
-          Compare
+          {({ isActive }) => (
+            <span className={navMainContentClass}>
+              <Icon name="gitCompare" className={navMainIconClass({ isActive })} />
+              <span>Compare</span>
+            </span>
+          )}
         </NavLink>
 
-        <div className="mt-1">
-          <details className="group rounded-lg" open>
-            <summary className={sidebarReportsSummaryClass}>
-              <span className="flex items-center justify-between gap-2">
-                Player Reports
-                <Icon
-                  name="chevronDown"
-                  className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180"
-                />
-              </span>
-            </summary>
-            <ul className="mt-1 space-y-0.5 border-l border-sea-500/22 pl-2.5">
-              <li>
-                <SidebarRouteSublink to="/player-reports/create" end>
-                  Create report
-                </SidebarRouteSublink>
-              </li>
-              <li>
-                <SidebarRouteSublink to="/player-reports" end>
-                  View reports
-                </SidebarRouteSublink>
-              </li>
-              <li>
-                <SidebarRouteSublink to="/player-reports/edit" end>
-                  Edit reports
-                </SidebarRouteSublink>
-              </li>
-            </ul>
-          </details>
-        </div>
-
-        <div className="mt-1">
-          <details className="group rounded-lg" open>
-            <summary className={sidebarReportsSummaryClass}>
-              <span className="flex items-center justify-between gap-2">
-                Draft Reports
-                <Icon
-                  name="chevronDown"
-                  className="h-3.5 w-3.5 shrink-0 text-fume-500 transition-transform group-open:rotate-180"
-                />
-              </span>
-            </summary>
-            <ul className="mt-1 space-y-0.5 border-l border-sea-500/22 pl-2.5">
-              <li>
-                <SidebarRouteSublink to="/draft-reports/create" end>
-                  Create draft
-                </SidebarRouteSublink>
-              </li>
-              <li>
-                <SidebarRouteSublink to="/draft-reports" end>
-                  View drafts
-                </SidebarRouteSublink>
-              </li>
-              <li>
-                <SidebarRouteSublink to="/draft-reports/edit" end>
-                  Edit drafts
-                </SidebarRouteSublink>
-              </li>
-            </ul>
-          </details>
+        <div className={sidebarReportGroupsWrapClass}>
+          <SidebarReportGroup
+            title="Player Reports"
+            activePrefix="/player-reports"
+            items={[
+              { to: '/player-reports/create', label: 'Create report', iconName: 'filePlus' },
+              { to: '/player-reports', label: 'View reports', iconName: 'files' },
+              { to: '/player-reports/edit', label: 'Edit reports', iconName: 'fileEdit' },
+            ]}
+          />
+          <SidebarReportGroup
+            title="Draft Reports"
+            activePrefix="/draft-reports"
+            items={[
+              { to: '/draft-reports/create', label: 'Create draft', iconName: 'filePlus' },
+              { to: '/draft-reports', label: 'View drafts', iconName: 'files' },
+              { to: '/draft-reports/edit', label: 'Edit drafts', iconName: 'fileEdit' },
+            ]}
+          />
         </div>
       </div>
     </aside>

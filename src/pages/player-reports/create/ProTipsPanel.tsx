@@ -1,12 +1,12 @@
 const proTipsPanelClass =
-  'rounded-xl border border-gold-600/30 bg-gradient-to-br from-gold-50 to-gold-100/70 p-4 shadow-sm shadow-gold-900/10 ring-1 ring-gold-800/5 dark:border-gold-500/20 dark:bg-gold-500/10 dark:shadow-none dark:ring-0'
+  'rounded-xl border border-gold-600/30 bg-gradient-to-br from-gold-50 to-gold-100/70 p-4 shadow-sm shadow-gold-900/10 ring-1 ring-gold-800/5 dark:border-gold-300/28 dark:bg-gradient-to-br dark:from-[#3d3215]/74 dark:via-[#473817]/70 dark:to-[#52401a]/68 dark:shadow-[0_14px_30px_-20px_rgba(0,0,0,0.8)] dark:ring-1 dark:ring-gold-200/18'
 
 const proTipsHeadingClass =
-  'text-xs font-semibold uppercase tracking-wider text-gold-700 dark:text-gold-400'
+  'text-xs font-semibold uppercase tracking-wider text-gold-700 dark:text-gold-200'
 
-const proTipsListClass = 'mt-3 space-y-2 text-sm text-fume-700 dark:text-fume-300'
+const proTipsListClass = 'mt-3 space-y-2 text-sm text-fume-700 dark:text-fume-100/88'
 
-const proTipsStrongClass = 'font-medium text-fume-900 dark:text-fume-100'
+const proTipsStrongClass = 'font-medium text-fume-900 dark:text-gold-300/95'
 
 export function ProTipsPanel() {
   return (
