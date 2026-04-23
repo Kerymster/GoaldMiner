@@ -10,10 +10,12 @@ import { EmptyState } from '../../components/empty-state/EmptyState'
 import { Modal } from '../../components/modal/Modal'
 import { proseErrorSm, proseMutedSm } from '../../components/styles/pageChromeStyles'
 import { isApiErr } from '../../types/api'
-import { buildMandateBrief, labelForOption, type DirectorPipeline } from '../../types/directorPipeline'
+import { type DirectorPipeline } from '../../types/directorPipeline'
+import { DirectorPipelineListRow } from './DirectorPipelineListRow'
+import { DirectorPipelineSeasonCompare } from './DirectorPipelineSeasonCompare'
+import { pipelineListRowTitle } from './directorPipelineListFormat'
 import {
   pipelineCardClass,
-  pipelineDangerButtonClass,
   pipelinePrimaryButtonClass,
   pipelineSecondaryButtonClass,
 } from './directorPipelineStyles'
@@ -24,16 +26,6 @@ type PendingPipelineAction =
   | { kind: 'archive'; row: DirectorPipeline }
   | { kind: 'activate'; row: DirectorPipeline }
   | { kind: 'delete'; row: DirectorPipeline }
-
-function pipelineRowLabel(row: DirectorPipeline): string {
-  return row.title?.trim() || row.context.club.clubName || 'Untitled pipeline'
-}
-
-function formatDate(iso: string): string {
-  const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return iso
-  return d.toLocaleString()
-}
 
 export function DirectorPipelinesList() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
@@ -143,85 +135,24 @@ export function DirectorPipelinesList() {
       {rows.length > 0 ? (
         <ul className="space-y-3">
           {rows.map((row) => (
-            <li key={row.id} className={pipelineCardClass}>
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div className="space-y-1">
-                  <p className="text-sm font-semibold text-fume-900 dark:text-fume-100">
-                    {row.title?.trim() || row.context.club.clubName}
-                  </p>
-                  <p className="text-xs text-fume-500 dark:text-fume-400">
-                    {row.status.toUpperCase()} · Updated {formatDate(row.updatedAt)}
-                  </p>
-                  <p className="text-xs text-fume-600 dark:text-fume-300">{buildMandateBrief(row.context)}</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <Link
-                    to={`/director-pipelines/${encodeURIComponent(row.id)}`}
-                    className={pipelineSecondaryButtonClass}
-                  >
-                    View
-                  </Link>
-                  <Link to={`/director-pipelines/edit?id=${encodeURIComponent(row.id)}`} className={pipelineSecondaryButtonClass}>
-                    Edit
-                  </Link>
-                  {row.status === 'active' ? (
-                    <button type="button" onClick={() => setPendingAction({ kind: 'archive', row })} className={pipelineSecondaryButtonClass}>
-                      Archive
-                    </button>
-                  ) : (
-                    <>
-                      <button type="button" onClick={() => setPendingAction({ kind: 'activate', row })} className={pipelinePrimaryButtonClass}>
-                        Activate
-                      </button>
-                      <button type="button" onClick={() => setPendingAction({ kind: 'delete', row })} className={pipelineDangerButtonClass}>
-                        Delete
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </li>
+            <DirectorPipelineListRow
+              key={row.id}
+              row={row}
+              onRequestArchive={() => setPendingAction({ kind: 'archive', row })}
+              onRequestActivate={() => setPendingAction({ kind: 'activate', row })}
+              onRequestDelete={() => setPendingAction({ kind: 'delete', row })}
+            />
           ))}
         </ul>
       ) : null}
 
       {active && compareWith ? (
-        <section className={pipelineCardClass}>
-          <h3 className="text-base font-semibold text-fume-900 dark:text-fume-100">Season change compare</h3>
-          <p className="mt-1 text-sm text-fume-600 dark:text-fume-400">
-            Compare active vision with one archived baseline.
-          </p>
-          <div className="mt-3">
-            <label className="text-xs font-semibold uppercase tracking-wide text-fume-500 dark:text-fume-400">
-              Archived baseline
-            </label>
-            <select
-              value={compareWith.id}
-              onChange={(event) => setSelectedCompareId(event.target.value)}
-              className="mt-1 w-full rounded-lg border border-surface-field-border bg-surface-field px-3 py-2 text-sm"
-            >
-              {archived.map((row) => (
-                <option key={row.id} value={row.id}>
-                  {(row.title?.trim() || row.context.club.clubName) + ' · ' + formatDate(row.updatedAt)}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <div className="rounded-lg border border-surface-field-border bg-surface-soft p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-fume-500">Active</p>
-              <p className="mt-1 text-sm">{active.context.club.clubName}</p>
-              <p className="text-xs text-fume-500">{labelForOption(active.context.objectives.primaryObjective)}</p>
-              <p className="mt-2 text-xs text-fume-600">{active.context.mandate}</p>
-            </div>
-            <div className="rounded-lg border border-surface-field-border bg-surface-soft p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-fume-500">Archived</p>
-              <p className="mt-1 text-sm">{compareWith.context.club.clubName}</p>
-              <p className="text-xs text-fume-500">{labelForOption(compareWith.context.objectives.primaryObjective)}</p>
-              <p className="mt-2 text-xs text-fume-600">{compareWith.context.mandate}</p>
-            </div>
-          </div>
-        </section>
+        <DirectorPipelineSeasonCompare
+          active={active}
+          compareWith={compareWith}
+          archived={archived}
+          onSelectArchivedId={setSelectedCompareId}
+        />
       ) : null}
 
       {pendingAction ? (
@@ -237,10 +168,10 @@ export function DirectorPipelinesList() {
           }
           description={
             pendingAction.kind === 'archive'
-              ? `${pipelineRowLabel(pendingAction.row)} will move to archived status. You can create a new active pipeline afterward, or re-activate this one when no other pipeline is active.`
+              ? `${pipelineListRowTitle(pendingAction.row)} will move to archived status. You can create a new active pipeline afterward, or re-activate this one when no other pipeline is active.`
               : pendingAction.kind === 'activate'
-                ? `${pipelineRowLabel(pendingAction.row)} will become your active club vision. The API returns an error if another pipeline is already active.`
-                : `Permanently delete ${pipelineRowLabel(pendingAction.row)}? Only archived pipelines can be removed. This cannot be undone.`
+                ? `${pipelineListRowTitle(pendingAction.row)} will become your active club vision. The API returns an error if another pipeline is already active.`
+                : `Permanently delete ${pipelineListRowTitle(pendingAction.row)}? Only archived pipelines can be removed. This cannot be undone.`
           }
           confirmLabel={
             pendingAction.kind === 'archive'
