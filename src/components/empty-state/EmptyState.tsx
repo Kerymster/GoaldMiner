@@ -12,7 +12,7 @@ type EmptyStateProps = {
   title: string
   description: string
   helper?: string
-  icon?: 'search' | 'fileCheck' | 'circleHelp'
+  icon?: 'search' | 'fileCheck' | 'circleHelp' | 'alertTriangle'
   extra?: ReactNode
 }
 

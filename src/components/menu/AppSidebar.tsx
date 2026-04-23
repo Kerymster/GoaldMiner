@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
-import { Icon } from '../icons'
+import { Icon, type IconName } from '../icons'
 import {
   navLinkClass,
   navMainContentClass,
@@ -29,17 +29,19 @@ import {
 type ReportGroupItem = {
   to: string
   label: string
-  iconName: 'filePlus' | 'files' | 'fileEdit'
+  iconName: IconName
 }
 
 function SidebarReportGroup({
   title,
   items,
   activePrefix,
+  leadIconName = 'fileCheck',
 }: {
   title: string
   items: ReportGroupItem[]
   activePrefix: string
+  leadIconName?: IconName
 }) {
   const { pathname } = useLocation()
   const isGroupActive = pathname.startsWith(activePrefix)
@@ -48,7 +50,7 @@ function SidebarReportGroup({
       <summary className={sidebarReportsSummaryClass}>
         <span className={sidebarReportGroupTitleWrapClass}>
           <span className={sidebarReportGroupTitleTextWrapClass}>
-            <Icon name="fileCheck" className={sidebarReportGroupLeadIconClass} />
+            <Icon name={leadIconName} className={sidebarReportGroupLeadIconClass} />
             <span>{title}</span>
           </span>
           <Icon name="chevronDown" className={sidebarReportGroupChevronClass} />
@@ -75,7 +77,7 @@ function SidebarRouteSublink({
 }: {
   to: string
   end?: boolean
-  iconName?: 'filePlus' | 'files' | 'fileEdit'
+  iconName?: IconName
   children: ReactNode
 }) {
   const { pathname } = useLocation()
@@ -142,6 +144,7 @@ export function AppSidebar() {
           <SidebarReportGroup
             title="Player Reports"
             activePrefix="/player-reports"
+            leadIconName="fileCheck"
             items={[
               { to: '/player-reports/create', label: 'Create report', iconName: 'filePlus' },
               { to: '/player-reports', label: 'View reports', iconName: 'files' },
@@ -151,10 +154,21 @@ export function AppSidebar() {
           <SidebarReportGroup
             title="Draft Reports"
             activePrefix="/draft-reports"
+            leadIconName="bell"
             items={[
               { to: '/draft-reports/create', label: 'Create draft', iconName: 'filePlus' },
-              { to: '/draft-reports', label: 'View drafts', iconName: 'files' },
-              { to: '/draft-reports/edit', label: 'Edit drafts', iconName: 'fileEdit' },
+              { to: '/draft-reports', label: 'View drafts', iconName: 'search' },
+              { to: '/draft-reports/edit', label: 'Edit drafts', iconName: 'info' },
+            ]}
+          />
+          <SidebarReportGroup
+            title="Club Vision Strategy"
+            activePrefix="/director-pipelines"
+            leadIconName="circleHelp"
+            items={[
+              { to: '/director-pipelines/create', label: 'Create vision', iconName: 'checkCircle' },
+              { to: '/director-pipelines', label: 'View pipelines', iconName: 'gitCompare' },
+              { to: '/director-pipelines/edit', label: 'Edit pipeline', iconName: 'alertTriangle' },
             ]}
           />
         </div>

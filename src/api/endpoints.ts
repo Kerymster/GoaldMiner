@@ -6,6 +6,7 @@ export const endpoints = {
   /** POST body: `ScoutReportForm` JSON — wire when backend exists */
   scoutReports: '/api/scout-reports',
   scoutReportDrafts: '/api/scout-reports/drafts',
+  directorPipelines: '/api/director/pipelines',
   nationalities: '/api/nationalities',
 } as const
 
@@ -22,4 +23,9 @@ export function scoutReportDraftById(id: string): string {
 /** `GET/PATCH /api/players/:id` — canonical player path helper. */
 export function playerById(id: string): string {
   return `${endpoints.players}/${encodeURIComponent(id)}`
+}
+
+/** `GET/PATCH/DELETE /api/director/pipelines/:id` helper. */
+export function directorPipelineById(id: string): string {
+  return `${endpoints.directorPipelines}/${encodeURIComponent(id)}`
 }

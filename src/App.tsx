@@ -15,6 +15,10 @@ import { CreateDraftReportPage } from './pages/draft-reports/create-report'
 import { EditDraftReportsPage } from './pages/draft-reports/edit-reports'
 import { ViewDraftReportsPage } from './pages/draft-reports/view-reports'
 import { DraftReportEditPage } from './pages/draft-reports/detail/draft-report-edit'
+import { CreateDirectorPipelinePage } from './pages/director-pipelines/create'
+import { EditDirectorPipelinePage } from './pages/director-pipelines/edit'
+import { ViewDirectorPipelinesPage } from './pages/director-pipelines/view'
+import { DirectorPipelineDetailPage } from './pages/director-pipelines/detail'
 import { ProtectedRoute } from './components/routing/ProtectedRoute'
 import { LoginPage } from './pages/auth/login'
 import { RegisterPage } from './pages/auth/register'
@@ -50,6 +54,10 @@ export default function App() {
             <Route path="draft-reports/edit" element={<EditDraftReportsPage />} />
             <Route path="draft-reports/create" element={<CreateDraftReportPage />} />
             <Route path="draft-reports/:draftId/edit" element={<DraftReportEditPage />} />
+            <Route path="director-pipelines" element={<ViewDirectorPipelinesPage />} />
+            <Route path="director-pipelines/create" element={<CreateDirectorPipelinePage />} />
+            <Route path="director-pipelines/edit" element={<EditDirectorPipelinePage />} />
+            <Route path="director-pipelines/:pipelineId" element={<DirectorPipelineDetailPage />} />
             <Route path="*" element={<Navigate to="/players" replace />} />
           </Route>
         </Route>
