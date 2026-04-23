@@ -73,7 +73,7 @@ export function ScoutReportDetailPage() {
     return (
       <ReportDetailStateShell
         title="Report not found"
-        description="Missing player or report in the URL."
+        description="This link is incomplete. Open the report from the view or edit reports list."
         backLink
       />
     )
@@ -99,7 +99,7 @@ export function ScoutReportDetailPage() {
     return (
       <ReportDetailStateShell
         title="Report not found"
-        description="No report with this id for this player. Open it from the report list or check the link."
+        description="This report could not be opened. Go back to the report list and try again."
         backLink
       />
     )

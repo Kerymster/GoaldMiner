@@ -45,10 +45,6 @@ export const pipelineDetailHeaderRecordFieldLabelClass =
 export const pipelineDetailHeaderRecordValueEmphasisClass =
   'mt-1.5 text-sm font-medium leading-snug text-fume-800 dark:text-fume-100'
 
-/** Hint line under pipeline detail tabs — same rhythm as scout report `detailTabHint`. */
-export const pipelineDetailTabHintClass =
-  'mt-2 max-w-2xl pl-2 text-xs leading-relaxed text-fume-600 sm:pl-3 dark:text-fume-400'
-
 /**
  * Read-only pipeline detail section shell — aligned with scout report `detailSectionCard`
  * (`src/pages/player-reports/detail/detailStyles.ts`): panel border, shadow, generous padding.

@@ -1,12 +1,9 @@
 import {
   coerceContextListFieldToString,
   createEmptyDirectorContext,
-  requiredStepOneFields,
   type DirectorContext,
   type DirectorPipeline,
 } from '../../../types/directorPipeline'
-
-export { requiredStepOneFields }
 
 export function parseInteger(value: string): number | undefined {
   const trimmed = value.trim()

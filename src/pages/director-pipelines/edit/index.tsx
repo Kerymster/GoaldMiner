@@ -46,7 +46,7 @@ export function EditDirectorPipelinePage() {
       <PageHeader
         breadcrumbItems={BREADCRUMB}
         title="Edit pipeline"
-        description="Adjust strategy blocks with partial updates while keeping one active pipeline policy."
+        description="Update this pipeline’s saved vision and context."
       />
       {status === 'loading' ? <p className={proseMutedSm}>Loading pipeline…</p> : null}
       {status === 'error' ? <p className={proseErrorSm}>{error}</p> : null}

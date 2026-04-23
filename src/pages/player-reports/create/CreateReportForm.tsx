@@ -146,7 +146,7 @@ export function CreateReportForm({
         setSaveMessage(detail ? `${base}\n\n${detail}` : base)
       } else {
         setSaveMessage(
-          e instanceof Error ? e.message : 'Save failed. Check the API and try again.',
+          e instanceof Error ? e.message : 'Save failed. Please try again.',
         )
       }
       setConfirmOpen(false)

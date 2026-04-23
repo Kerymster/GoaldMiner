@@ -170,7 +170,7 @@ export function DirectorPipelinesList() {
             pendingAction.kind === 'archive'
               ? `${pipelineListRowTitle(pendingAction.row)} will move to archived status. You can create a new active pipeline afterward, or re-activate this one when no other pipeline is active.`
               : pendingAction.kind === 'activate'
-                ? `${pipelineListRowTitle(pendingAction.row)} will become your active club vision. The API returns an error if another pipeline is already active.`
+                ? `${pipelineListRowTitle(pendingAction.row)} will become your active club vision. If another pipeline is already active, archive it first.`
                 : `Permanently delete ${pipelineListRowTitle(pendingAction.row)}? Only archived pipelines can be removed. This cannot be undone.`
           }
           confirmLabel={

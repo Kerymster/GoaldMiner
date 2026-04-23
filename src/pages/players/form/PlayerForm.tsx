@@ -179,7 +179,7 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
     if (!validateForSave()) return
 
     if (isEdit && !initialPlayer) {
-      setApiError('Missing player context for edit.')
+      setApiError('This player could not be loaded for editing.')
       return
     }
 
@@ -207,7 +207,7 @@ export function PlayerForm({ mode, initialPlayer }: PlayerFormProps) {
     }
 
     if (isEdit && !initialPlayer) {
-      setApiError('Missing player context for edit.')
+      setApiError('This player could not be loaded for editing.')
       setConfirmOpen(false)
       return
     }

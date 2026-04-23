@@ -18,8 +18,7 @@ import { EmptyState } from '../../../components/empty-state/EmptyState'
 
 const BREADCRUMB = [{ label: 'Player Reports' as const }]
 const TITLE = 'Edit reports'
-const DESCRIPTION =
-  'Search the roster, pick a player, then open a report to edit. The same multi-step form as create is used, with your changes saved to the existing report.'
+const DESCRIPTION = 'Find a player and open one of their reports to edit it.'
 
 export function EditReportsPage() {
   const dispatch = useAppDispatch()
@@ -83,8 +82,8 @@ export function EditReportsPage() {
       ) : (
         <EmptyState
           title="Choose a player to start editing"
-          description="Search by player or team, then select the profile to list reports that can be updated."
-          helper="We'll keep you in the same edit flow used during report creation."
+          description="Search by player or club, pick them from the list, then choose a report to update."
+          helper="New reports are created from the Create report flow."
           icon="fileCheck"
         />
       )}

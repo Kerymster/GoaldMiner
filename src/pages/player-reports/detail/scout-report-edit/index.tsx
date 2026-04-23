@@ -75,7 +75,7 @@ export function ScoutReportEditPage() {
         <EditFlowPageHeader
           breadcrumbLast="Edit"
           title="Report not found"
-          description="Missing player or report in the URL."
+          description="This link is incomplete. Open the report from the edit reports list."
         />
         <BackToEditReportsLink />
       </div>
@@ -113,7 +113,7 @@ export function ScoutReportEditPage() {
         <EditFlowPageHeader
           breadcrumbLast="Edit"
           title="Report not found"
-          description="No report with this id for this player. Open it from the edit list or check the link."
+          description="This report could not be opened. Go back to the edit list and try again."
         />
         <BackToEditReportsLink />
       </div>
@@ -125,7 +125,7 @@ export function ScoutReportEditPage() {
       <EditFlowPageHeader
         breadcrumbLast="Edit report"
         title="Edit scout report"
-        description="Update the same step-by-step template; changes are saved to the existing report."
+        description="Update the report section by section. Changes save to this report."
       />
       <CreateReportForm
         key={record.id}

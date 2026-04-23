@@ -62,8 +62,8 @@ export function DraftReportsList({
       {status === 'succeeded' && rows.length === 0 ? (
         <EmptyState
           title="No drafts yet"
-          description="Start a new draft report and keep adding notes until the report is ready."
-          helper="Drafts stay separate from the main player reports list until you publish."
+          description="Start a draft and add sections whenever you like."
+          helper="Published drafts appear on the player’s report list."
           icon="fileCheck"
         />
       ) : null}

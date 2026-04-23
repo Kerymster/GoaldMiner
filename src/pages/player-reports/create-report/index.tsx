@@ -7,8 +7,7 @@ const BREADCRUMB = [
   { label: 'Create report' as const },
 ]
 const TITLE = 'Create report'
-const DESCRIPTION =
-  'Pro-level scout template — step through each block. Your answers map 1:1 to the save payload.'
+const DESCRIPTION = 'Complete each section to build a scout report, then save when you are ready.'
 
 export function CreateReportPage() {
   return (

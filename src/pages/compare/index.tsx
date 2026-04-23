@@ -17,8 +17,7 @@ import { CompareStatsTable } from './CompareStatsTable'
 
 const BREADCRUMB = [{ label: 'Compare' as const }]
 const TITLE = 'Compare'
-const DESCRIPTION =
-  'Pick two players from the first page of results (up to 50).'
+const DESCRIPTION = 'Choose two players from the list (up to 50 shown) to compare side by side.'
 
 export function ComparePage() {
   const dispatch = useAppDispatch()
@@ -65,7 +64,7 @@ export function ComparePage() {
           title={TITLE}
           description={DESCRIPTION}
         />
-        <p className={proseMuted}>Need at least two players in the API to compare.</p>
+        <p className={proseMuted}>Add at least two players before you can run a comparison.</p>
       </div>
     )
   }

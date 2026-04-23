@@ -42,7 +42,7 @@ export function DraftReportEditPage() {
         <PageHeader
           breadcrumbItems={BREADCRUMBS}
           title="Draft not found"
-          description="Missing draft id in the URL."
+          description="This link is incomplete. Open the draft from your draft list."
         />
         <BackToDraftsLink />
       </div>
@@ -67,7 +67,7 @@ export function DraftReportEditPage() {
         <PageHeader
           breadcrumbItems={BREADCRUMBS}
           title="Draft not found"
-          description={error ?? 'No draft found with this id.'}
+          description={error ?? 'This draft could not be loaded.'}
         />
         <BackToDraftsLink />
       </div>
@@ -80,7 +80,7 @@ export function DraftReportEditPage() {
         <PageHeader
           breadcrumbItems={BREADCRUMBS}
           title="Draft not found"
-          description="No draft found with this id."
+          description="This draft could not be found. Return to the draft list and try again."
         />
         <BackToDraftsLink />
       </div>
@@ -92,7 +92,7 @@ export function DraftReportEditPage() {
       <PageHeader
         breadcrumbItems={BREADCRUMBS}
         title="Edit draft report"
-        description="Keep iterating section by section, save whenever you want, and publish when complete."
+        description="Edit section by section, save as you go, and publish when the report is finished."
       />
       <DraftReportForm initialDraft={draft} />
     </div>

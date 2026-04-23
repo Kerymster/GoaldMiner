@@ -20,8 +20,7 @@ import { EmptyState } from '../../../components/empty-state/EmptyState'
 
 const BREADCRUMB = [{ label: 'Player Reports' as const }]
 const TITLE = 'View reports'
-const DESCRIPTION =
-  'Search the roster, pick a player, then open a report. Lists are loaded from the API and cached in the app store; each report link includes the player id.'
+const DESCRIPTION = 'Find a player, then open any of their scout reports.'
 
 export function ViewReportsPage() {
   const dispatch = useAppDispatch()
@@ -112,9 +111,9 @@ export function ViewReportsPage() {
         </div>
       ) : (
         <EmptyState
-          title="Pick a player to reveal reports"
-          description="Use the search box to find a player or team. Once selected, we'll load every available scout report in one place."
-          helper="Tip: searching by team name is often faster in larger squads."
+          title="Pick a player to see reports"
+          description="Search by player or club. When you choose someone, their saved reports appear below."
+          helper="Searching by club can be quicker for large squads."
           icon="search"
         />
       )}

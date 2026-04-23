@@ -2,8 +2,7 @@ import { pageStack } from '../../../components/styles/pageChromeStyles'
 import { DraftReportsList } from '../DraftReportsList'
 
 const TITLE = 'View draft reports'
-const DESCRIPTION =
-  'See every in-progress draft in one list. Drafts are isolated from players and published reports until you publish.'
+const DESCRIPTION = 'All in-progress drafts in one place until you publish them.'
 
 export function ViewDraftReportsPage() {
   return (

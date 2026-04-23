@@ -10,7 +10,7 @@ export function ViewDirectorPipelinesPage() {
       <PageHeader
         breadcrumbItems={BREADCRUMB}
         title="View pipelines"
-        description="Manage active and archived club vision pipelines by season and status."
+        description="Open, edit, or archive club vision pipelines."
       />
       <DirectorPipelinesList />
     </div>

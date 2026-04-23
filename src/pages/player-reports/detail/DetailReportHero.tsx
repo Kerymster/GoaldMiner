@@ -130,7 +130,7 @@ export function DetailReportHero({
               type="button"
               onClick={copyId}
               className={heroCopyButtonClass}
-              title="Copy full report ID"
+              title="Copy report reference"
             >
               <svg className="h-3 w-3 shrink-0 opacity-70" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path

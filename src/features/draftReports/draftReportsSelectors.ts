@@ -30,7 +30,7 @@ export function selectDraftReportBundle(
   if (!draftId) {
     return {
       status: 'failed',
-      error: 'Missing draft id in the URL.',
+      error: 'This draft could not be opened.',
       item: null,
     }
   }

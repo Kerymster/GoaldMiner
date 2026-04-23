@@ -43,7 +43,7 @@ export function CreateDirectorPipelinePage() {
       <PageHeader
         breadcrumbItems={BREADCRUMB}
         title="Create club vision pipeline"
-        description="Define what this club is chasing in the current period through structured context blocks."
+        description="Capture the club's direction for this period."
       />
       {status === 'loading' ? <p className={proseMutedSm}>Checking active pipeline status…</p> : null}
       {status === 'error' ? <p className={proseErrorSm}>{error}</p> : null}

@@ -15,11 +15,7 @@ import {
   mandatePatchFromGeneratedBrief,
   mergePlanningBriefDraftIntoMandate,
 } from './form/directorPipelineFormUpdateHelpers'
-import {
-  getContextFromPipeline,
-  requiredStepOneFields,
-  stepOneErrors,
-} from './form/formHelpers'
+import { getContextFromPipeline, stepOneErrors } from './form/formHelpers'
 import { PipelineFormProgressCard } from './form/PipelineFormProgressCard'
 import { PIPELINE_FORM_STEPS } from './form/pipelineFormStepsMeta'
 import {
@@ -188,8 +184,9 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
 
       <div className={pipelineCardClass}>
         <h3 className="text-lg font-semibold text-fume-950 dark:text-fume-50">{PIPELINE_FORM_STEPS[step].title}</h3>
-        <p className={`mt-1 ${pipelineHelpClass}`}>{PIPELINE_FORM_STEPS[step].description}</p>
-        {step === 0 ? <p className={`mt-2 ${pipelineHelpClass}`}>Required: {requiredStepOneFields.join(', ')}</p> : null}
+        {PIPELINE_FORM_STEPS[step].description ? (
+          <p className={`mt-1 ${pipelineHelpClass}`}>{PIPELINE_FORM_STEPS[step].description}</p>
+        ) : null}
         {errors.length > 0 ? (
           <ul className="mt-3 list-disc space-y-1 pl-5">
             {errors.map((error) => (
@@ -252,7 +249,7 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
         isOpen={replaceMandateOpen}
         variant="danger"
         title="Replace mandate text?"
-        description="The current mandate sentence will be overwritten by the auto-generated planning brief. You can still edit it before saving."
+        description="Your mandate sentence will be replaced by the generated brief. You can edit it again before saving."
         confirmLabel="Replace mandate"
         cancelLabel="Cancel"
         onClose={() => setReplaceMandateOpen(false)}
@@ -268,8 +265,8 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
         title={mode === 'create' ? 'Create active pipeline?' : 'Save pipeline?'}
         description={
           mode === 'create'
-            ? 'This will send your club vision context to the server and set this pipeline as the active one. You can archive or edit it later from the pipelines list.'
-            : 'This will update the pipeline on the server with your current title and context. Continue?'
+            ? 'This becomes your active club vision. You can change it later from the pipelines list.'
+            : 'Your title and all fields on this form will replace what is saved for this pipeline.'
         }
         confirmLabel={mode === 'create' ? 'Create active pipeline' : 'Save pipeline'}
         cancelLabel="Cancel"

@@ -6,7 +6,6 @@ import { PageHeader } from '../../../components/page-header/PageHeader'
 import { pageStack, proseErrorSm, proseMutedSm } from '../../../components/styles/pageChromeStyles'
 import { coerceContextListFieldToString, labelForOption, type DirectorPipeline } from '../../../types/directorPipeline'
 import {
-  pipelineDetailTabHintClass,
   pipelineDetailViewGridClass,
   pipelinePrimaryButtonClass,
   pipelineSecondaryButtonClass,
@@ -98,7 +97,7 @@ export function DirectorPipelineDetailPage() {
           { label: title },
         ]}
         title={title}
-        description="Read-only view of the full director pipeline context."
+        description="Summary of this club vision pipeline."
         end={pipeline ? <PipelineDetailHeaderRecord pipeline={pipeline} headingTitle={title} /> : null}
       />
 
@@ -185,7 +184,6 @@ export function DirectorPipelineDetailPage() {
                 Constraints + stakeholders
               </button>
             </div>
-            <p className={pipelineDetailTabHintClass}>Read-only structure mirrors the create stepper.</p>
           </div>
 
           {tab === 'core' ? (
