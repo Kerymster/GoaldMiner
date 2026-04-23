@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { createDirectorPipeline, patchDirectorPipeline } from '../../api/directorPipelines'
 import { EmptyState } from '../../components/empty-state/EmptyState'
+import { Modal } from '../../components/modal/Modal'
 import { formatApiIssuesSummary, isApiErr } from '../../types/api'
 import {
   academyIntegrationLevels,
@@ -64,6 +65,13 @@ function parseNullableInteger(value: string): number | null | undefined {
   return parseInteger(value)
 }
 
+function parseOptionalNumber(value: string): number | undefined {
+  const trimmed = value.trim()
+  if (!trimmed) return undefined
+  const n = Number(trimmed)
+  return Number.isFinite(n) ? n : undefined
+}
+
 function stepOneErrors(context: DirectorContext): string[] {
   const errors: string[] = []
   if (!context.club.clubName.trim()) errors.push('Club name is required.')
@@ -119,6 +127,8 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
   const [message, setMessage] = useState<string | null>(null)
   const [errors, setErrors] = useState<string[]>([])
   const [isDirty, setIsDirty] = useState(false)
+  const [replaceMandateOpen, setReplaceMandateOpen] = useState(false)
+  const [saveConfirmOpen, setSaveConfirmOpen] = useState(false)
 
   useEffect(() => {
     setTitle(initialPipeline?.title ?? '')
@@ -429,6 +439,17 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
                   <input value={context.club.seasonLabel ?? ''} onChange={(event) => updateClub('seasonLabel', event.target.value)} className={pipelineInputClass} />
                 </label>
               </div>
+              <label>
+                <span className={pipelineFieldLabelClass}>League tier (1–6)</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={6}
+                  value={context.club.leagueTier ?? ''}
+                  onChange={(event) => updateClub('leagueTier', parseInteger(event.target.value))}
+                  className={pipelineInputClass}
+                />
+              </label>
               <div className={pipelineGridClass}>
                 <label>
                   <span className={pipelineFieldLabelClass}>Ownership display name</span>
@@ -534,14 +555,34 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
                   className={pipelineMultiLineListClass}
                 />
               </label>
+              <label>
+                <span className={pipelineFieldLabelClass}>Style notes</span>
+                <textarea
+                  value={context.playingIdentity?.styleNotes ?? ''}
+                  onChange={(event) => updatePlayingIdentity('styleNotes', event.target.value)}
+                  className={pipelineTextareaClass}
+                />
+              </label>
+              <label>
+                <span className={pipelineFieldLabelClass}>Non-negotiables</span>
+                <textarea
+                  value={context.playingIdentity?.nonNegotiables ?? ''}
+                  onChange={(event) => updatePlayingIdentity('nonNegotiables', event.target.value)}
+                  className={pipelineTextareaClass}
+                />
+              </label>
             </>
           ) : null}
 
           {step === 3 ? (
             <>
+              <p className={pipelineHelpClass}>
+                Budget amounts below are in millions of EUR (M EUR). Example: 35 means €35m. Percentages and FFP
+                status are not in M EUR.
+              </p>
               <div className={pipelineGridClass}>
                 <label>
-                  <span className={pipelineFieldLabelClass}>Currency</span>
+                  <span className={pipelineFieldLabelClass}>Currency (reference)</span>
                   <input value={context.financial?.currency ?? 'EUR'} onChange={(event) => updateFinancial('currency', event.target.value.toUpperCase())} className={pipelineInputClass} />
                 </label>
                 <label>
@@ -562,12 +603,55 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
               </div>
               <div className={pipelineGridClass}>
                 <label>
-                  <span className={pipelineFieldLabelClass}>Season operating budget</span>
+                  <span className={pipelineFieldLabelClass}>Season operating budget (M EUR)</span>
                   <input type="number" value={context.financial?.seasonOperatingBudget ?? ''} onChange={(event) => updateFinancial('seasonOperatingBudget', parseNullableInteger(event.target.value))} className={pipelineInputClass} />
                 </label>
                 <label>
-                  <span className={pipelineFieldLabelClass}>Annual wage budget</span>
+                  <span className={pipelineFieldLabelClass}>Annual wage budget (M EUR)</span>
                   <input type="number" value={context.financial?.annualWageBudget ?? ''} onChange={(event) => updateFinancial('annualWageBudget', parseNullableInteger(event.target.value))} className={pipelineInputClass} />
+                </label>
+              </div>
+              <div className={pipelineGridClass}>
+                <label>
+                  <span className={pipelineFieldLabelClass}>Transfer budget net (M EUR)</span>
+                  <input
+                    type="number"
+                    value={context.financial?.transferBudgetNet ?? ''}
+                    onChange={(event) => updateFinancial('transferBudgetNet', parseNullableInteger(event.target.value))}
+                    className={pipelineInputClass}
+                  />
+                </label>
+                <label>
+                  <span className={pipelineFieldLabelClass}>Transfer budget gross (M EUR)</span>
+                  <input
+                    type="number"
+                    min={0}
+                    value={context.financial?.transferBudgetGross ?? ''}
+                    onChange={(event) => updateFinancial('transferBudgetGross', parseNullableInteger(event.target.value))}
+                    className={pipelineInputClass}
+                  />
+                </label>
+              </div>
+              <div className={pipelineGridClass}>
+                <label>
+                  <span className={pipelineFieldLabelClass}>Wage / revenue cap (%)</span>
+                  <input
+                    type="number"
+                    min={0}
+                    max={100}
+                    value={context.financial?.wageToRevenueCapPct ?? ''}
+                    onChange={(event) => updateFinancial('wageToRevenueCapPct', parseNullableInteger(event.target.value))}
+                    className={pipelineInputClass}
+                  />
+                </label>
+                <label>
+                  <span className={pipelineFieldLabelClass}>Profit target per season (M EUR)</span>
+                  <input
+                    type="number"
+                    value={context.financial?.profitTargetPerSeason ?? ''}
+                    onChange={(event) => updateFinancial('profitTargetPerSeason', parseNullableInteger(event.target.value))}
+                    className={pipelineInputClass}
+                  />
                 </label>
               </div>
               <div className={pipelineGridClass}>
@@ -593,6 +677,42 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
                   <input type="number" value={context.squadStrategy?.targetSquadSize ?? ''} onChange={(event) => updateSquad('targetSquadSize', parseInteger(event.target.value))} className={pipelineInputClass} />
                 </label>
               </div>
+              <div className={pipelineGridClass}>
+                <label>
+                  <span className={pipelineFieldLabelClass}>Foreign player limit</span>
+                  <input
+                    type="number"
+                    min={0}
+                    max={40}
+                    value={context.squadStrategy?.foreignPlayerLimit ?? ''}
+                    onChange={(event) => updateSquad('foreignPlayerLimit', parseNullableInteger(event.target.value))}
+                    className={pipelineInputClass}
+                  />
+                </label>
+                <label>
+                  <span className={pipelineFieldLabelClass}>Homegrown quota (%)</span>
+                  <input
+                    type="number"
+                    min={0}
+                    max={100}
+                    value={context.squadStrategy?.homegrownQuotaPct ?? ''}
+                    onChange={(event) => updateSquad('homegrownQuotaPct', parseNullableInteger(event.target.value))}
+                    className={pipelineInputClass}
+                  />
+                </label>
+              </div>
+              <label>
+                <span className={pipelineFieldLabelClass}>Target average age</span>
+                <input
+                  type="number"
+                  min={17}
+                  max={35}
+                  step="0.1"
+                  value={context.squadStrategy?.targetAverageAge ?? ''}
+                  onChange={(event) => updateSquad('targetAverageAge', parseOptionalNumber(event.target.value))}
+                  className={pipelineInputClass}
+                />
+              </label>
             </>
           ) : null}
 
@@ -644,7 +764,7 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
                   <button type="button" onClick={onGenerateBrief} className={pipelineSecondaryButtonClass}>
                     Generate planning brief
                   </button>
-                  <button type="button" onClick={() => setContextPatch({ mandate: buildMandateBrief(context) })} className={pipelineDangerButtonClass}>
+                  <button type="button" onClick={() => setReplaceMandateOpen(true)} className={pipelineDangerButtonClass}>
                     Replace mandate with brief
                   </button>
                 </div>
@@ -663,13 +783,58 @@ export function DirectorPipelineForm({ mode, initialPipeline, hasActivePipeline,
                 Next
               </button>
             ) : null}
-            <button type="button" onClick={() => void onSubmit()} disabled={status === 'saving'} className={pipelinePrimaryButtonClass}>
+            <button
+              type="button"
+              onClick={() => setSaveConfirmOpen(true)}
+              disabled={status === 'saving'}
+              className={pipelinePrimaryButtonClass}
+            >
               {status === 'saving' ? 'Saving…' : mode === 'create' ? 'Create active pipeline' : 'Save pipeline'}
             </button>
           </div>
         </div>
         {message ? <p className={`mt-3 whitespace-pre-line ${status === 'success' ? 'text-sm text-sea-700 dark:text-sea-400' : pipelineErrorClass}`}>{message}</p> : null}
       </div>
+
+      <Modal
+        isOpen={replaceMandateOpen}
+        variant="danger"
+        title="Replace mandate text?"
+        description="The current mandate sentence will be overwritten by the auto-generated planning brief. You can still edit it before saving."
+        confirmLabel="Replace mandate"
+        cancelLabel="Cancel"
+        onClose={() => setReplaceMandateOpen(false)}
+        onConfirm={() => {
+          setContextPatch({ mandate: buildMandateBrief(context) })
+          setReplaceMandateOpen(false)
+        }}
+      />
+
+      <Modal
+        isOpen={saveConfirmOpen}
+        variant="confirmation"
+        title={mode === 'create' ? 'Create active pipeline?' : 'Save pipeline?'}
+        description={
+          mode === 'create'
+            ? 'This will send your club vision context to the server and set this pipeline as the active one. You can archive or edit it later from the pipelines list.'
+            : 'This will update the pipeline on the server with your current title and context. Continue?'
+        }
+        confirmLabel={mode === 'create' ? 'Create active pipeline' : 'Save pipeline'}
+        cancelLabel="Cancel"
+        isConfirming={status === 'saving'}
+        closeOnBackdrop={status !== 'saving'}
+        closeOnEscape={status !== 'saving'}
+        onClose={() => {
+          if (status === 'saving') return
+          setSaveConfirmOpen(false)
+        }}
+        onConfirm={() => {
+          void (async () => {
+            await onSubmit()
+            setSaveConfirmOpen(false)
+          })()
+        }}
+      />
     </div>
   )
 }

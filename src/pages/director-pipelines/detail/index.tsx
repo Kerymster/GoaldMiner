@@ -6,8 +6,8 @@ import { PageHeader } from '../../../components/page-header/PageHeader'
 import { pageStack, proseErrorSm, proseMutedSm } from '../../../components/styles/pageChromeStyles'
 import { coerceContextListFieldToString, labelForOption, type DirectorPipeline } from '../../../types/directorPipeline'
 import {
-  pipelineCardClass,
-  pipelineDetailSectionClass,
+  pipelineDetailTabHintClass,
+  pipelineDetailViewGridClass,
   pipelinePrimaryButtonClass,
   pipelineSecondaryButtonClass,
   pipelineTabButtonActiveClass,
@@ -15,6 +15,13 @@ import {
   pipelineTabButtonIdleClass,
   pipelineTabListClass,
 } from '../directorPipelineStyles'
+import { PipelineDetailHeaderRecord } from './PipelineDetailHeaderRecord'
+import {
+  PipelineDetailCallout,
+  PipelineDetailMultiline,
+  PipelineDetailRow,
+  PipelineDetailSection,
+} from './PipelineDetailPrimitives'
 
 type PipelineDetailTab = 'core' | 'clubOwnership' | 'identity' | 'financialSquad' | 'constraintsStakeholders'
 
@@ -23,9 +30,22 @@ function fallback(value: string | number | null | undefined): string {
   return String(value)
 }
 
-function textBlock(value: string | undefined): string {
-  const t = (value ?? '').trim()
-  return t || '—'
+function formatYears(value: string | number | null | undefined): string {
+  const v = fallback(value)
+  if (v === '—') return '—'
+  return `${v} years`
+}
+
+function formatLeaguePositionBand(
+  from: string | number | null | undefined,
+  to: string | number | null | undefined,
+): string {
+  const f = fallback(from)
+  const t = fallback(to)
+  if (f === '—' && t === '—') return '—'
+  if (f === '—') return `${t} (upper bound)`
+  if (t === '—') return `${f} (lower bound)`
+  return `${f} – ${t}`
 }
 
 export function DirectorPipelineDetailPage() {
@@ -79,6 +99,7 @@ export function DirectorPipelineDetailPage() {
         ]}
         title={title}
         description="Read-only view of the full director pipeline context."
+        end={pipeline ? <PipelineDetailHeaderRecord pipeline={pipeline} headingTitle={title} /> : null}
       />
 
       <div className="flex flex-wrap gap-2">
@@ -105,7 +126,7 @@ export function DirectorPipelineDetailPage() {
       ) : null}
 
       {pipeline ? (
-        <div className="space-y-4">
+        <div className="space-y-5">
           <div className="space-y-2">
             <div className={pipelineTabListClass} role="tablist" aria-label="Pipeline detail sections">
               <button
@@ -164,24 +185,27 @@ export function DirectorPipelineDetailPage() {
                 Constraints + stakeholders
               </button>
             </div>
-            <p className="mt-2 text-xs text-fume-600 dark:text-fume-400">
-              Read-only structure mirrors the create stepper.
-            </p>
+            <p className={pipelineDetailTabHintClass}>Read-only structure mirrors the create stepper.</p>
           </div>
 
           {tab === 'core' ? (
-            <div id="pipeline-panel-core" role="tabpanel" aria-labelledby="pipeline-tab-core" className="space-y-4">
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Required fields</h3>
-                <div className="mt-2 grid gap-2 text-sm md:grid-cols-2">
-                  <p>Club name: {fallback(pipeline.context.club.clubName)}</p>
-                  <p>Ownership model: {labelForOption(pipeline.context.ownership.model)}</p>
-                  <p>Ownership mandate: {labelForOption(pipeline.context.ownership.mandate)}</p>
-                  <p>Primary objective: {labelForOption(pipeline.context.objectives.primaryObjective)}</p>
-                  <p>Time horizon: {fallback(pipeline.context.objectives.timeHorizonYears)} years</p>
+            <div id="pipeline-panel-core" role="tabpanel" aria-labelledby="pipeline-tab-core" className="space-y-5">
+              <PipelineDetailSection title="Core context & mandate">
+                <div className={pipelineDetailViewGridClass}>
+                  <PipelineDetailRow label="Club name" value={fallback(pipeline.context.club.clubName)} />
+                  <PipelineDetailRow label="Ownership model" value={labelForOption(pipeline.context.ownership.model)} />
+                  <PipelineDetailRow
+                    label="Ownership mandate"
+                    value={labelForOption(pipeline.context.ownership.mandate)}
+                  />
+                  <PipelineDetailRow
+                    label="Primary objective"
+                    value={labelForOption(pipeline.context.objectives.primaryObjective)}
+                  />
+                  <PipelineDetailRow label="Time horizon" value={formatYears(pipeline.context.objectives.timeHorizonYears)} />
                 </div>
-                <p className="mt-2 whitespace-pre-wrap text-sm">Mandate sentence: {textBlock(pipeline.context.mandate)}</p>
-              </section>
+                <PipelineDetailMultiline label="Mandate sentence" text={pipeline.context.mandate ?? ''} />
+              </PipelineDetailSection>
             </div>
           ) : null}
 
@@ -190,58 +214,57 @@ export function DirectorPipelineDetailPage() {
               id="pipeline-panel-club-ownership"
               role="tabpanel"
               aria-labelledby="pipeline-tab-club-ownership"
-              className="space-y-4"
+              className="space-y-5"
             >
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Club profile</h3>
-                <div className="mt-2 grid gap-2 text-sm md:grid-cols-2">
-                  <p>Club short name: {fallback(pipeline.context.club.clubShortName)}</p>
-                  <p>Country: {fallback(pipeline.context.club.country)}</p>
-                  <p>League: {fallback(pipeline.context.club.league)}</p>
-                  <p>League tier: {fallback(pipeline.context.club.leagueTier)}</p>
-                  <p>Season label: {fallback(pipeline.context.club.seasonLabel)}</p>
+              <PipelineDetailSection title="Club profile">
+                <div className={pipelineDetailViewGridClass}>
+                  <PipelineDetailRow label="Club short name" value={fallback(pipeline.context.club.clubShortName)} />
+                  <PipelineDetailRow label="Country" value={fallback(pipeline.context.club.country)} />
+                  <PipelineDetailRow label="League" value={fallback(pipeline.context.club.league)} />
+                  <PipelineDetailRow label="League tier" value={fallback(pipeline.context.club.leagueTier)} />
+                  <PipelineDetailRow label="Season label" value={fallback(pipeline.context.club.seasonLabel)} />
                 </div>
-              </section>
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Ownership details</h3>
-                <div className="mt-2 grid gap-2 text-sm md:grid-cols-2">
-                  <p>Display name: {fallback(pipeline.context.ownership.displayName)}</p>
-                  <p>Tenure: {labelForOption(pipeline.context.ownership.tenure)}</p>
+              </PipelineDetailSection>
+              <PipelineDetailSection title="Ownership">
+                <div className={pipelineDetailViewGridClass}>
+                  <PipelineDetailRow label="Display name" value={fallback(pipeline.context.ownership.displayName)} />
+                  <PipelineDetailRow label="Tenure" value={labelForOption(pipeline.context.ownership.tenure)} />
                 </div>
-                <p className="mt-2 whitespace-pre-wrap text-sm">
-                  Board expectations: {textBlock(pipeline.context.ownership.boardExpectations)}
-                </p>
-              </section>
+                <PipelineDetailMultiline label="Board expectations" text={pipeline.context.ownership.boardExpectations ?? ''} />
+              </PipelineDetailSection>
             </div>
           ) : null}
 
           {tab === 'identity' ? (
-            <div id="pipeline-panel-identity" role="tabpanel" aria-labelledby="pipeline-tab-identity" className="space-y-4">
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Sporting objectives</h3>
-                <div className="mt-2 grid gap-2 text-sm md:grid-cols-2">
-                  <p>Cup ambitions: {fallback(pipeline.context.objectives.cupAmbitions)}</p>
-                  <p>Target position from: {fallback(pipeline.context.objectives.targetLeaguePositionFrom)}</p>
-                  <p>Target position to: {fallback(pipeline.context.objectives.targetLeaguePositionTo)}</p>
+            <div id="pipeline-panel-identity" role="tabpanel" aria-labelledby="pipeline-tab-identity" className="space-y-5">
+              <PipelineDetailSection title="Sporting objectives">
+                <div className={pipelineDetailViewGridClass}>
+                  <PipelineDetailRow label="Cup ambitions" value={fallback(pipeline.context.objectives.cupAmbitions)} />
+                  <PipelineDetailRow
+                    label="League finish target"
+                    value={formatLeaguePositionBand(
+                      pipeline.context.objectives.targetLeaguePositionFrom,
+                      pipeline.context.objectives.targetLeaguePositionTo,
+                    )}
+                  />
                 </div>
-                <p className="mt-2 text-sm font-medium text-fume-600 dark:text-fume-400">Secondary objectives</p>
-                <p className="mt-1 whitespace-pre-wrap text-sm">{textBlock(secondaryObjectives)}</p>
-              </section>
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Playing identity</h3>
-                <div className="mt-2 grid gap-2 text-sm md:grid-cols-2">
-                  <p>Style: {labelForOption(pipeline.context.playingIdentity?.style)}</p>
-                  <p>Academy integration: {labelForOption(pipeline.context.playingIdentity?.academyIntegration)}</p>
+                <PipelineDetailMultiline label="Secondary objectives" text={secondaryObjectives} />
+              </PipelineDetailSection>
+              <PipelineDetailSection title="Playing identity">
+                <div className={pipelineDetailViewGridClass}>
+                  <PipelineDetailRow label="Style" value={labelForOption(pipeline.context.playingIdentity?.style)} />
+                  <PipelineDetailRow
+                    label="Academy integration"
+                    value={labelForOption(pipeline.context.playingIdentity?.academyIntegration)}
+                  />
                 </div>
-                <p className="mt-2 text-sm font-medium text-fume-600 dark:text-fume-400">Preferred formations</p>
-                <p className="mt-1 whitespace-pre-wrap text-sm">{textBlock(preferredFormations)}</p>
-                <p className="mt-2 whitespace-pre-wrap text-sm">
-                  Style notes: {textBlock(pipeline.context.playingIdentity?.styleNotes)}
-                </p>
-                <p className="mt-2 whitespace-pre-wrap text-sm">
-                  Non-negotiables: {textBlock(pipeline.context.playingIdentity?.nonNegotiables)}
-                </p>
-              </section>
+                <PipelineDetailMultiline label="Preferred formations" text={preferredFormations} />
+                <PipelineDetailMultiline label="Style notes" text={pipeline.context.playingIdentity?.styleNotes ?? ''} />
+                <PipelineDetailMultiline
+                  label="Non-negotiables"
+                  text={pipeline.context.playingIdentity?.nonNegotiables ?? ''}
+                />
+              </PipelineDetailSection>
             </div>
           ) : null}
 
@@ -250,31 +273,62 @@ export function DirectorPipelineDetailPage() {
               id="pipeline-panel-financial-squad"
               role="tabpanel"
               aria-labelledby="pipeline-tab-financial-squad"
-              className="grid gap-4 lg:grid-cols-2"
+              className="grid gap-5 lg:grid-cols-2"
             >
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Financial framework</h3>
-                <div className="mt-2 grid gap-2 text-sm">
-                  <p>Currency: {fallback(pipeline.context.financial?.currency)}</p>
-                  <p>Season operating budget: {fallback(pipeline.context.financial?.seasonOperatingBudget)}</p>
-                  <p>Transfer budget net: {fallback(pipeline.context.financial?.transferBudgetNet)}</p>
-                  <p>Transfer budget gross: {fallback(pipeline.context.financial?.transferBudgetGross)}</p>
-                  <p>Annual wage budget: {fallback(pipeline.context.financial?.annualWageBudget)}</p>
-                  <p>Wage/revenue cap (%): {fallback(pipeline.context.financial?.wageToRevenueCapPct)}</p>
-                  <p>FFP status: {labelForOption(pipeline.context.financial?.ffpStatus)}</p>
-                  <p>Profit target per season: {fallback(pipeline.context.financial?.profitTargetPerSeason)}</p>
+              <PipelineDetailSection title="Financial framework">
+                <PipelineDetailCallout>
+                  Budget figures in M EUR are millions of euros (e.g. 35 = €35m). Percentages and FFP are not M EUR.
+                </PipelineDetailCallout>
+                <div className={`mt-4 ${pipelineDetailViewGridClass}`}>
+                  <PipelineDetailRow label="Currency (reference)" value={fallback(pipeline.context.financial?.currency)} />
+                  <PipelineDetailRow
+                    label="Season operating budget (M EUR)"
+                    value={fallback(pipeline.context.financial?.seasonOperatingBudget)}
+                  />
+                  <PipelineDetailRow
+                    label="Transfer budget net (M EUR)"
+                    value={fallback(pipeline.context.financial?.transferBudgetNet)}
+                  />
+                  <PipelineDetailRow
+                    label="Transfer budget gross (M EUR)"
+                    value={fallback(pipeline.context.financial?.transferBudgetGross)}
+                  />
+                  <PipelineDetailRow
+                    label="Annual wage budget (M EUR)"
+                    value={fallback(pipeline.context.financial?.annualWageBudget)}
+                  />
+                  <PipelineDetailRow
+                    label="Wage / revenue cap (%)"
+                    value={fallback(pipeline.context.financial?.wageToRevenueCapPct)}
+                  />
+                  <PipelineDetailRow label="FFP status" value={labelForOption(pipeline.context.financial?.ffpStatus)} />
+                  <PipelineDetailRow
+                    label="Profit target per season (M EUR)"
+                    value={fallback(pipeline.context.financial?.profitTargetPerSeason)}
+                  />
                 </div>
-              </section>
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Squad strategy</h3>
-                <div className="mt-2 grid gap-2 text-sm">
-                  <p>Target squad size: {fallback(pipeline.context.squadStrategy?.targetSquadSize)}</p>
-                  <p>Foreign player limit: {fallback(pipeline.context.squadStrategy?.foreignPlayerLimit)}</p>
-                  <p>Homegrown quota (%): {fallback(pipeline.context.squadStrategy?.homegrownQuotaPct)}</p>
-                  <p>Transfer approach: {labelForOption(pipeline.context.squadStrategy?.transferApproach)}</p>
-                  <p>Target average age: {fallback(pipeline.context.squadStrategy?.targetAverageAge)}</p>
+              </PipelineDetailSection>
+              <PipelineDetailSection title="Squad strategy">
+                <div className={pipelineDetailViewGridClass}>
+                  <PipelineDetailRow label="Target squad size" value={fallback(pipeline.context.squadStrategy?.targetSquadSize)} />
+                  <PipelineDetailRow
+                    label="Foreign player limit"
+                    value={fallback(pipeline.context.squadStrategy?.foreignPlayerLimit)}
+                  />
+                  <PipelineDetailRow
+                    label="Homegrown quota (%)"
+                    value={fallback(pipeline.context.squadStrategy?.homegrownQuotaPct)}
+                  />
+                  <PipelineDetailRow
+                    label="Transfer approach"
+                    value={labelForOption(pipeline.context.squadStrategy?.transferApproach)}
+                  />
+                  <PipelineDetailRow
+                    label="Target average age"
+                    value={fallback(pipeline.context.squadStrategy?.targetAverageAge)}
+                  />
                 </div>
-              </section>
+              </PipelineDetailSection>
             </div>
           ) : null}
 
@@ -283,34 +337,26 @@ export function DirectorPipelineDetailPage() {
               id="pipeline-panel-constraints-stakeholders"
               role="tabpanel"
               aria-labelledby="pipeline-tab-constraints-stakeholders"
-              className="grid gap-4 lg:grid-cols-2"
+              className="grid gap-5 lg:grid-cols-2"
             >
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Constraints</h3>
-                <p className="mt-2 text-sm font-medium text-fume-600 dark:text-fume-400">Items</p>
-                <p className="mt-1 whitespace-pre-wrap text-sm">{textBlock(constraintItems)}</p>
-                <p className="mt-2 whitespace-pre-wrap text-sm">Key risks: {textBlock(pipeline.context.constraints?.keyRisks)}</p>
-              </section>
-              <section className={pipelineDetailSectionClass}>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Stakeholders</h3>
-                <div className="mt-2 grid gap-2 text-sm">
-                  <p>Owner: {fallback(pipeline.context.stakeholders?.ownerName)}</p>
-                  <p>CEO: {fallback(pipeline.context.stakeholders?.ceoName)}</p>
-                  <p>Current head coach: {fallback(pipeline.context.stakeholders?.currentHeadCoach)}</p>
-                  <p>Reports to: {fallback(pipeline.context.stakeholders?.reportsTo)}</p>
+              <PipelineDetailSection title="Constraints">
+                <PipelineDetailMultiline label="Items" text={constraintItems} />
+                <PipelineDetailMultiline label="Key risks" text={pipeline.context.constraints?.keyRisks ?? ''} />
+              </PipelineDetailSection>
+              <PipelineDetailSection title="Stakeholders">
+                <div className={pipelineDetailViewGridClass}>
+                  <PipelineDetailRow label="Owner" value={fallback(pipeline.context.stakeholders?.ownerName)} />
+                  <PipelineDetailRow label="CEO" value={fallback(pipeline.context.stakeholders?.ceoName)} />
+                  <PipelineDetailRow
+                    label="Current head coach"
+                    value={fallback(pipeline.context.stakeholders?.currentHeadCoach)}
+                  />
+                  <PipelineDetailRow label="Reports to" value={fallback(pipeline.context.stakeholders?.reportsTo)} />
                 </div>
-                <p className="mt-2 whitespace-pre-wrap text-sm">Notes: {textBlock(pipeline.context.notes)}</p>
-              </section>
+                <PipelineDetailMultiline label="Notes" text={pipeline.context.notes ?? ''} />
+              </PipelineDetailSection>
             </div>
           ) : null}
-
-          <section className={pipelineCardClass}>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-fume-500">Meta</h3>
-            <div className="mt-2 grid gap-2 text-sm md:grid-cols-2">
-              <p>Status: {pipeline.status.toUpperCase()}</p>
-              <p>Updated: {new Date(pipeline.updatedAt).toLocaleString()}</p>
-            </div>
-          </section>
         </div>
       ) : null}
     </div>

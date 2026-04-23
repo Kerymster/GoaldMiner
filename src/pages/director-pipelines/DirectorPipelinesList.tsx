@@ -7,6 +7,7 @@ import {
   listDirectorPipelines,
 } from '../../api/directorPipelines'
 import { EmptyState } from '../../components/empty-state/EmptyState'
+import { Modal } from '../../components/modal/Modal'
 import { proseErrorSm, proseMutedSm } from '../../components/styles/pageChromeStyles'
 import { isApiErr } from '../../types/api'
 import { buildMandateBrief, labelForOption, type DirectorPipeline } from '../../types/directorPipeline'
@@ -18,6 +19,15 @@ import {
 } from './directorPipelineStyles'
 
 type StatusFilter = 'all' | 'active' | 'archived'
+
+type PendingPipelineAction =
+  | { kind: 'archive'; row: DirectorPipeline }
+  | { kind: 'activate'; row: DirectorPipeline }
+  | { kind: 'delete'; row: DirectorPipeline }
+
+function pipelineRowLabel(row: DirectorPipeline): string {
+  return row.title?.trim() || row.context.club.clubName || 'Untitled pipeline'
+}
 
 function formatDate(iso: string): string {
   const d = new Date(iso)
@@ -31,6 +41,8 @@ export function DirectorPipelinesList() {
   const [error, setError] = useState<string | null>(null)
   const [rows, setRows] = useState<DirectorPipeline[]>([])
   const [selectedCompareId, setSelectedCompareId] = useState<string>('')
+  const [pendingAction, setPendingAction] = useState<PendingPipelineAction | null>(null)
+  const [actionBusy, setActionBusy] = useState(false)
 
   const load = useCallback(async () => {
     setStatus('loading')
@@ -56,38 +68,36 @@ export function DirectorPipelinesList() {
     [archived, selectedCompareId],
   )
 
-  async function handleArchive(id: string) {
+  async function performPendingAction() {
+    if (!pendingAction) return
+    const { kind, row } = pendingAction
+    setActionBusy(true)
+    setError(null)
     try {
-      await archiveDirectorPipeline(id)
-      await load()
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Archive failed.')
-    }
-  }
-
-  async function handleActivate(id: string) {
-    try {
-      await activateDirectorPipeline(id)
+      if (kind === 'archive') {
+        await archiveDirectorPipeline(row.id)
+      } else if (kind === 'activate') {
+        await activateDirectorPipeline(row.id)
+      } else {
+        await deleteDirectorPipeline(row.id)
+      }
+      setPendingAction(null)
       await load()
     } catch (e) {
       if (isApiErr(e) && e.status === 409) {
-        setError('An active pipeline already exists. Archive it first.')
+        if (kind === 'activate') {
+          setError('An active pipeline already exists. Archive it first, then try again.')
+        } else if (kind === 'delete') {
+          setError('Active pipelines cannot be deleted. Archive this pipeline first.')
+        } else {
+          setError(e.message || 'This action could not be completed (409).')
+        }
       } else {
-        setError(e instanceof Error ? e.message : 'Activation failed.')
+        setError(e instanceof Error ? e.message : 'Request failed.')
       }
-    }
-  }
-
-  async function handleDelete(id: string) {
-    try {
-      await deleteDirectorPipeline(id)
-      await load()
-    } catch (e) {
-      if (isApiErr(e) && e.status === 409) {
-        setError('Active pipelines cannot be deleted. Archive first.')
-      } else {
-        setError(e instanceof Error ? e.message : 'Delete failed.')
-      }
+      setPendingAction(null)
+    } finally {
+      setActionBusy(false)
     }
   }
 
@@ -155,15 +165,15 @@ export function DirectorPipelinesList() {
                     Edit
                   </Link>
                   {row.status === 'active' ? (
-                    <button type="button" onClick={() => void handleArchive(row.id)} className={pipelineSecondaryButtonClass}>
+                    <button type="button" onClick={() => setPendingAction({ kind: 'archive', row })} className={pipelineSecondaryButtonClass}>
                       Archive
                     </button>
                   ) : (
                     <>
-                      <button type="button" onClick={() => void handleActivate(row.id)} className={pipelinePrimaryButtonClass}>
+                      <button type="button" onClick={() => setPendingAction({ kind: 'activate', row })} className={pipelinePrimaryButtonClass}>
                         Activate
                       </button>
-                      <button type="button" onClick={() => void handleDelete(row.id)} className={pipelineDangerButtonClass}>
+                      <button type="button" onClick={() => setPendingAction({ kind: 'delete', row })} className={pipelineDangerButtonClass}>
                         Delete
                       </button>
                     </>
@@ -212,6 +222,42 @@ export function DirectorPipelinesList() {
             </div>
           </div>
         </section>
+      ) : null}
+
+      {pendingAction ? (
+        <Modal
+          isOpen
+          variant={pendingAction.kind === 'delete' ? 'danger' : 'confirmation'}
+          title={
+            pendingAction.kind === 'archive'
+              ? 'Archive this pipeline?'
+              : pendingAction.kind === 'activate'
+                ? 'Activate this pipeline?'
+                : 'Delete this pipeline?'
+          }
+          description={
+            pendingAction.kind === 'archive'
+              ? `${pipelineRowLabel(pendingAction.row)} will move to archived status. You can create a new active pipeline afterward, or re-activate this one when no other pipeline is active.`
+              : pendingAction.kind === 'activate'
+                ? `${pipelineRowLabel(pendingAction.row)} will become your active club vision. The API returns an error if another pipeline is already active.`
+                : `Permanently delete ${pipelineRowLabel(pendingAction.row)}? Only archived pipelines can be removed. This cannot be undone.`
+          }
+          confirmLabel={
+            pendingAction.kind === 'archive'
+              ? 'Archive pipeline'
+              : pendingAction.kind === 'activate'
+                ? 'Activate pipeline'
+                : 'Delete permanently'
+          }
+          cancelLabel="Cancel"
+          isConfirming={actionBusy}
+          closeOnBackdrop={!actionBusy}
+          onClose={() => {
+            if (actionBusy) return
+            setPendingAction(null)
+          }}
+          onConfirm={() => void performPendingAction()}
+        />
       ) : null}
     </div>
   )
