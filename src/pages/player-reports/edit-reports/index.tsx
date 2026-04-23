@@ -51,10 +51,7 @@ export function EditReportsPage() {
       />
 
       {selectedPlayer ? (
-        <div className="space-y-3">
-          <h2 className="text-sm font-semibold text-fume-900 dark:text-fume-100">
-            Reports for {selectedPlayer.name}
-          </h2>
+        <>
           {reportsLoading ? (
             <p className={proseMutedSm}>Loading reports…</p>
           ) : reportsError ? (
@@ -78,13 +75,13 @@ export function EditReportsPage() {
               ))}
             </ul>
           )}
-        </div>
+        </>
       ) : (
         <EmptyState
           title="Choose a player to start editing"
           description="Search by player or club, pick them from the list, then choose a report to update."
           helper="New reports are created from the Create report flow."
-          icon="fileCheck"
+          icon="search"
         />
       )}
     </div>

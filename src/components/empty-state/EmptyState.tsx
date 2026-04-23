@@ -25,18 +25,20 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className={emptyStateContainerClass} role="status" aria-live="polite">
-      <div className="space-y-3">
-        <span className={emptyStateIconWrapClass}>
-          <Icon name={icon} size={18} />
+      <div className="flex w-full flex-col items-center gap-5 sm:gap-6">
+        <span className={emptyStateIconWrapClass} aria-hidden>
+          <Icon name={icon} className="h-8 w-8 sm:h-10 sm:w-10" strokeWidth={1.75} />
         </span>
-        <div className="space-y-1.5">
+        <div className="flex w-full flex-col items-center gap-1.5">
           <h3 className={emptyStateTitleClass}>{title}</h3>
           <p className={emptyStateDescriptionClass}>{description}</p>
           {helper ? (
             <p className={emptyStateHelperClass}>{helper}</p>
           ) : null}
         </div>
-        {extra ? <div>{extra}</div> : null}
+        {extra ? (
+          <div className="mt-1 flex w-full flex-col items-center justify-center">{extra}</div>
+        ) : null}
       </div>
     </div>
   )

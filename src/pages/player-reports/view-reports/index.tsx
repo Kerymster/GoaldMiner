@@ -86,10 +86,7 @@ export function ViewReportsPage() {
       />
 
       {selectedPlayer ? (
-        <div className="space-y-3">
-          <h2 className="text-sm font-semibold text-fume-900 dark:text-fume-100">
-            Reports for {selectedPlayer.name}
-          </h2>
+        <>
           {reportsLoading ? (
             <p className={proseMutedSm}>Loading reports…</p>
           ) : reportsError ? (
@@ -108,7 +105,7 @@ export function ViewReportsPage() {
               ))}
             </ul>
           )}
-        </div>
+        </>
       ) : (
         <EmptyState
           title="Pick a player to see reports"
