@@ -14,6 +14,8 @@ export const pipelineErrorClass = 'text-sm text-red-600 dark:text-red-400'
 export const pipelineGridClass = 'grid gap-4 md:grid-cols-2'
 export const pipelinePrimaryButtonClass = primaryCtaButtonClass
 export const pipelineSecondaryButtonClass = secondaryCtaButtonClass
+export const pipelineSuccessButtonClass =
+  'inline-flex min-h-10 cursor-pointer items-center justify-center rounded-lg border border-emerald-600/70 bg-emerald-600/12 px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm transition-colors hover:bg-emerald-600/22 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 disabled:opacity-60 dark:border-emerald-500/50 dark:bg-emerald-500/12 dark:text-emerald-300'
 export const pipelineDangerButtonClass =
   'inline-flex min-h-10 cursor-pointer items-center justify-center rounded-lg border border-rose-600/70 bg-rose-600/10 px-4 py-2 text-sm font-semibold text-rose-700 shadow-sm transition-colors hover:bg-rose-600/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/40 disabled:opacity-60 dark:border-rose-500/50 dark:text-rose-300'
 

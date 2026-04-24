@@ -4,6 +4,7 @@ import {
   activateDirectorPipeline,
   archiveDirectorPipeline,
   deleteDirectorPipeline,
+  getActiveDirectorPipeline,
   listDirectorPipelines,
 } from '../../api/directorPipelines'
 import { EmptyState } from '../../components/empty-state/EmptyState'
@@ -32,6 +33,7 @@ export function DirectorPipelinesList() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle')
   const [error, setError] = useState<string | null>(null)
   const [rows, setRows] = useState<DirectorPipeline[]>([])
+  const [hasActivePipeline, setHasActivePipeline] = useState(false)
   const [selectedCompareId, setSelectedCompareId] = useState<string>('')
   const [pendingAction, setPendingAction] = useState<PendingPipelineAction | null>(null)
   const [actionBusy, setActionBusy] = useState(false)
@@ -40,8 +42,12 @@ export function DirectorPipelinesList() {
     setStatus('loading')
     setError(null)
     try {
-      const items = await listDirectorPipelines(statusFilter)
+      const [items, activePipeline] = await Promise.all([
+        listDirectorPipelines(statusFilter),
+        getActiveDirectorPipeline(),
+      ])
       setRows(items)
+      setHasActivePipeline(Boolean(activePipeline))
       setStatus('ready')
     } catch (e) {
       setStatus('error')
@@ -109,9 +115,11 @@ export function DirectorPipelinesList() {
               </button>
             ))}
           </div>
-          <Link to="/director-pipelines/create" className={pipelinePrimaryButtonClass}>
-            Create vision
-          </Link>
+          {!hasActivePipeline ? (
+            <Link to="/director-pipelines/create" className={pipelinePrimaryButtonClass}>
+              Create vision
+            </Link>
+          ) : null}
         </div>
       </div>
 
@@ -125,9 +133,11 @@ export function DirectorPipelinesList() {
           helper="Only one pipeline can be active at the same time."
           icon="fileCheck"
           extra={
-            <Link to="/director-pipelines/create" className={pipelinePrimaryButtonClass}>
-              Create vision
-            </Link>
+            !hasActivePipeline ? (
+              <Link to="/director-pipelines/create" className={pipelinePrimaryButtonClass}>
+                Create vision
+              </Link>
+            ) : undefined
           }
         />
       ) : null}

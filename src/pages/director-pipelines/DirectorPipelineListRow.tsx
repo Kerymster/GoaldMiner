@@ -6,6 +6,7 @@ import {
   pipelineDangerButtonClass,
   pipelinePrimaryButtonClass,
   pipelineSecondaryButtonClass,
+  pipelineSuccessButtonClass,
 } from './directorPipelineStyles'
 
 type Props = {
@@ -25,7 +26,7 @@ export function DirectorPipelineListRow({
     <li className={pipelineCardClass}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
-          <p className="text-sm font-semibold text-fume-900 dark:text-fume-100">
+          <p className="text-sm font-semibold text-gold-800 dark:text-gold-300">
             {row.title?.trim() || row.context.club.clubName}
           </p>
           <p className="text-xs text-fume-500 dark:text-fume-400">
@@ -36,7 +37,7 @@ export function DirectorPipelineListRow({
         <div className="flex flex-wrap gap-2">
           <Link
             to={`/director-pipelines/${encodeURIComponent(row.id)}`}
-            className={pipelineSecondaryButtonClass}
+            className={pipelinePrimaryButtonClass}
           >
             View
           </Link>
@@ -52,7 +53,7 @@ export function DirectorPipelineListRow({
             </button>
           ) : (
             <>
-              <button type="button" onClick={onRequestActivate} className={pipelinePrimaryButtonClass}>
+              <button type="button" onClick={onRequestActivate} className={pipelineSuccessButtonClass}>
                 Activate
               </button>
               <button type="button" onClick={onRequestDelete} className={pipelineDangerButtonClass}>
