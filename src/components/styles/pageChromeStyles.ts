@@ -20,10 +20,10 @@ export const pageInlineLinkGold =
   'text-sm font-medium text-gold-700 underline-offset-4 hover:underline dark:text-gold-400'
 
 /** Body text — muted, default size (loading lines, short status). */
-export const proseMuted = 'text-fume-600 dark:text-fume-400'
+export const proseMuted = 'text-text-muted dark:text-text-subtle'
 
 /** Body text — muted `text-sm`. */
-export const proseMutedSm = 'text-sm text-fume-600 dark:text-fume-400'
+export const proseMutedSm = 'text-sm text-text-muted dark:text-text-subtle'
 
 /** Inline error without guaranteed `text-sm` (compact spans). */
 export const proseError = 'text-red-600 dark:text-red-400'
@@ -32,17 +32,17 @@ export const proseError = 'text-red-600 dark:text-red-400'
 export const proseErrorSm = 'text-sm text-red-600 dark:text-red-400'
 
 /** Hint under lists (player reports pick-a-player). */
-export const pageHintNarrow = 'max-w-xl text-sm text-fume-600 dark:text-fume-400'
+export const pageHintNarrow = 'max-w-xl text-sm text-text-muted dark:text-text-subtle'
 
 /** Full-viewport loading gate (e.g. auth session check). */
 export const sessionGateLoadingClass =
-  'flex min-h-dvh items-center justify-center bg-shell font-sans text-fume-600 dark:bg-fume-950 dark:text-fume-400'
+  'flex min-h-dvh items-center justify-center bg-bg-canvas font-sans text-text-muted dark:bg-bg-emphasis dark:text-text-subtle'
 
 /** Paginated list prev/next — matches `ListPagination`. */
 export const paginationBarClass = 'flex flex-wrap items-center gap-2 text-sm'
 
 export const paginationNavButtonClass =
-  'cursor-pointer rounded-lg border border-fume-200 px-3 py-1.5 font-medium disabled:cursor-not-allowed disabled:opacity-40 dark:border-fume-700'
+  'cursor-pointer rounded-lg border border-border-default px-3 py-1.5 font-medium disabled:cursor-not-allowed disabled:opacity-40 dark:border-border-inverse'
 
 /**
  * Gold primary CTA — same chrome as player form “Create / Update player” (border-gold-600/80, bg-gold-600/15).

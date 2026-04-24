@@ -34,17 +34,17 @@ export const modalTextStackClass = 'min-w-0 flex-1 space-y-2'
 /**
  * Modal title.
  */
-export const modalTitleClass = 'text-base font-semibold text-fume-900 dark:text-fume-50'
+export const modalTitleClass = 'text-base font-semibold text-text-primary dark:text-text-inverse'
 
 /**
  * Optional supporting description.
  */
-export const modalDescriptionClass = 'text-sm text-fume-600 dark:text-fume-300'
+export const modalDescriptionClass = 'text-sm text-text-muted dark:text-fume-300'
 
 /**
  * Optional custom body slot.
  */
-export const modalBodyClass = 'pt-1 text-sm text-fume-700 dark:text-fume-200'
+export const modalBodyClass = 'pt-1 text-sm text-text-secondary dark:text-fume-200'
 
 /**
  * Footer row with actions.
@@ -62,4 +62,4 @@ export const modalButtonBaseClass =
  * Quiet icon close button in top-right corner.
  */
 export const modalCloseButtonClass =
-  'absolute right-3 top-3 inline-flex size-8 items-center justify-center rounded-md text-fume-500 transition-colors hover:bg-fume-100 hover:text-fume-700 focus:outline-none focus:ring-2 focus:ring-gold-500/40 dark:text-fume-300 dark:hover:bg-fume-700 dark:hover:text-fume-100'
+  'absolute right-3 top-3 inline-flex size-8 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-bg-soft hover:text-text-secondary focus:outline-none focus:ring-2 focus:ring-gold-500/40 dark:text-fume-300 dark:hover:bg-fume-700 dark:hover:text-fume-100'

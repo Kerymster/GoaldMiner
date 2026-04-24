@@ -1,5 +1,5 @@
 const proTipsPanelClass =
-  'rounded-xl border border-gold-600/30 bg-gradient-to-br from-gold-50 to-gold-100/70 p-4 shadow-sm shadow-gold-900/10 ring-1 ring-gold-800/5 dark:border-gold-300/28 dark:bg-gradient-to-br dark:from-[#3d3215]/74 dark:via-[#473817]/70 dark:to-[#52401a]/68 dark:shadow-[0_14px_30px_-20px_rgba(0,0,0,0.8)] dark:ring-1 dark:ring-gold-200/18'
+  'rounded-xl border border-gold-600/30 bg-gradient-to-br from-gold-50 to-gold-100/70 p-4 shadow-sm shadow-gold-900/10 ring-1 ring-gold-800/5 dark:border-gold-300/28 dark:bg-gradient-to-br dark:from-[var(--panel-protips-from)] dark:via-[var(--panel-protips-via)] dark:to-[var(--panel-protips-to)] dark:shadow-[0_14px_30px_-20px_var(--shadow-elevated-panel)] dark:ring-1 dark:ring-gold-200/18'
 
 const proTipsHeadingClass =
   'text-xs font-semibold uppercase tracking-wider text-gold-700 dark:text-gold-200'

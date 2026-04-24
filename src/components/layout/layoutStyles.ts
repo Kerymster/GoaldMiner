@@ -4,7 +4,7 @@
  */
 
 export const layoutRootClass =
-  'min-h-dvh bg-shell font-sans text-fume-900 dark:bg-fume-950 dark:text-fume-100'
+  'min-h-dvh bg-bg-canvas font-sans text-text-primary dark:bg-bg-emphasis dark:text-text-inverse'
 
 export const layoutBodyRowClass = 'flex min-h-dvh flex-col md:flex-row'
 

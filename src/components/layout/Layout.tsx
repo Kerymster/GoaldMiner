@@ -21,7 +21,7 @@ export function Layout() {
             aria-hidden
             style={{
               background:
-                'radial-gradient(ellipse 85% 55% at 50% -18%, rgba(245, 158, 11, 0.06), transparent 52%), radial-gradient(ellipse 70% 45% at 80% 0%, rgba(20, 184, 166, 0.045), transparent 50%)',
+                'radial-gradient(ellipse 85% 55% at 50% -18%, var(--overlay-gold-wash), transparent 52%), radial-gradient(ellipse 70% 45% at 80% 0%, var(--overlay-sea-wash), transparent 50%)',
             }}
           />
           <TopBar key={pathname} />

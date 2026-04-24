@@ -15,7 +15,7 @@ function initialsFromName(name: string) {
 }
 
 const starOn =
-  'text-gold-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.35)]'
+  'text-gold-400 drop-shadow-[0_0_8px_var(--star-glow-gold)]'
 const starOff = 'text-fume-400 dark:text-fume-700'
 const heroRootClass =
   'relative isolate min-h-[200px] overflow-hidden rounded-3xl border-2 border-gold-500/35 bg-gradient-to-br from-white via-fume-50 to-fume-100 text-fume-900 shadow-lg shadow-gold-900/10 dark:border-gold-400/50 dark:from-fume-950 dark:via-fume-950 dark:to-fume-950 dark:text-fume-50 dark:shadow-fume-950/40 sm:min-h-[220px]'
@@ -97,7 +97,8 @@ export function DetailReportHero({
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.18] dark:opacity-[0.12]"
         style={{
-          backgroundImage: `linear-gradient(rgba(51,65,85,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(51,65,85,0.22) 1px, transparent 1px)`,
+          backgroundImage:
+            'linear-gradient(var(--overlay-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--overlay-grid-line) 1px, transparent 1px)',
           backgroundSize: '48px 48px',
         }}
         aria-hidden

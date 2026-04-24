@@ -52,12 +52,30 @@
   --color-surface-panel: var(--surface-panel);
   --color-surface-panel-border: var(--surface-panel-border);
   --color-surface-panel-hover: var(--surface-panel-hover);
+  --color-surface-soft: var(--surface-soft);
   --color-surface-inset: var(--surface-inset);
   --color-surface-inset-border: var(--surface-inset-border);
   --color-surface-field: var(--surface-field);
   --color-surface-field-border: var(--surface-field-border);
   --color-surface-divider: var(--surface-divider);
   --color-surface-list-divider: var(--surface-list-divider);
+
+  /* Semantic text / border / accent tokens used by utility classes */
+  --color-text-primary: var(--color-fume-900);
+  --color-text-secondary: var(--color-fume-700);
+  --color-text-muted: var(--color-fume-500);
+  --color-text-subtle: var(--color-fume-400);
+  --color-text-inverse: var(--color-fume-50);
+  --color-bg-canvas: var(--color-shell);
+  --color-bg-emphasis: var(--color-fume-950);
+  --color-bg-soft: var(--color-fume-50);
+  --color-border-strong: var(--color-fume-800);
+  --color-border-default: var(--color-fume-300);
+  --color-border-muted: var(--surface-divider);
+  --color-border-inverse: var(--color-fume-700);
+  --color-accent-primary: var(--color-gold-500);
+  --color-accent-secondary: var(--color-sea-500);
+  --color-status-danger: #e11d48;
 }
 
 :root {
@@ -66,12 +84,26 @@
   --surface-panel: #ffffff;
   --surface-panel-border: rgb(186 199 216 / 0.95);
   --surface-panel-hover: rgb(243 247 252);
+  --surface-soft: rgb(248 250 252 / 0.88);
   --surface-inset: rgb(220 229 240 / 0.78);
   --surface-inset-border: rgb(186 199 216 / 0.9);
   --surface-field: #ffffff;
   --surface-field-border: rgb(186 199 216 / 0.95);
   --surface-divider: rgb(213 223 235);
   --surface-list-divider: rgb(213 223 235);
+  --overlay-gold-wash: rgb(245 158 11 / 0.06);
+  --overlay-sea-wash: rgb(20 184 166 / 0.045);
+  --overlay-grid-line: rgb(51 65 85 / 0.22);
+  --shadow-elevated-soft: rgb(0 0 0 / 0.35);
+  --shadow-elevated-strong: rgb(0 0 0 / 0.55);
+  --shadow-elevated-header: rgb(0 0 0 / 0.6);
+  --shadow-elevated-panel: rgb(0 0 0 / 0.8);
+  --ring-gold-soft: rgb(217 119 6 / 0.22);
+  --surface-ink-deep: #081733;
+  --panel-protips-from: rgb(61 50 21 / 0.74);
+  --panel-protips-via: rgb(71 56 23 / 0.7);
+  --panel-protips-to: rgb(82 64 26 / 0.68);
+  --star-glow-gold: rgb(251 191 36 / 0.35);
 }
 
 /* Matches Tailwind default dark mode (prefers-color-scheme). If you switch to class-based dark on <html>, mirror these vars under a `.dark` rule. */
@@ -82,6 +114,7 @@
     --surface-panel: rgb(30 41 59);
     --surface-panel-border: rgb(71 85 105 / 0.55);
     --surface-panel-hover: rgb(15 23 42);
+    --surface-soft: rgb(15 23 42 / 0.72);
     /* Recessed chrome (tabs, popovers) — one step darker than panel */
     --surface-inset: rgb(15 23 42);
     --surface-inset-border: rgb(51 65 85 / 0.55);
@@ -90,6 +123,19 @@
     --surface-field-border: rgb(71 85 105 / 0.55);
     --surface-divider: rgb(51 65 85 / 0.6);
     --surface-list-divider: rgb(51 65 85);
+    --overlay-gold-wash: rgb(245 158 11 / 0.08);
+    --overlay-sea-wash: rgb(20 184 166 / 0.06);
+    --overlay-grid-line: rgb(51 65 85 / 0.22);
+    --shadow-elevated-soft: rgb(0 0 0 / 0.45);
+    --shadow-elevated-strong: rgb(0 0 0 / 0.6);
+    --shadow-elevated-header: rgb(0 0 0 / 0.65);
+    --shadow-elevated-panel: rgb(0 0 0 / 0.8);
+    --ring-gold-soft: rgb(217 119 6 / 0.26);
+    --surface-ink-deep: #081733;
+    --panel-protips-from: rgb(61 50 21 / 0.74);
+    --panel-protips-via: rgb(71 56 23 / 0.7);
+    --panel-protips-to: rgb(82 64 26 / 0.68);
+    --star-glow-gold: rgb(251 191 36 / 0.35);
   }
 }
 

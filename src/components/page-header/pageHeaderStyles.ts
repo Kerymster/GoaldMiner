@@ -39,14 +39,14 @@ export const pageHeaderEyebrowClass =
 export const pageHeaderTitleClass =
   'text-balance text-2xl font-bold tracking-tight text-gold-950 dark:text-gold-200 sm:text-[1.65rem] sm:leading-snug'
 
-export const pageHeaderMetaLineClass = 'text-sm text-fume-600 dark:text-fume-400'
+export const pageHeaderMetaLineClass = 'text-sm text-text-muted dark:text-text-subtle'
 
 /**
  * Optional row directly under the `<h1>` (e.g. status pills + timestamps). Used by `PageHeader` `afterTitle`.
  */
 export const pageHeaderAfterTitleSlotClass =
-  'mt-1 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-fume-600 dark:text-fume-400'
+  'mt-1 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm text-text-muted dark:text-text-subtle'
 
 export const pageHeaderDescriptionClass =
-  'max-w-2xl text-sm leading-relaxed text-fume-600 dark:text-fume-400'
+  'max-w-2xl text-sm leading-relaxed text-text-muted dark:text-text-subtle'
 

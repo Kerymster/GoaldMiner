@@ -4,7 +4,7 @@
  */
 
 export const sidebarRootClass =
-  'flex w-full shrink-0 flex-col border-b border-fume-800/80 bg-fume-900 md:w-60 md:border-r md:border-b-0 md:min-h-dvh md:shadow-[4px_0_24px_-4px_rgba(0,0,0,0.35)]'
+  'flex w-full shrink-0 flex-col border-b border-fume-800/80 bg-fume-900 md:w-60 md:border-r md:border-b-0 md:min-h-dvh md:shadow-[4px_0_24px_-4px_var(--shadow-elevated-soft)]'
 
 /** Scroll only when content exceeds viewport; scrollbar track hidden (still scrolls with wheel / touch). */
 export const sidebarRailClass =
@@ -25,7 +25,7 @@ export const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   [
     'rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200',
     isActive
-      ? 'bg-gold-500/12 text-gold-400 shadow-[inset_0_0_0_1px_rgba(217,119,6,0.22)]'
+      ? 'bg-gold-500/12 text-gold-400 shadow-[inset_0_0_0_1px_var(--ring-gold-soft)]'
       : 'text-fume-300 hover:bg-fume-800/90 hover:text-fume-50',
   ].join(' ')
 
@@ -33,7 +33,7 @@ export const navSublinkClass = ({ isActive }: { isActive: boolean }) =>
   [
     'block rounded-md px-2 py-1.5 text-sm transition-colors duration-200',
     isActive
-      ? 'bg-gold-500/12 font-medium text-gold-400 shadow-[inset_0_0_0_1px_rgba(217,119,6,0.22)]'
+      ? 'bg-gold-500/12 font-medium text-gold-400 shadow-[inset_0_0_0_1px_var(--ring-gold-soft)]'
       : 'text-fume-400 hover:bg-fume-800/70 hover:text-fume-200',
   ].join(' ')
 
@@ -56,7 +56,7 @@ export const sidebarReportGroupsWrapClass = 'mt-2 space-y-2'
 export const sidebarReportsSummaryClass =
   'cursor-pointer list-none rounded-lg px-2.5 py-2 text-xs font-semibold text-fume-200 transition-colors marker:hidden hover:bg-fume-800/70 [&::-webkit-details-marker]:hidden'
 export const sidebarReportGroupClass =
-  'rounded-xl border border-fume-800/90 bg-gradient-to-b from-fume-900 to-[#081733] px-2.5 py-2 shadow-[0_8px_20px_-14px_rgba(0,0,0,0.8)]'
+  'rounded-xl border border-fume-800/90 bg-gradient-to-b from-fume-900 to-[var(--surface-ink-deep)] px-2.5 py-2 shadow-[0_8px_20px_-14px_var(--shadow-elevated-panel)]'
 export const sidebarReportGroupTitleWrapClass = 'flex items-center justify-between gap-2'
 export const sidebarReportGroupTitleTextWrapClass = 'flex items-center gap-2'
 export const sidebarReportGroupLeadIconClass = 'h-4 w-4 text-gold-400/90'

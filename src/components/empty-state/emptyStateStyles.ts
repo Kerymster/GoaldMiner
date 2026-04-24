@@ -15,13 +15,13 @@ export const emptyStateIconWrapClass =
  * Main title in empty-state blocks.
  */
 export const emptyStateTitleClass =
-  'text-balance text-sm font-semibold tracking-tight text-fume-900 dark:text-fume-100'
+  'text-balance text-sm font-semibold tracking-tight text-text-primary dark:text-text-inverse'
 
 /**
  * Body copy under the empty-state title.
  */
 export const emptyStateDescriptionClass =
-  'mx-auto max-w-md text-balance text-sm leading-relaxed text-fume-600 dark:text-fume-400'
+  'mx-auto max-w-md text-balance text-sm leading-relaxed text-text-muted dark:text-text-subtle'
 
 /**
  * Optional helper hint with accent color.
