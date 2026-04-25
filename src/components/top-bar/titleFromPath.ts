@@ -20,5 +20,14 @@ export function titleFromPath(pathname: string): {
   if (pathname.includes('/player-reports/players/') && pathname.includes('/reports/')) {
     return { title: 'Scout report', subtitle: 'Read-only detail' }
   }
+  if (pathname === '/sportive-strategy/playing-style') {
+    return { title: 'Playing Style', subtitle: 'Sportive Strategy module' }
+  }
+  if (pathname === '/sportive-strategy/organization') {
+    return { title: 'Organization', subtitle: 'Sportive Strategy module' }
+  }
+  if (pathname === '/sportive-strategy/recruitment') {
+    return { title: 'Recruitment', subtitle: 'Sportive Strategy module' }
+  }
   return { title: 'Overview' }
 }

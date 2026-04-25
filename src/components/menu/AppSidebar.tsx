@@ -171,6 +171,28 @@ export function AppSidebar() {
               { to: '/director-pipelines/edit', label: 'Edit pipeline', iconName: 'alertTriangle' },
             ]}
           />
+          <SidebarReportGroup
+            title="Sportive Strategy"
+            activePrefix="/sportive-strategy"
+            leadIconName="circleHelp"
+            items={[
+              {
+                to: '/sportive-strategy/playing-style',
+                label: 'Playing Style',
+                iconName: 'fileCheck',
+              },
+              {
+                to: '/sportive-strategy/organization',
+                label: 'Organization',
+                iconName: 'files',
+              },
+              {
+                to: '/sportive-strategy/recruitment',
+                label: 'Recruitment',
+                iconName: 'search',
+              },
+            ]}
+          />
         </div>
       </div>
     </aside>

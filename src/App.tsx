@@ -19,6 +19,9 @@ import { CreateDirectorPipelinePage } from './pages/director-pipelines/create'
 import { EditDirectorPipelinePage } from './pages/director-pipelines/edit'
 import { ViewDirectorPipelinesPage } from './pages/director-pipelines/view'
 import { DirectorPipelineDetailPage } from './pages/director-pipelines/detail'
+import { PlayingStylePage } from './pages/sportive-strategy/playing-style'
+import { OrganizationPage } from './pages/sportive-strategy/organization'
+import { RecruitmentPage } from './pages/sportive-strategy/recruitment'
 import { ProtectedRoute } from './components/routing/ProtectedRoute'
 import { LoginPage } from './pages/auth/login'
 import { RegisterPage } from './pages/auth/register'
@@ -58,6 +61,9 @@ export default function App() {
             <Route path="director-pipelines/create" element={<CreateDirectorPipelinePage />} />
             <Route path="director-pipelines/edit" element={<EditDirectorPipelinePage />} />
             <Route path="director-pipelines/:pipelineId" element={<DirectorPipelineDetailPage />} />
+            <Route path="sportive-strategy/playing-style" element={<PlayingStylePage />} />
+            <Route path="sportive-strategy/organization" element={<OrganizationPage />} />
+            <Route path="sportive-strategy/recruitment" element={<RecruitmentPage />} />
             <Route path="*" element={<Navigate to="/players" replace />} />
           </Route>
         </Route>
