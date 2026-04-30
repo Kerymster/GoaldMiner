@@ -53,6 +53,16 @@ export const navSublinkIconClass = ({ isActive }: { isActive: boolean }) =>
   ].join(' ')
 
 export const sidebarReportGroupsWrapClass = 'mt-2 space-y-2'
+
+/**
+ * Small caps label introducing a sidebar region (e.g. Scouting vs Sporting director).
+ * Pairs with `sidebarSectionSeparatorClass` between major product areas.
+ */
+export const sidebarSectionLabelClass =
+  'px-3 pb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-fume-500 dark:text-fume-400'
+
+/** Full-width hairline between scouting workflows and sporting-director workflows. */
+export const sidebarSectionSeparatorClass = 'mx-1 my-3 border-0 border-t border-fume-800/80 dark:border-fume-700/60'
 export const sidebarReportsSummaryClass =
   'cursor-pointer list-none rounded-lg px-2.5 py-2 text-xs font-semibold text-fume-200 transition-colors marker:hidden hover:bg-fume-800/70 [&::-webkit-details-marker]:hidden'
 export const sidebarReportGroupClass =

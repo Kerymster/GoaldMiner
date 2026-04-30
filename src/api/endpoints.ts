@@ -7,6 +7,7 @@ export const endpoints = {
   scoutReports: '/api/scout-reports',
   scoutReportDrafts: '/api/scout-reports/drafts',
   directorPipelines: '/api/director/pipelines',
+  playingStyle: '/api/playing-style',
   nationalities: '/api/nationalities',
 } as const
 
@@ -28,4 +29,9 @@ export function playerById(id: string): string {
 /** `GET/PATCH/DELETE /api/director/pipelines/:id` helper. */
 export function directorPipelineById(id: string): string {
   return `${endpoints.directorPipelines}/${encodeURIComponent(id)}`
+}
+
+/** `GET/PATCH/DELETE /api/playing-style/:id` helper. */
+export function playingStyleById(id: string): string {
+  return `${endpoints.playingStyle}/${encodeURIComponent(id)}`
 }

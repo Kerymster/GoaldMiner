@@ -21,7 +21,20 @@ export function titleFromPath(pathname: string): {
     return { title: 'Scout report', subtitle: 'Read-only detail' }
   }
   if (pathname === '/sportive-strategy/playing-style') {
-    return { title: 'Playing Style', subtitle: 'Sportive Strategy module' }
+    return { title: 'Playing styles', subtitle: 'Sportive Strategy module' }
+  }
+  if (pathname === '/sportive-strategy/playing-style/create') {
+    return { title: 'Create playing style', subtitle: 'Sportive Strategy module' }
+  }
+  if (pathname === '/sportive-strategy/playing-style/edit') {
+    return { title: 'Edit playing style', subtitle: 'Sportive Strategy module' }
+  }
+  if (
+    /^\/sportive-strategy\/playing-style\/[^/]+$/.test(pathname) &&
+    pathname !== '/sportive-strategy/playing-style/create' &&
+    pathname !== '/sportive-strategy/playing-style/edit'
+  ) {
+    return { title: 'Playing style detail', subtitle: 'Sportive Strategy module' }
   }
   if (pathname === '/sportive-strategy/organization') {
     return { title: 'Organization', subtitle: 'Sportive Strategy module' }

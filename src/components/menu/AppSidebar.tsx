@@ -24,6 +24,8 @@ import {
   sidebarReportGroupsWrapClass,
   sidebarReportsSummaryClass,
   sidebarRootClass,
+  sidebarSectionLabelClass,
+  sidebarSectionSeparatorClass,
 } from './navStyles'
 
 type ReportGroupItem = {
@@ -123,6 +125,7 @@ export function AppSidebar() {
           </div>
         </Link>
 
+        <p className={`${sidebarSectionLabelClass} pt-1`}>Scouting</p>
         <NavLink to="/players" className={navLinkClass}>
           {({ isActive }) => (
             <span className={navMainContentClass}>
@@ -161,6 +164,12 @@ export function AppSidebar() {
               { to: '/draft-reports/edit', label: 'Edit drafts', iconName: 'info' },
             ]}
           />
+        </div>
+
+        <hr className={sidebarSectionSeparatorClass} aria-hidden />
+
+        <p className={sidebarSectionLabelClass}>Sporting director</p>
+        <div className={sidebarReportGroupsWrapClass}>
           <SidebarReportGroup
             title="Club Vision Strategy"
             activePrefix="/director-pipelines"
@@ -173,23 +182,47 @@ export function AppSidebar() {
           />
           <SidebarReportGroup
             title="Sportive Strategy"
-            activePrefix="/sportive-strategy"
+            activePrefix="/sportive-strategy/playing-style"
             leadIconName="circleHelp"
             items={[
               {
-                to: '/sportive-strategy/playing-style',
-                label: 'Playing Style',
-                iconName: 'fileCheck',
+                to: '/sportive-strategy/playing-style/create',
+                label: 'Create playing style',
+                iconName: 'filePlus',
               },
               {
-                to: '/sportive-strategy/organization',
-                label: 'Organization',
+                to: '/sportive-strategy/playing-style',
+                label: 'View playing styles',
                 iconName: 'files',
               },
               {
+                to: '/sportive-strategy/playing-style/edit',
+                label: 'Edit playing style',
+                iconName: 'fileEdit',
+              },
+            ]}
+          />
+          <SidebarReportGroup
+            title="Organization"
+            activePrefix="/sportive-strategy/organization"
+            leadIconName="files"
+            items={[
+              {
+                to: '/sportive-strategy/organization',
+                label: 'Overview',
+                iconName: 'fileCheck',
+              },
+            ]}
+          />
+          <SidebarReportGroup
+            title="Recruitment"
+            activePrefix="/sportive-strategy/recruitment"
+            leadIconName="search"
+            items={[
+              {
                 to: '/sportive-strategy/recruitment',
-                label: 'Recruitment',
-                iconName: 'search',
+                label: 'Overview',
+                iconName: 'fileCheck',
               },
             ]}
           />
