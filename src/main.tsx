@@ -5,16 +5,19 @@ import { Bootstrap } from './components/bootstrap/Bootstrap'
 import './index.css'
 import App from './App.tsx'
 import { AuthProvider } from './contexts/AuthProvider'
+import { ThemeProvider } from './contexts/ThemeContext'
 import { store } from './store/store'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <AuthProvider>
-        <Bootstrap>
-          <App />
-        </Bootstrap>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Bootstrap>
+            <App />
+          </Bootstrap>
+        </AuthProvider>
+      </ThemeProvider>
     </Provider>
   </StrictMode>,
 )

@@ -14,6 +14,7 @@ import {
   authPageRootClass,
   authSubmitClass,
 } from '../../../components/auth/authFormStyles'
+import { ThemeToggleButton } from '../../../components/ThemeToggleButton'
 import { useAuth } from '../../../hooks/useAuth'
 
 export function RegisterPage() {
@@ -51,6 +52,9 @@ export function RegisterPage() {
 
   return (
     <div className={authPageRootClass}>
+      <div className="fixed right-4 top-4 z-10 sm:right-6 sm:top-6">
+        <ThemeToggleButton />
+      </div>
       <div className={authCardClass}>
         <h1 className={authHeadingClass}>Create account</h1>
         <p className={authLeadClass}>Register with email and password.</p>

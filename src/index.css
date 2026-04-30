@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Class-based dark mode (`html.dark`) so theme is user-controlled; pair with `ThemeProvider`. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 
@@ -106,42 +109,35 @@
   --star-glow-gold: rgb(251 191 36 / 0.35);
 }
 
-/* Matches Tailwind default dark mode (prefers-color-scheme). If you switch to class-based dark on <html>, mirror these vars under a `.dark` rule. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    /* Lifted panels vs page (fume-950) — tweak these to retune all content surfaces */
-    --surface-panel: rgb(30 41 59);
-    --surface-panel-border: rgb(71 85 105 / 0.55);
-    --surface-panel-hover: rgb(15 23 42);
-    --surface-soft: rgb(15 23 42 / 0.72);
-    /* Recessed chrome (tabs, popovers) — one step darker than panel */
-    --surface-inset: rgb(15 23 42);
-    --surface-inset-border: rgb(51 65 85 / 0.55);
-    /* Controls on page canvas — match elevated panels (selects, text inputs) */
-    --surface-field: rgb(30 41 59);
-    --surface-field-border: rgb(71 85 105 / 0.55);
-    --surface-divider: rgb(51 65 85 / 0.6);
-    --surface-list-divider: rgb(51 65 85);
-    --overlay-gold-wash: rgb(245 158 11 / 0.08);
-    --overlay-sea-wash: rgb(20 184 166 / 0.06);
-    --overlay-grid-line: rgb(51 65 85 / 0.22);
-    --shadow-elevated-soft: rgb(0 0 0 / 0.45);
-    --shadow-elevated-strong: rgb(0 0 0 / 0.6);
-    --shadow-elevated-header: rgb(0 0 0 / 0.65);
-    --shadow-elevated-panel: rgb(0 0 0 / 0.8);
-    --ring-gold-soft: rgb(217 119 6 / 0.26);
-    --surface-ink-deep: #081733;
-    --panel-protips-from: rgb(61 50 21 / 0.74);
-    --panel-protips-via: rgb(71 56 23 / 0.7);
-    --panel-protips-to: rgb(82 64 26 / 0.68);
-    --star-glow-gold: rgb(251 191 36 / 0.35);
-  }
-}
-
-/* When using class-based dark on `<html>`, keep native controls aligned (see DEVELOPMENT.md). */
+/*
+ * Dark semantic surfaces — only when `html.dark` (Theme toggle / initial script).
+ * OS `prefers-color-scheme` alone no longer switches tokens; avoids fighting user choice.
+ */
 html.dark {
   color-scheme: dark;
+  --surface-panel: rgb(30 41 59);
+  --surface-panel-border: rgb(71 85 105 / 0.55);
+  --surface-panel-hover: rgb(15 23 42);
+  --surface-soft: rgb(15 23 42 / 0.72);
+  --surface-inset: rgb(15 23 42);
+  --surface-inset-border: rgb(51 65 85 / 0.55);
+  --surface-field: rgb(30 41 59);
+  --surface-field-border: rgb(71 85 105 / 0.55);
+  --surface-divider: rgb(51 65 85 / 0.6);
+  --surface-list-divider: rgb(51 65 85);
+  --overlay-gold-wash: rgb(245 158 11 / 0.08);
+  --overlay-sea-wash: rgb(20 184 166 / 0.06);
+  --overlay-grid-line: rgb(51 65 85 / 0.22);
+  --shadow-elevated-soft: rgb(0 0 0 / 0.45);
+  --shadow-elevated-strong: rgb(0 0 0 / 0.6);
+  --shadow-elevated-header: rgb(0 0 0 / 0.65);
+  --shadow-elevated-panel: rgb(0 0 0 / 0.8);
+  --ring-gold-soft: rgb(217 119 6 / 0.26);
+  --surface-ink-deep: #081733;
+  --panel-protips-from: rgb(61 50 21 / 0.74);
+  --panel-protips-via: rgb(71 56 23 / 0.7);
+  --panel-protips-to: rgb(82 64 26 / 0.68);
+  --star-glow-gold: rgb(251 191 36 / 0.35);
 }
 
 body {
@@ -188,25 +184,6 @@ body {
    * Native date/time pickers ship a dark calendar icon; on dark `surface-field`
    * backgrounds it disappears. Lighten the indicator in dark UI only.
    */
-  @media (prefers-color-scheme: dark) {
-    input[type='date']::-webkit-calendar-picker-indicator,
-    input[type='datetime-local']::-webkit-calendar-picker-indicator,
-    input[type='month']::-webkit-calendar-picker-indicator,
-    input[type='week']::-webkit-calendar-picker-indicator {
-      cursor: pointer;
-      opacity: 0.85;
-      filter: invert(1) brightness(1.05);
-    }
-
-    input[type='date']::-moz-calendar-picker-indicator,
-    input[type='datetime-local']::-moz-calendar-picker-indicator,
-    input[type='month']::-moz-calendar-picker-indicator {
-      cursor: pointer;
-      opacity: 0.85;
-      filter: invert(1) brightness(1.05);
-    }
-  }
-
   .dark input[type='date']::-webkit-calendar-picker-indicator,
   .dark input[type='datetime-local']::-webkit-calendar-picker-indicator,
   .dark input[type='month']::-webkit-calendar-picker-indicator,

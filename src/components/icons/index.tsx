@@ -11,6 +11,8 @@ import {
   Files,
   GitCompareArrows,
   Info,
+  Moon,
+  Sun,
   Users,
   Search,
   X,
@@ -30,6 +32,8 @@ export type IconName =
   | 'files'
   | 'gitCompare'
   | 'info'
+  | 'moon'
+  | 'sun'
   | 'users'
   | 'search'
 
@@ -46,6 +50,8 @@ const ICON_MAP: Record<IconName, LucideIcon> = {
   files: Files,
   gitCompare: GitCompareArrows,
   info: Info,
+  moon: Moon,
+  sun: Sun,
   users: Users,
   search: Search,
 }

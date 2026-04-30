@@ -1,6 +1,7 @@
-import { overlayMenuPanelClass } from '../overlay-select/overlayDropdownStyles'
-import { Icon } from '../icons'
 import { useAuth } from '../../hooks/useAuth'
+import { ThemeToggleButton } from '../ThemeToggleButton'
+import { Icon } from '../icons'
+import { overlayMenuPanelClass } from '../overlay-select/overlayDropdownStyles'
 
 const topBarActionsWrapClass = 'flex shrink-0 items-center gap-1'
 const notificationsButtonClass =
@@ -41,6 +42,7 @@ export function TopBarActions({ menuOpen, setMenuOpen }: TopBarActionsProps) {
 
   return (
     <div className={topBarActionsWrapClass}>
+      <ThemeToggleButton className={notificationsButtonClass} />
       <button
         type="button"
         title="Notifications (mock)"
