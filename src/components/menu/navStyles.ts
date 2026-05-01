@@ -15,7 +15,8 @@ export const sidebarBrandLinkClass =
 
 export const sidebarBrandInnerClass = 'flex items-start gap-2.5 border-b border-fume-800/80 pb-3'
 export const sidebarBrandLogoClass = 'h-9 w-9 shrink-0 rounded-lg shadow-sm ring-1 ring-fume-800/90'
-export const sidebarBrandTitleClass = 'text-base font-bold tracking-tight text-fume-50'
+export const sidebarBrandTitleClass =
+  'font-headline text-base font-bold tracking-tight text-fume-50'
 export const sidebarBrandSubtitleClass =
   'mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-400'
 export const sidebarBrandDividerClass = 'mt-2 h-px w-8 bg-gradient-to-r from-gold-500 to-transparent'

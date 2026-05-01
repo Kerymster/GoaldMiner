@@ -15,7 +15,7 @@ export const topBarTitleRowClass =
 export const topBarTitleBlockClass = 'min-w-0'
 
 export const topBarTitleClass =
-  'truncate text-sm font-semibold tracking-tight text-text-inverse'
+  'font-headline truncate text-sm font-semibold tracking-tight text-text-inverse'
 
 export const topBarSubtitleClass = 'truncate text-xs text-text-subtle'
 
