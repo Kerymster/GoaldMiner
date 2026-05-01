@@ -39,6 +39,19 @@ export function titleFromPath(pathname: string): {
   if (pathname === '/sportive-strategy/organization') {
     return { title: 'Organization', subtitle: 'Sportive Strategy module' }
   }
+  if (pathname === '/sportive-strategy/organization/create') {
+    return { title: 'Create organization', subtitle: 'Sportive Strategy module' }
+  }
+  if (pathname === '/sportive-strategy/organization/edit') {
+    return { title: 'Edit organization', subtitle: 'Sportive Strategy module' }
+  }
+  if (
+    /^\/sportive-strategy\/organization\/[^/]+$/.test(pathname) &&
+    pathname !== '/sportive-strategy/organization/create' &&
+    pathname !== '/sportive-strategy/organization/edit'
+  ) {
+    return { title: 'Organization detail', subtitle: 'Sportive Strategy module' }
+  }
   if (pathname === '/sportive-strategy/recruitment') {
     return { title: 'Recruitment', subtitle: 'Sportive Strategy module' }
   }

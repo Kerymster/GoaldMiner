@@ -4,7 +4,7 @@ import type { PlayingStyleRecord } from '../types/playingStyle'
 
 /**
  * Loads the active playing style record once (create flow gate, dashboards).
- * Mirrors the “check active pipeline” pattern used in Club Vision Strategy.
+ * Mirrors the “check active pipeline” pattern used in Club Vision.
  */
 export function useActivePlayingStyle() {
   const [record, setRecord] = useState<PlayingStyleRecord | null>(null)

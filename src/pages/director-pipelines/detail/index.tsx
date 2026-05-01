@@ -93,7 +93,7 @@ export function DirectorPipelineDetailPage() {
     <div className={pageStack}>
       <PageHeader
         breadcrumbItems={[
-          { label: 'Club Vision Strategy', to: '/director-pipelines' },
+          { label: 'Club Vision', to: '/director-pipelines' },
           { label: title },
         ]}
         title={title}

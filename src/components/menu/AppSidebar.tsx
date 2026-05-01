@@ -171,7 +171,7 @@ export function AppSidebar() {
         <p className={sidebarSectionLabelClass}>Sporting director</p>
         <div className={sidebarReportGroupsWrapClass}>
           <SidebarReportGroup
-            title="Club Vision Strategy"
+            title="Club Vision"
             activePrefix="/director-pipelines"
             leadIconName="circleHelp"
             items={[
@@ -208,9 +208,19 @@ export function AppSidebar() {
             leadIconName="files"
             items={[
               {
+                to: '/sportive-strategy/organization/create',
+                label: 'Create organization',
+                iconName: 'filePlus',
+              },
+              {
                 to: '/sportive-strategy/organization',
-                label: 'Overview',
-                iconName: 'fileCheck',
+                label: 'View organization',
+                iconName: 'files',
+              },
+              {
+                to: '/sportive-strategy/organization/edit',
+                label: 'Edit organization',
+                iconName: 'fileEdit',
               },
             ]}
           />

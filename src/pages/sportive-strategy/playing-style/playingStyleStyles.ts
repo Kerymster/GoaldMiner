@@ -1,6 +1,6 @@
 /**
  * Playing Style wizard and list — reuses director pipeline chrome tokens
- * (`directorPipelineStyles`) so Sportive Strategy matches Club Vision Strategy visually.
+ * (`directorPipelineStyles`) so Sportive Strategy matches Club Vision visually.
  */
 export {
   pipelineCardClass,

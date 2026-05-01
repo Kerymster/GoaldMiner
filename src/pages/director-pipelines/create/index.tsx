@@ -7,7 +7,7 @@ import type { DirectorPipeline } from '../../../types/directorPipeline'
 import { DirectorPipelineForm } from '../DirectorPipelineForm'
 
 const BREADCRUMB = [
-  { label: 'Club Vision Strategy', to: '/director-pipelines' },
+  { label: 'Club Vision', to: '/director-pipelines' },
   { label: 'Create vision' as const },
 ]
 

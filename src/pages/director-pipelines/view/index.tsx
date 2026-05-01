@@ -2,7 +2,7 @@ import { PageHeader } from '../../../components/page-header/PageHeader'
 import { pageStack } from '../../../components/styles/pageChromeStyles'
 import { DirectorPipelinesList } from '../DirectorPipelinesList'
 
-const BREADCRUMB = [{ label: 'Club Vision Strategy' as const }]
+const BREADCRUMB = [{ label: 'Club Vision' as const }]
 
 export function ViewDirectorPipelinesPage() {
   return (

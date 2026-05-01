@@ -23,7 +23,10 @@ import { ViewPlayingStylesPage } from './pages/sportive-strategy/playing-style'
 import { CreatePlayingStylePage } from './pages/sportive-strategy/playing-style/create'
 import { EditPlayingStylePage } from './pages/sportive-strategy/playing-style/edit'
 import { PlayingStyleDetailPage } from './pages/sportive-strategy/playing-style/detail'
-import { OrganizationPage } from './pages/sportive-strategy/organization'
+import { ViewOrganizationsPage } from './pages/sportive-strategy/organization'
+import { CreateOrganizationPage } from './pages/sportive-strategy/organization/create'
+import { EditOrganizationPage } from './pages/sportive-strategy/organization/edit'
+import { OrganizationDetailPage } from './pages/sportive-strategy/organization/detail'
 import { RecruitmentPage } from './pages/sportive-strategy/recruitment'
 import { ProtectedRoute } from './components/routing/ProtectedRoute'
 import { LoginPage } from './pages/auth/login'
@@ -68,7 +71,10 @@ export default function App() {
             <Route path="sportive-strategy/playing-style/edit" element={<EditPlayingStylePage />} />
             <Route path="sportive-strategy/playing-style/:playingStyleId" element={<PlayingStyleDetailPage />} />
             <Route path="sportive-strategy/playing-style" element={<ViewPlayingStylesPage />} />
-            <Route path="sportive-strategy/organization" element={<OrganizationPage />} />
+            <Route path="sportive-strategy/organization/create" element={<CreateOrganizationPage />} />
+            <Route path="sportive-strategy/organization/edit" element={<EditOrganizationPage />} />
+            <Route path="sportive-strategy/organization/:organizationId" element={<OrganizationDetailPage />} />
+            <Route path="sportive-strategy/organization" element={<ViewOrganizationsPage />} />
             <Route path="sportive-strategy/recruitment" element={<RecruitmentPage />} />
             <Route path="*" element={<Navigate to="/players" replace />} />
           </Route>
