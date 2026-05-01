@@ -5,6 +5,8 @@ import {
   layoutBodyRowClass,
   layoutMainClass,
   layoutMainColumnClass,
+  layoutPageBackdropImageClass,
+  layoutPageBackdropScrimClass,
   layoutRootClass,
 } from './layoutStyles'
 
@@ -16,8 +18,10 @@ export function Layout() {
       <div className={layoutBodyRowClass}>
         <AppSidebar />
         <div className={layoutMainColumnClass}>
+          <div className={layoutPageBackdropImageClass} aria-hidden />
+          <div className={layoutPageBackdropScrimClass} aria-hidden />
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.26] dark:opacity-25"
+            className="pointer-events-none absolute inset-0 z-[2] opacity-[0.26] dark:opacity-25"
             aria-hidden
             style={{
               background:
