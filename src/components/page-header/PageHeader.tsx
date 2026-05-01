@@ -15,6 +15,7 @@ import {
   pageHeaderTextBlockClass,
   pageHeaderTitleClass,
   pageHeaderTitleRowClass,
+  pageHeaderTopGlowClass,
 } from './pageHeaderStyles'
 
 type PageHeaderProps = {
@@ -50,6 +51,7 @@ export function PageHeader({
 
   return (
     <header className={pageHeaderShellClass}>
+      <div className={pageHeaderTopGlowClass} aria-hidden />
       <div className={pageHeaderBottomGlowClass} aria-hidden />
       <div className={pageHeaderInnerClass}>
         <Breadcrumbs items={breadcrumbItems} />

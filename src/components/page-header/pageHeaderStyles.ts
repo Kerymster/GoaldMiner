@@ -1,15 +1,22 @@
 /**
- * `PageHeader` shell — panel card, gold accent bar, title block.
+ * `PageHeader` shell — elevated “hero” band: top→bottom gradient (slightly darker → `surface-panel`),
+ * stronger shadow + gold frame than generic cards so wayfinding stays clear above the tactical backdrop
+ * (`layoutPageBackdropImageClass`). We intentionally do not tile the same PNG here — the
+ * layout already full-bleeds it; re-layering would add noise and scale clashes.
  * Keep in sync with `src/components/page-header/PageHeader.tsx`.
  */
 
 export const pageHeaderShellClass =
-  'relative overflow-hidden rounded-2xl border border-surface-panel-border bg-surface-panel p-5 shadow-md shadow-fume-950/12 ring-1 ring-fume-900/5 dark:shadow-none dark:ring-0 sm:p-6 lg:p-7'
+  'relative overflow-hidden rounded-2xl border border-surface-panel-border bg-gradient-to-b from-fume-200/50 from-0% via-fume-50/80 via-45% to-surface-panel to-100% p-5 shadow-lg shadow-fume-950/15 ring-1 ring-fume-900/[0.07] dark:border-gold-400/48 dark:from-fume-900 dark:via-fume-900/55 dark:via-40% dark:to-surface-panel dark:shadow-[0_20px_52px_-18px_var(--shadow-elevated-header)] dark:ring-1 dark:ring-gold-400/30 sm:p-6 lg:p-7'
+
+/** Thin gold cap — pairs with bottom glow so the header reads as a bounded band, not a floating card. */
+export const pageHeaderTopGlowClass =
+  'pointer-events-none absolute inset-x-0 top-0 z-[1] h-0.5 bg-gradient-to-r from-transparent via-gold-500/50 to-transparent dark:via-gold-400/60'
 
 export const pageHeaderBottomGlowClass =
-  'pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold-500/30 to-transparent'
+  'pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent dark:via-gold-400/48'
 
-export const pageHeaderInnerClass = 'relative space-y-5'
+export const pageHeaderInnerClass = 'relative z-[2] space-y-5'
 
 export const pageHeaderTitleRowClass = 'flex gap-3 sm:gap-4'
 
